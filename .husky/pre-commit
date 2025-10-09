@@ -1,0 +1,2 @@
+pnpm --filter @matching-app/server lint-staged
+pnpm --filter @matching-app/mobile lint-staged
