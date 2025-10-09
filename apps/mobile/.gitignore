@@ -1,0 +1,31 @@
+node_modules/
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+*.apk
+*.abbs
+
+coverage/
+stories/
+*.local
+
+*.log
+logs
+
+# macOS
+.DS_Store
+
+expo-env.d.ts
+.envrc
+android/
+ios/
+.idea/
+# @end expo-cli
+.env
