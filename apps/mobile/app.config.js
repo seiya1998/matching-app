@@ -68,7 +68,7 @@ export default {
         origin: false
       },
       eas: {
-        projectId: "1934116d-9bd3-4071-853d-54ec4ba120c9"
+        projectId: "78767224-8208-49d2-97d0-2c9473edc2a5"
       }
     }
   }
