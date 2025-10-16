@@ -7,23 +7,18 @@ module.exports = {
     },
     extend: {
       fontSize: {
-        // sはfontSize: 12px, lineHeight: 140%, letterSpacing: 5%と同じ数値になっている
-        // letterSpacingを文字列にするとandroidで起動時にエラーとなるため、数値にしている
-        s: ['12px', { lineHeight: '16.8px', letterSpacing: 0.6 }],
-        m: ['14px', { lineHeight: '22.4px', letterSpacing: 0.7 }],
-        l: ['16px', { lineHeight: '22.4px', letterSpacing: 0.8 }],
+        s: ['12px', { lineHeight: '18px', letterSpacing: 0.6 }],
+        m: ['14px', { lineHeight: '24px', letterSpacing: 0.7 }],
+        l: ['16px', { lineHeight: '24px', letterSpacing: 0.8 }],
         xl: ['18px', { lineHeight: '28.8px', letterSpacing: 0.9 }],
         xxl: ['20px', { lineHeight: '32px', letterSpacing: 1 }],
         xxxl: ['24px', { lineHeight: '38.4px', letterSpacing: 1.2 }]
       },
       textColor: {
-        body: '#25231f', //gray-9
-        description: '#66645f', //gray-7
-        disable: '#c3c0ba', //gray-4
-        alert: '#eb5052' // red-4
-      },
-      backgroundColor: {
-        beige: '#f9f6f0' //gray-1
+        body: '#0a2c2f',
+        description: '#66645f',
+        disable: '#c3c0ba',
+        alert: '#eb5052'
       },
       borderColor: {
         divider: '#e6e3dd', //gray-3
@@ -35,11 +30,8 @@ module.exports = {
         normal: '12px',
         circle: '9999px'
       },
-      height: {
-        21: '84px'
-      },
       colors: {
-        primary: '#6f8d1b', //green-5
+        primary: '#4a90e2',
         gray: {
           0: '#fdfaf4',
           1: '#f9f6f0',
