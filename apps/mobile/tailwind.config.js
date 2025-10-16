@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}"],
+  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}", "./features/**/*.{js,jsx,ts,tsx}"],
   presets: [require("nativewind/preset")],
   theme: {
     data: {
@@ -16,7 +16,7 @@ module.exports = {
         xxxl: ['24px', { lineHeight: '38.4px', letterSpacing: 1.2 }]
       },
       textColor: {
-        body: '#0a2c2f',
+        body: '#25231F',
         description: '#66645f',
         disable: '#c3c0ba',
         alert: '#eb5052'
