@@ -13,13 +13,12 @@ export default function Messages() {
 
   return (
     <Container>
-      <Text className='text-center text-xl font-bold text-body'>
+      <Text className='mb-3 text-center text-xl font-bold text-body'>
         メッセージ
       </Text>
-      <View className='mt-3'>
-        <Text className='text-m text-body'>マッチング中</Text>
-        <MatchedUsersList users={users} />
-      </View>
+      <Text className='text-m font-bold text-body'>マッチング中</Text>
+      <MatchedUsersList users={users} />
+      <View className='mt-8 border-b border-gray-200' />
     </Container>
   );
 }

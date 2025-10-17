@@ -28,9 +28,10 @@ export const MatchedUserCard = memo<MatchedUserCardProps>(
     return (
       <TouchableOpacity
         onPress={() => handleUserPress(userId)}
-        className='mr-4 items-center'
+        className='mr-3 items-center'
+        activeOpacity={1}
       >
-        <Image source={imageSource} className='h-20 w-20 rounded-full' />
+        <Image source={imageSource} className='h-24 w-24 rounded-full' />
         <View className='mt-1 flex-row items-center'>
           <OnlineStatusIndicator status={onlineStatus} />
           <Text className='ml-1 text-sm text-body'>
