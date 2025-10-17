@@ -5,7 +5,20 @@
     "paths": {
       "@/*": ["./*"]
     },
-    "exactOptionalPropertyTypes": false
+    "jsx": "react-native",
+    "lib": ["ESNext"],
+    "target": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "exactOptionalPropertyTypes": false,
+    "noEmit": true,
+    "noErrorTruncation": true
   },
   "include": [
     ".expo/types/**/*.ts",
@@ -15,6 +28,7 @@
     "utils",
     "hooks",
     "store",
+    "features",
     "components",
     "constants",
     "libs",

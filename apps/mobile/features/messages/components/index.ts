@@ -1,2 +1,2 @@
-export * from './MatchedUsersList';
 export * from './MatchedUserCard';
+export * from './MessageThreadItem';
