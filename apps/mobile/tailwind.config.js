@@ -7,6 +7,9 @@ module.exports = {
       error: 'error=true'
     },
     extend: {
+      spacing: {
+        '18': '72px',
+      },
       fontSize: {
         s: ['12px', { lineHeight: '18px', letterSpacing: 0.6 }],
         m: ['14px', { lineHeight: '24px', letterSpacing: 0.7 }],
