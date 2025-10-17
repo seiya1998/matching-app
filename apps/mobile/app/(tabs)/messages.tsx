@@ -29,7 +29,8 @@ export default function Messages() {
         location: '北海道',
         status: 'online' as const,
         lastMessage: 'こんにちは！お元気ですか？',
-        lastMessagedAt: new Date('2024-06-20T10:30:00')
+        lastMessagedAt: new Date('2024-06-20T10:30:00'),
+        imageSource: require('@/assets/images/users/01.png')
       },
       {
         id: 2,
@@ -39,7 +40,8 @@ export default function Messages() {
         status: 'recent' as const,
         lastMessage:
           'お久しぶりです！最近どうしていますか？今度お時間があるときにでもお話ししませんか？',
-        lastMessagedAt: new Date('2024-06-19T14:20:00')
+        lastMessagedAt: new Date('2024-06-19T14:20:00'),
+        imageSource: require('@/assets/images/users/02.png')
       },
       {
         id: 3,
@@ -48,7 +50,8 @@ export default function Messages() {
         location: '大阪',
         status: 'offline' as const,
         lastMessage: 'お元気ですか？',
-        lastMessagedAt: new Date('2024-06-18T09:15:00')
+        lastMessagedAt: new Date('2024-06-18T09:15:00'),
+        imageSource: require('@/assets/images/users/03.png')
       },
       {
         id: 4,
@@ -57,7 +60,8 @@ export default function Messages() {
         location: '福岡',
         status: 'online' as const,
         lastMessage: 'こんにちは！',
-        lastMessagedAt: new Date('2024-06-20T10:30:00')
+        lastMessagedAt: new Date('2024-06-20T10:30:00'),
+        imageSource: require('@/assets/images/users/default-user.jpg')
       },
       {
         id: 5,
@@ -66,7 +70,8 @@ export default function Messages() {
         location: '沖縄',
         status: 'recent' as const,
         lastMessage: 'また会いましょう！',
-        lastMessagedAt: new Date('2024-06-19T14:20:00')
+        lastMessagedAt: new Date('2024-06-19T14:20:00'),
+        imageSource: require('@/assets/images/users/01.png')
       },
       {
         id: 6,
@@ -75,7 +80,8 @@ export default function Messages() {
         location: '名古屋',
         status: 'online' as const,
         lastMessage: '今日はいい天気ですね',
-        lastMessagedAt: new Date('2024-06-20T11:00:00')
+        lastMessagedAt: new Date('2024-06-20T11:00:00'),
+        imageSource: require('@/assets/images/users/02.png')
       },
       {
         id: 7,
@@ -84,7 +90,8 @@ export default function Messages() {
         location: '神戸',
         status: 'offline' as const,
         lastMessage: 'お疲れ様でした',
-        lastMessagedAt: new Date('2024-06-17T18:45:00')
+        lastMessagedAt: new Date('2024-06-17T18:45:00'),
+        imageSource: require('@/assets/images/users/03.png')
       },
       {
         id: 8,
@@ -93,7 +100,8 @@ export default function Messages() {
         location: '横浜',
         status: 'recent' as const,
         lastMessage: '明日時間ありますか？',
-        lastMessagedAt: new Date('2024-06-19T16:30:00')
+        lastMessagedAt: new Date('2024-06-19T16:30:00'),
+        imageSource: require('@/assets/images/users/default-user.jpg')
       },
       {
         id: 9,
@@ -102,7 +110,8 @@ export default function Messages() {
         location: '札幌',
         status: 'online' as const,
         lastMessage: '趣味は何ですか？',
-        lastMessagedAt: new Date('2024-06-20T12:15:00')
+        lastMessagedAt: new Date('2024-06-20T12:15:00'),
+        imageSource: require('@/assets/images/users/01.png')
       },
       {
         id: 10,
@@ -111,7 +120,8 @@ export default function Messages() {
         location: '仙台',
         status: 'offline' as const,
         lastMessage: 'よろしくお願いします',
-        lastMessagedAt: new Date('2024-06-16T08:00:00')
+        lastMessagedAt: new Date('2024-06-16T08:00:00'),
+        imageSource: require('@/assets/images/users/02.png')
       }
     ],
     []
@@ -134,7 +144,7 @@ export default function Messages() {
 
       {/* 新しいマッチング一覧 */}
       <Text className='text-m font-bold text-body'>マッチング中</Text>
-      <View className='-mx-4 mt-3' style={{ height: 120 }}>
+      <View className='-mx-4 mt-3'>
         <FlashList
           data={matchedUsers}
           horizontal
@@ -158,20 +168,20 @@ export default function Messages() {
       <View className='-mx-4'>
         <FlashList
           data={usersWithFormattedTime}
-          contentContainerStyle={{ paddingHorizontal: 0 }}
+          scrollEnabled={false}
           renderItem={({ item }) => (
-          <MessageThreadItem
-            imageSource={require('@/assets/images/users/default-user.jpg')}
-            userId={item.id}
-            nickname={item.nickname}
-            age={item.age}
-            location={item.location}
-            onlineStatus={item.status}
-            lastMessage={item.lastMessage}
-            formattedTime={item.formattedTime}
-          />
-        )}
-        keyExtractor={(item) => item.id.toString()}
+            <MessageThreadItem
+              imageSource={item.imageSource}
+              userId={item.id}
+              nickname={item.nickname}
+              age={item.age}
+              location={item.location}
+              onlineStatus={item.status}
+              lastMessage={item.lastMessage}
+              formattedTime={item.formattedTime}
+            />
+          )}
+          keyExtractor={(item) => item.id.toString()}
         />
       </View>
     </Container>
