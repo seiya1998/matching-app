@@ -1,5 +1,6 @@
 import { Text } from '@/components/bases';
 import { OnlineStatusIndicator } from '@/components/modules/OnlineStatusIndicator';
+import { router } from 'expo-router';
 import React, { memo } from 'react';
 import {
   View,
@@ -20,14 +21,11 @@ interface MatchedUserCardProps {
 
 export const MatchedUserCard = memo<MatchedUserCardProps>(
   ({ imageSource, age, location, onlineStatus = 'offline', userId }) => {
-    const handleUserPress = (userId: number | string) => {
-      console.log(`User ${userId} pressed`);
-      // ここでナビゲーション処理など
-    };
-
     return (
       <TouchableOpacity
-        onPress={() => handleUserPress(userId)}
+        onPress={() => {
+          router.push(`/(app)/(stack)/messages/${String(userId)}`);
+        }}
         className='mr-3 items-center'
         activeOpacity={1}
       >

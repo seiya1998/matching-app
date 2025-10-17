@@ -15,6 +15,13 @@ export default function AppLayout() {
         name='modal'
         options={{ presentation: 'modal', title: 'Modal' }}
       />
+      <Stack.Screen
+        name='(stack)/messages/[messageId]'
+        options={{
+          headerShown: false,
+          animation: 'slide_from_bottom'
+        }}
+      />
     </Stack>
   );
 }
