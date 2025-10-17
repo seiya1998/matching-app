@@ -22,34 +22,43 @@ export default function TabLayout() {
           shadowColor: '#000',
           paddingTop: 6
         },
-        tabBarButton: HapticTab,
-      }}>
+        tabBarButton: HapticTab
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name='index'
         options={{
           title: 'ホーム',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name='house' color={color} />
+          )
         }}
       />
       <Tabs.Screen
-        name="likes"
+        name='likes'
         options={{
           title: 'いいね',
-          tabBarIcon: ({ color }) => <EvilIcons size={32} name="like" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <EvilIcons size={32} name='like' color={color} />
+          )
         }}
       />
       <Tabs.Screen
-        name="messages"
+        name='messages'
         options={{
           title: 'メッセージ',
-          tabBarIcon: ({ color }) => <AntDesign size={22} name="message" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <AntDesign size={22} name='message' color={color} />
+          )
         }}
       />
       <Tabs.Screen
-        name="mypages"
+        name='mypages'
         options={{
           title: 'マイページ',
-          tabBarIcon: ({ color }) => <EvilIcons size={32} name="user" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <EvilIcons size={32} name='user' color={color} />
+          )
         }}
       />
     </Tabs>
