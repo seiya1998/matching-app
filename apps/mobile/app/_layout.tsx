@@ -10,9 +10,10 @@ import '../global.css';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useRef } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const unstable_settings = {
-  anchor: '(tabs)'
+  anchor: '(app)/(tabs)'
 };
 
 export default function RootLayout() {
@@ -27,22 +28,26 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack
-        screenOptions={{
-          headerTitle: '',
-          headerTitleAlign: 'center',
-          headerTitleStyle: { fontSize: 17 },
-          headerShadowVisible: false
-        }}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider
+        value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
       >
-        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-        <Stack.Screen
-          name='modal'
-          options={{ presentation: 'modal', title: 'Modal' }}
-        />
-      </Stack>
-      <StatusBar style='auto' />
-    </ThemeProvider>
+        <Stack
+          screenOptions={{
+            headerTitle: '',
+            headerTitleAlign: 'center',
+            headerTitleStyle: { fontSize: 17 },
+            headerShadowVisible: false
+          }}
+        >
+          <Stack.Screen name='(app)/(tabs)' options={{ headerShown: false }} />
+          <Stack.Screen
+            name='modal'
+            options={{ presentation: 'modal', title: 'Modal' }}
+          />
+        </Stack>
+        <StatusBar style='auto' />
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }
