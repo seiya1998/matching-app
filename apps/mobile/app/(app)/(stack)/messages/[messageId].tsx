@@ -1,17 +1,71 @@
-import { Text } from '@/components/bases';
-import { MessageHeader } from '@/features/messages/components';
+import { MessageHeader, MessageBubble, MessageDateLabel } from '@/features/messages/components';
 import { router } from 'expo-router';
 import { View, StatusBar } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useMemo } from 'react';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
+type MessageItem = {
+  id: string;
+  type: 'date' | 'message';
+  date?: string;
+  text?: string;
+  isMine?: boolean;
+  timestamp?: string;
+};
+
 export default function MessageDetail() {
   const insets = useSafeAreaInsets();
-  const dummyMessages = useMemo(
-    () => Array.from({ length: 20 }, (_, i) => ({ id: i, text: `メッセージ ${i + 1}` })),
+
+  const rawMessages = useMemo(
+    () => [
+      { id: 1, text: 'こんにちは！', isMine: false, datetime: new Date('2024-10-01T10:30:00') },
+      { id: 2, text: 'こんにちは！元気ですか？', isMine: true, datetime: new Date('2024-10-01T10:31:00') },
+      { id: 3, text: '元気だよ！今日はいい天気だね', isMine: false, datetime: new Date('2024-10-02T10:32:00') },
+      { id: 4, text: 'そうだね！散歩日和だよね', isMine: true, datetime: new Date('2024-10-02T10:33:00') },
+      { id: 5, text: '週末は何か予定ある？', isMine: false, datetime: new Date('2024-10-02T14:35:00') },
+      { id: 6, text: 'まだ特に決めてないけど、天気が良ければ外に出たいな', isMine: true, datetime: new Date('2024-10-03T10:36:00') },
+      { id: 7, text: 'いいね！どこか行きたいところある？', isMine: false, datetime: new Date('2024-10-03T10:37:00') },
+      { id: 8, text: '公園とかカフェとか...あなたは？', isMine: true, datetime: new Date('2024-10-03T15:38:00') },
+    ],
     []
   );
+
+  const messagesWithDateLabels = useMemo<MessageItem[]>(() => {
+    const result: MessageItem[] = [];
+    let lastDate = '';
+
+    rawMessages.forEach((msg) => {
+      const month = msg.datetime.getMonth() + 1;
+      const day = msg.datetime.getDate();
+      const weekday = msg.datetime.toLocaleDateString('ja-JP', { weekday: 'short' });
+      const msgDate = `${month}/${day}（${weekday}）`;
+
+      // 日付が変わったら日付ラベルを挿入
+      if (msgDate !== lastDate) {
+        result.push({
+          id: `date-${msg.id}`,
+          type: 'date',
+          date: msgDate
+        });
+        lastDate = msgDate;
+      }
+
+      // メッセージを追加
+      result.push({
+        id: `msg-${msg.id}`,
+        type: 'message',
+        text: msg.text,
+        isMine: msg.isMine,
+        timestamp: msg.datetime.toLocaleTimeString('ja-JP', {
+          hour: '2-digit',
+          minute: '2-digit'
+        })
+      });
+    });
+
+    return result;
+  }, [rawMessages]);
 
   return (
     <SafeAreaView className='flex-1 bg-white' edges={['left', 'right']}>
@@ -27,15 +81,26 @@ export default function MessageDetail() {
           paddingTop={insets.top}
         />
         <FlashList
-          data={dummyMessages}
-          renderItem={({ item }) => (
-            <View className='mx-4 rounded-lg bg-gray-100 p-3'>
-              <Text className='text-body'>{item.text}</Text>
-            </View>
-          )}
-          keyExtractor={(item) => item.id.toString()}
-          contentContainerStyle={{ paddingTop: insets.top + 72, paddingBottom: 16 }}
-          ItemSeparatorComponent={() => <View className='h-4' />}
+          data={messagesWithDateLabels}
+          renderItem={({ item }) => {
+            if (item.type === 'date') {
+              return <MessageDateLabel date={item.date!} />;
+            }
+            return (
+              <MessageBubble
+                message={item.text!}
+                isMine={item.isMine!}
+                timestamp={item.timestamp}
+                userImage={
+                  !item.isMine
+                    ? require('@/assets/images/users/default-user.jpg')
+                    : undefined
+                }
+              />
+            );
+          }}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={{ paddingTop: insets.top + 72, paddingBottom: 16, paddingHorizontal: 16 }}
         />
       </View>
     </SafeAreaView>
