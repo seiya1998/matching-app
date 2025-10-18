@@ -1,5 +1,6 @@
 import { Text } from '@/components/bases';
 import { OnlineStatusIndicator } from '@/components/modules/OnlineStatusIndicator';
+import { router } from 'expo-router';
 import React, { memo } from 'react';
 import {
   View,
@@ -32,14 +33,11 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
     lastMessage,
     formattedTime
   }) => {
-    const handleUserPress = (userId: number | string) => {
-      console.log(`User ${userId} pressed`);
-      // ここでナビゲーション処理など
-    };
-
     return (
       <TouchableHighlight
-        onPress={() => handleUserPress(userId)}
+        onPress={() => {
+          router.push(`/(app)/(stack)/messages/${String(userId)}`);
+        }}
         underlayColor='#f3f4f6'
         activeOpacity={0.95}
       >

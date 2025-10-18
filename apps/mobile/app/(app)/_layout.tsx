@@ -1,4 +1,6 @@
-import { Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
+import { Button } from '@/components/bases';
+import { ChevronBack } from '@/assets/svgs';
 
 export default function AppLayout() {
   return (
@@ -7,13 +9,27 @@ export default function AppLayout() {
         headerTitle: '',
         headerTitleAlign: 'center',
         headerTitleStyle: { fontSize: 17 },
-        headerShadowVisible: false
+        headerShadowVisible: false,
+        headerLeft: () => {
+          return (
+            <Button activeOpacity={0.7} onPress={() => router.back()}>
+              <ChevronBack />
+            </Button>
+          );
+        }
       }}
     >
       <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
       <Stack.Screen
         name='modal'
         options={{ presentation: 'modal', title: 'Modal' }}
+      />
+      <Stack.Screen
+        name='(stack)/messages/[messageId]'
+        options={{
+          headerShown: false,
+          animation: 'slide_from_right'
+        }}
       />
     </Stack>
   );
