@@ -9,6 +9,7 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 import { Button } from '@/components/bases';
 import { ChevronBack } from '@/assets/svgs';
 import { View } from 'react-native';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -72,12 +73,16 @@ export default function TabLayout() {
           headerLeft: () => null,
           headerRight: () => {
             return (
-              <View className='mr-4 flex-row space-x-4'>
+              <View className='mr-4 flex-row gap-6'>
                 <Button activeOpacity={0.7} onPress={() => router.back()}>
-                  <ChevronBack />
+                  <Ionicons name='settings-outline' size={24} color='black' />
                 </Button>
                 <Button activeOpacity={0.7} onPress={() => router.back()}>
-                  <ChevronBack />
+                  <Ionicons
+                    name='notifications-outline'
+                    size={24}
+                    color='black'
+                  />
                 </Button>
               </View>
             );
