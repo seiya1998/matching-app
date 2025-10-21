@@ -37,6 +37,12 @@ export default function AppLayout() {
           headerTitle: 'お知らせ'
         }}
       />
+      <Stack.Screen
+        name='(stack)/notifications/[notificationId]'
+        options={{
+          headerTitle: 'お知らせ'
+        }}
+      />
     </Stack>
   );
 }

@@ -80,7 +80,9 @@ export default function Notifications() {
             description={item.description}
             isShowRightIcon={true}
             isShowBottomBorder={index < (notifications.length ?? 0) - 1}
-            onPress={() => router.push('/(app)/(tabs)/messages')}
+            onPress={() =>
+              router.push(`/(app)/(stack)/notifications/${String(item.id)}`)
+            }
           />
         )}
       />
