@@ -46,7 +46,7 @@ export default function Mypages() {
           className='h-32 w-32 self-center rounded-full'
         />
       </View>
-      <View className='mt-6 flex-row items-center justify-center gap-4'>
+      <View className='mt-6 flex-row items-baseline justify-center gap-4'>
         <Text className='text-[20px] font-bold text-body'>ssy</Text>
         <Text className='text-m text-description'>23歳 北海道</Text>
       </View>
