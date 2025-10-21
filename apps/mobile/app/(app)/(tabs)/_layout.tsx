@@ -74,7 +74,10 @@ export default function TabLayout() {
           headerRight: () => {
             return (
               <View className='mr-4 flex-row gap-6'>
-                <Button activeOpacity={0.7} onPress={() => router.back()}>
+                <Button
+                  activeOpacity={0.7}
+                  onPress={() => router.push('/(app)/(stack)/settings')}
+                >
                   <Ionicons name='settings-outline' size={24} color='black' />
                 </Button>
                 <Button
