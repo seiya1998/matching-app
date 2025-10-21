@@ -77,7 +77,10 @@ export default function TabLayout() {
                 <Button activeOpacity={0.7} onPress={() => router.back()}>
                   <Ionicons name='settings-outline' size={24} color='black' />
                 </Button>
-                <Button activeOpacity={0.7} onPress={() => router.back()}>
+                <Button
+                  activeOpacity={0.7}
+                  onPress={() => router.push('/(app)/(stack)/notifications')}
+                >
                   <Ionicons
                     name='notifications-outline'
                     size={24}

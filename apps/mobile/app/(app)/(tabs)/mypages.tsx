@@ -12,11 +12,6 @@ export default function Mypages() {
       path: '/likes'
     },
     {
-      leftIconType: 'notification',
-      title: 'お知らせ',
-      path: '/likes'
-    },
-    {
       leftIconType: 'star',
       title: 'お気に入り',
       path: '/likes'
@@ -29,11 +24,6 @@ export default function Mypages() {
     {
       leftIconType: 'help',
       title: 'ヘルプ・お問い合わせ',
-      path: '/likes'
-    },
-    {
-      leftIconType: 'setting',
-      title: '各種設定',
       path: '/likes'
     }
   ] as const;

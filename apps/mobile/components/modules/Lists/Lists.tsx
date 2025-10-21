@@ -6,15 +6,12 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 type BaseListsProps = {
-  leftIconType?:
-    | 'footprint'
-    | 'star'
-    | 'like'
-    | 'notification'
-    | 'setting'
-    | 'help'
-    | null;
+  listType?: 'L' | 'M' | null;
+  leftIconType?: 'footprint' | 'star' | 'like' | 'help' | null;
   title: string;
+  isTitleBold?: boolean;
+  description?: string | null;
+  category?: 'IMPORTANT' | 'NOTIFICATION' | null;
   isShowBottomBorder: boolean;
   onPress?: () => void | null;
   rightComponent?: React.ReactNode;
@@ -30,10 +27,19 @@ type ListsProps =
       rightText?: string | null;
     });
 
+const CATEGORY_LABELS: Record<string, string> = {
+  IMPORTANT: '重要',
+  NOTIFICATION: 'お知らせ'
+} as const;
+
 /**
  * リストアイテムを表示するコンポーネント
+ * @param listType - リストの種類（'L'|'M'|null）
  * @param leftIconType - 左側に表示するアイコンの種類（'footprint'|'comment'| 'check' | null）
  * @param title - タイトル
+ * @param isTitleBold - タイトルを太字にするかどうか
+ * @param description - リストアイテムの説明文
+ * @param category - リストアイテムのカテゴリ（'IMPORTANT'|'NOTIFICATION'|null）
  * @param isShowBottomBorder - 下部にボーダーを表示するかどうか
  * @param isShowRightIcon - 右側に矢印アイコンを表示するかどうか
  * @param rightText - 右側に表示するテキスト（isShowRightIconがfalseの場合のみ有効）
@@ -41,8 +47,12 @@ type ListsProps =
  * @param rightComponent - 右側に表示するコンポーネント
  */
 export function Lists({
+  listType = null,
   leftIconType = null,
   title,
+  isTitleBold = false,
+  description = null,
+  category = null,
   isShowBottomBorder = false,
   isShowRightIcon = false,
   rightText,
@@ -57,14 +67,6 @@ export function Lists({
     ) : leftIconType === 'like' ? (
       <View className='h-14 w-14 items-center justify-center rounded-full bg-red-500'>
         <EvilIcons size={32} name='like' color='white' />
-      </View>
-    ) : leftIconType === 'notification' ? (
-      <View className='h-14 w-14 items-center justify-center rounded-full bg-purple-500'>
-        <Ionicons name='notifications-outline' size={24} color='white' />
-      </View>
-    ) : leftIconType === 'setting' ? (
-      <View className='h-14 w-14 items-center justify-center rounded-full bg-gray-500'>
-        <Ionicons name='settings-outline' size={24} color='white' />
       </View>
     ) : leftIconType === 'star' ? (
       <View className='h-14 w-14 items-center justify-center rounded-full bg-yellow-500'>
@@ -87,13 +89,12 @@ export function Lists({
     >
       <View
         className={cn(
-          'bg-background w-full flex-1 flex-row items-center justify-between border-gray-4',
+          'bg-background w-full flex-1 flex-row items-center justify-between border-gray-3',
           isShowBottomBorder && 'pb-3'
         )}
       >
         {/* 左の肉球またはコメントアイコン */}
         {leftIcon}
-        {/* タイトル */}
         <View
           className={cn(
             'flex-1',
@@ -102,13 +103,42 @@ export function Lists({
             isShowRightIcon && 'mr-[10px]'
           )}
         >
-          <Text className={cn('text-l text-body')}>{title}</Text>
+          {/* カテゴリー */}
+          {category != null && (
+            <Text
+              className={cn(
+                'mb-1 min-w-[68px] self-start rounded-md px-2 py-1 text-center text-xs font-bold',
+                category === 'IMPORTANT'
+                  ? 'bg-red-400 text-white'
+                  : 'bg-gray-200 text-description'
+              )}
+            >
+              {CATEGORY_LABELS[category]}
+            </Text>
+          )}
+          {/* タイトル */}
+          <Text
+            className={cn(
+              'text-body',
+              isTitleBold === true && 'font-bold',
+              listType === 'L' ? 'text-l' : 'text-m'
+            )}
+          >
+            {title}
+          </Text>
+          {description != null && (
+            <Text className='text-m text-description'>{description}</Text>
+          )}
         </View>
         {rightComponent}
         {/* 右の矢印アイコンかアイテム */}
         {isShowRightIcon && (
           <View className='h-6 w-6 items-center justify-center'>
-            <AntDesign name='right' size={24} color='gray' />
+            <AntDesign
+              name='right'
+              size={listType === 'L' ? 24 : 20}
+              color='gray'
+            />
           </View>
         )}
         {rightText != null && (
