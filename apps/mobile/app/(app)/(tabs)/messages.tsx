@@ -137,11 +137,7 @@ export default function Messages() {
   }, [users]);
 
   return (
-    <Container>
-      <Text className='mb-3 text-center text-xl font-bold text-body'>
-        メッセージ
-      </Text>
-
+    <Container isPaddingTop={false}>
       {/* 新しいマッチング一覧 */}
       <Text className='text-m font-bold text-body'>マッチング中</Text>
       <View className='-mx-4 mt-3'>
