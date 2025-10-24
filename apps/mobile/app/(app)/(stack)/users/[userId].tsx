@@ -26,6 +26,7 @@ export default function UserProfile() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={0}
       >
+        {/* ヘッダー */}
         <MessageHeader
           userName='aaaa'
           userImage={require('@/assets/images/users/default-user.jpg')}
@@ -35,6 +36,7 @@ export default function UserProfile() {
           paddingTop={insets.top}
         />
 
+        {/* ユーザーの画像ギャラリー */}
         <UserImageGallery images={images} />
       </KeyboardAvoidingView>
     </SafeAreaView>

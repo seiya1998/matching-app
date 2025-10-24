@@ -3,6 +3,7 @@ import { View, Image, ImageSourcePropType, Dimensions } from 'react-native';
 import Carousel from 'react-native-reanimated-carousel';
 import { FlashList } from '@shopify/flash-list';
 import { Button } from '@/components/bases';
+import { cn } from '@/utils';
 
 const { width: CARD_WIDTH } = Dimensions.get('window');
 
@@ -19,21 +20,21 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
   }, []);
 
   const handleThumbnailPress = useCallback((index: number) => {
+    setActiveIndex(index); // 即座にアクティブインデックスを更新
     carouselRef.current?.scrollTo({ index, animated: true });
   }, []);
 
   const renderCarouselItem = useCallback(
     ({ item }: { item: ImageSourcePropType }) => (
-      <View style={{ width: CARD_WIDTH }}>
-        <View
-          className='overflow-hidden'
-          style={{
-            borderTopLeftRadius: 30,
-            borderTopRightRadius: 30
-          }}
-        >
-          <Image source={item} className='h-full w-full' resizeMode='cover' />
-        </View>
+      <View
+        className='overflow-hidden'
+        style={{
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+          width: CARD_WIDTH
+        }}
+      >
+        <Image source={item} className='h-full w-full' resizeMode='cover' />
       </View>
     ),
     []
@@ -43,7 +44,11 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
     ({ item, index }: { item: ImageSourcePropType; index: number }) => (
       <Button
         onPress={() => handleThumbnailPress(index)}
-        className={`mr-2 border-2 ${index === activeIndex ? 'border-blue-500' : 'border-gray-300'} overflow-hidden rounded-lg`}
+        className={cn(
+          'mr-2 overflow-hidden rounded-lg border-2',
+          index === activeIndex ? 'border-blue-500' : 'border-gray-300'
+        )}
+        activeOpacity={1}
       >
         <Image
           source={item}
@@ -66,6 +71,8 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
         renderItem={renderCarouselItem}
         onSnapToItem={handleSnapToItem}
         loop={false}
+        enabled={false} // スワイプジェスチャーを無効化
+        scrollAnimationDuration={300} // スライドアニメーションの速度
       />
 
       {/* サムネイル */}
