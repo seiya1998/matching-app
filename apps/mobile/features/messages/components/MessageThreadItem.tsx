@@ -2,12 +2,8 @@ import { Text } from '@/components/bases';
 import { OnlineStatusIndicator } from '@/components/modules/OnlineStatusIndicator';
 import { router } from 'expo-router';
 import React, { memo } from 'react';
-import {
-  View,
-  Image,
-  ImageSourcePropType,
-  TouchableHighlight
-} from 'react-native';
+import { View, ImageSourcePropType, TouchableHighlight } from 'react-native';
+import { Image } from 'expo-image';
 
 type OnlineStatus = 'online' | 'recent' | 'offline';
 
@@ -42,7 +38,13 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
         activeOpacity={0.95}
       >
         <View className='flex-row items-start px-4 py-3'>
-          <Image source={imageSource} className='h-16 w-16 rounded-full' />
+          <Image
+            source={imageSource}
+            style={{ width: 64, height: 64, borderRadius: 32 }}
+            contentFit='cover'
+            cachePolicy='memory-disk'
+            priority='high'
+          />
           <View className='flex-1'>
             <View className='ml-4 flex-row items-center justify-between'>
               <Text className='text-m font-bold text-body'>

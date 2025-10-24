@@ -1,5 +1,6 @@
 import { memo, useRef, useCallback, useState } from 'react';
-import { View, Image, ImageSourcePropType, Dimensions } from 'react-native';
+import { View, Dimensions, ImageSourcePropType } from 'react-native';
+import { Image } from 'expo-image';
 import Carousel from 'react-native-reanimated-carousel';
 import { FlashList } from '@shopify/flash-list';
 import { Button } from '@/components/bases';
@@ -27,14 +28,21 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
   const renderCarouselItem = useCallback(
     ({ item }: { item: ImageSourcePropType }) => (
       <View
-        className='overflow-hidden'
         style={{
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
-          width: CARD_WIDTH
+          width: CARD_WIDTH,
+          height: 400,
+          overflow: 'hidden'
         }}
       >
-        <Image source={item} className='h-full w-full' resizeMode='cover' />
+        <Image
+          source={item}
+          style={{ width: '100%', height: '100%' }}
+          contentFit='cover'
+          cachePolicy='memory-disk' // メモリとディスクキャッシュを有効化
+          priority='high' // 優先度を高く設定
+        />
       </View>
     ),
     []
@@ -52,8 +60,9 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
       >
         <Image
           source={item}
-          className='h-20 w-20 rounded-md'
-          resizeMode='cover'
+          style={{ width: 80, height: 80, borderRadius: 6 }}
+          contentFit='cover'
+          cachePolicy='memory-disk'
         />
       </Button>
     ),

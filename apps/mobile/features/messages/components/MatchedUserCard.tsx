@@ -2,12 +2,8 @@ import { Text } from '@/components/bases';
 import { OnlineStatusIndicator } from '@/components/modules/OnlineStatusIndicator';
 import { router } from 'expo-router';
 import React, { memo } from 'react';
-import {
-  View,
-  Image,
-  ImageSourcePropType,
-  TouchableOpacity
-} from 'react-native';
+import { View, ImageSourcePropType, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
 
 type OnlineStatus = 'online' | 'recent' | 'offline';
 
@@ -29,7 +25,13 @@ export const MatchedUserCard = memo<MatchedUserCardProps>(
         className='mr-3 items-center'
         activeOpacity={1}
       >
-        <Image source={imageSource} className='h-20 w-20 rounded-full' />
+        <Image
+          source={imageSource}
+          style={{ width: 80, height: 80, borderRadius: 40 }}
+          contentFit='cover'
+          cachePolicy='memory-disk'
+          priority='high'
+        />
         <View className='mt-1 flex-row items-center'>
           <OnlineStatusIndicator status={onlineStatus} />
           <Text className='ml-1 text-sm text-body'>
