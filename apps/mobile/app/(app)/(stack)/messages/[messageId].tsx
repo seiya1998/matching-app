@@ -5,7 +5,13 @@ import {
   MessageInput
 } from '@/features/messages/components';
 import { router } from 'expo-router';
-import { View, StatusBar, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import {
+  View,
+  StatusBar,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard
+} from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useMemo, useCallback, useState, useEffect } from 'react';
 import {
@@ -146,7 +152,9 @@ export default function MessageDetail() {
 
   // 初期スクロール位置を最後に設定
   const initialScrollIndex = useMemo(() => {
-    return messagesWithDateLabels.length > 0 ? messagesWithDateLabels.length - 1 : 0;
+    return messagesWithDateLabels.length > 0
+      ? messagesWithDateLabels.length - 1
+      : 0;
   }, [messagesWithDateLabels.length]);
 
   return (
@@ -161,7 +169,7 @@ export default function MessageDetail() {
           <MessageHeader
             userName='aaaa'
             userImage={require('@/assets/images/users/default-user.jpg')}
-            onBack={() => router.back()}
+            onImagePress={() => router.push('/(app)/(stack)/users/123')}
             onMenuPress={() => {
               /* メニュー処理 */
             }}

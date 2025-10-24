@@ -32,6 +32,13 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
+        name='(stack)/users/[userId]'
+        options={{
+          headerShown: false,
+          animation: 'slide_from_right'
+        }}
+      />
+      <Stack.Screen
         name='(stack)/settings/index'
         options={{
           headerTitle: '設定'
