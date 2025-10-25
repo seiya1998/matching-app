@@ -56,7 +56,7 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
         onPress={() => handleThumbnailPress(index)}
         className={cn(
           'mr-2 overflow-hidden rounded-lg border-2',
-          index === activeIndex ? 'border-blue-500' : 'border-gray-300'
+          index === activeIndex ? 'border-gray-300' : 'border-transparent'
         )}
         activeOpacity={1}
       >
@@ -87,7 +87,7 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
       />
 
       {/* サムネイル */}
-      <View className='px-4 pt-4'>
+      <View className='pl-5 pt-4'>
         <FlashList
           data={images}
           horizontal

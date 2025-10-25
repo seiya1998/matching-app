@@ -9,6 +9,7 @@ type BaseListsProps = {
   listType?: 'L' | 'M' | null;
   leftIconType?: 'footprint' | 'star' | 'like' | 'help' | null;
   title: string;
+  titleColor?: string;
   isTitleBold?: boolean;
   description?: string | null;
   category?: 'IMPORTANT' | 'NOTIFICATION' | null;
@@ -37,6 +38,7 @@ const CATEGORY_LABELS: Record<string, string> = {
  * @param listType - リストの種類（'L'|'M'|null）
  * @param leftIconType - 左側に表示するアイコンの種類（'footprint'|'comment'| 'check' | null）
  * @param title - タイトル
+ * @param titleColor - タイトルの色
  * @param isTitleBold - タイトルを太字にするかどうか
  * @param description - リストアイテムの説明文
  * @param category - リストアイテムのカテゴリ（'IMPORTANT'|'NOTIFICATION'|null）
@@ -50,6 +52,7 @@ export function Lists({
   listType = null,
   leftIconType = null,
   title,
+  titleColor = 'text-body',
   isTitleBold = false,
   description = null,
   category = null,
@@ -119,7 +122,7 @@ export function Lists({
           {/* タイトル */}
           <Text
             className={cn(
-              'text-body',
+              titleColor !== null ? titleColor : 'text-body',
               isTitleBold === true && 'font-bold',
               listType === 'L' ? 'text-l' : 'text-m'
             )}
@@ -143,7 +146,7 @@ export function Lists({
         )}
         {rightText != null && (
           <Text
-            className={cn('mr-1 h-6 min-w-[47px] text-right text-l text-body')}
+            className={cn('mr-1 h-6 min-w-[47px] text-right text-m text-body')}
           >
             {rightText}
           </Text>

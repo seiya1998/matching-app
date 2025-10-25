@@ -37,7 +37,7 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
         underlayColor='#f3f4f6'
         activeOpacity={0.95}
       >
-        <View className='flex-row items-start px-4 py-3'>
+        <View className='mx-5 flex-row items-start py-3'>
           <Image
             source={imageSource}
             style={{ width: 64, height: 64, borderRadius: 32 }}

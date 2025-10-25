@@ -1,8 +1,8 @@
-import { Text } from '@/components/bases';
+import { Text, Button } from '@/components/bases';
 import { OnlineStatusIndicator } from '@/components/modules';
 import { router } from 'expo-router';
 import React, { memo } from 'react';
-import { View, ImageSourcePropType, TouchableOpacity } from 'react-native';
+import { View, ImageSourcePropType } from 'react-native';
 import { Image } from 'expo-image';
 
 type OnlineStatus = 'online' | 'recent' | 'offline';
@@ -18,7 +18,7 @@ interface MatchedUserCardProps {
 export const MatchedUserCard = memo<MatchedUserCardProps>(
   ({ imageSource, age, location, onlineStatus = 'offline', userId }) => {
     return (
-      <TouchableOpacity
+      <Button
         onPress={() => {
           router.push(`/(app)/(stack)/messages/${String(userId)}`);
         }}
@@ -38,7 +38,7 @@ export const MatchedUserCard = memo<MatchedUserCardProps>(
             {age}歳 {location}
           </Text>
         </View>
-      </TouchableOpacity>
+      </Button>
     );
   }
 );

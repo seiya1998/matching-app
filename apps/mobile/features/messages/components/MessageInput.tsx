@@ -20,12 +20,12 @@ export const MessageInput = memo<MessageInputProps>(
     };
 
     return (
-      <View className='flex-row items-center gap-3 border-t border-gray-200 bg-white px-4 py-3'>
+      <View className='mx-5 flex-row items-center gap-3 border-t border-gray-200 bg-white py-3'>
         <Button activeOpacity={0.7} onPress={onCameraPress}>
           <Camera width={24} height={24} fill='#6B7280' />
         </Button>
         <TextInput
-          className='flex-1 rounded-full border border-gray-300 bg-gray-50 px-4 text-base text-body'
+          className='mx-5 flex-1 rounded-full border border-gray-300 bg-gray-50 text-base text-body'
           placeholder='メッセージを入力...'
           placeholderTextColor='#9CA3AF'
           value={message}
@@ -42,7 +42,7 @@ export const MessageInput = memo<MessageInputProps>(
           disabled={!message.trim()}
         >
           <View
-            className={`rounded-full px-4 py-2 ${
+            className={`mx-5 rounded-full py-2 ${
               message.trim() ? 'bg-blue-500' : 'bg-gray-300'
             }`}
           >

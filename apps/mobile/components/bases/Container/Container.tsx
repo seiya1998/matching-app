@@ -43,7 +43,7 @@ const Container = forwardRef<ScrollView, ContainerProps>(
 
     const content = (
       <View
-        className={`mx-4 flex-1 ${style ?? ''}`}
+        className={`mx-5 flex-1 ${style ?? ''}`}
         style={{ paddingTop: isPaddingTop ? insets.top : 0 }}
       >
         {children}
@@ -52,10 +52,7 @@ const Container = forwardRef<ScrollView, ContainerProps>(
 
     return (
       <SafeAreaProvider>
-        <SafeAreaView
-          className={`flex-1 bg-white`}
-          edges={['left', 'right']}
-        >
+        <SafeAreaView className={`flex-1 bg-white`} edges={['left', 'right']}>
           <StatusBar
             barStyle={barStyle}
             translucent

@@ -59,7 +59,7 @@ const variantClass = {
 
 const sizeClass = {
   small: 'h-8',
-  medium: 'h-[38px] px-5 mx-auto ',
+  medium: 'h-[38px] mx-5 mx-auto ',
   large: 'self-stretch h-12'
 };
 

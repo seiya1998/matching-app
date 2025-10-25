@@ -140,7 +140,7 @@ export default function Messages() {
     <Container isPaddingTop={false}>
       {/* 新しいマッチング一覧 */}
       <Text className='text-m font-bold text-body'>マッチング中</Text>
-      <View className='-mx-4 mt-3'>
+      <View className='-mx-5 mt-3'>
         <FlashList
           data={matchedUsers}
           horizontal
@@ -161,7 +161,7 @@ export default function Messages() {
       <View className='my-8 border-b border-gray-200' />
 
       {/* メッセージ一覧 */}
-      <View className='-mx-4'>
+      <View className='-mx-5'>
         <FlashList
           data={usersWithFormattedTime}
           scrollEnabled={false}
