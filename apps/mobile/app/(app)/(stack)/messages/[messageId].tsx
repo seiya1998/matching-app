@@ -4,7 +4,7 @@ import {
   MessageDateLabel,
   MessageInput
 } from '@/features/messages/components';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import {
   View,
   StatusBar,
@@ -18,6 +18,7 @@ import {
   SafeAreaView,
   useSafeAreaInsets
 } from 'react-native-safe-area-context';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
 type MessageItem = {
   id: string;
@@ -31,6 +32,21 @@ type MessageItem = {
 export default function MessageDetail() {
   const insets = useSafeAreaInsets();
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+  const params = useLocalSearchParams();
+  const messageId =
+    typeof params['messageId'] === 'string' ? params['messageId'] : '';
+
+  // 右から左へスワイプで次の画面に遷移（右から左のアニメーション）
+  const swipeGesture = Gesture.Pan()
+    .activeOffsetX([-50, Infinity]) // 左方向（負の値）に50px以上スワイプで発火
+    .failOffsetY([-20, 20]) // 垂直方向のスワイプを無視（スクロールを優先）
+    .runOnJS(true) // JSスレッドで実行
+    .onEnd((event) => {
+      'worklet';
+      if (event.velocityX < -500 || event.translationX < -100) {
+        router.replace(`/(app)/(stack)/users/${messageId}`);
+      }
+    });
 
   useEffect(() => {
     const keyboardWillShow = Keyboard.addListener(
@@ -160,66 +176,70 @@ export default function MessageDetail() {
   return (
     <SafeAreaView className='flex-1 bg-white' edges={['left', 'right']}>
       <StatusBar barStyle='dark-content' />
-      <KeyboardAvoidingView
-        className='flex-1'
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={0}
-      >
-        <View className='flex-1'>
-          <MessageHeader
-            userName='aaaa'
-            userImage={require('@/assets/images/users/default-user.jpg')}
-            onImagePress={() => router.push('/(app)/(stack)/users/123')}
-            onMenuPress={() => {
-              /* メニュー処理 */
-            }}
-            paddingTop={insets.top}
-          />
-          <FlashList
-            data={messagesWithDateLabels}
-            initialScrollIndex={initialScrollIndex}
-            renderItem={({ item }) => {
-              if (item.type === 'date') {
-                return <MessageDateLabel date={item.date!} />;
-              }
-              return (
-                <MessageBubble
-                  message={item.text!}
-                  isMine={item.isMine!}
-                  timestamp={item.timestamp}
-                  userImage={
-                    !item.isMine
-                      ? require('@/assets/images/users/default-user.jpg')
-                      : undefined
-                  }
-                />
-              );
-            }}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={{
-              paddingTop: insets.top + 72,
-              paddingBottom: 100,
-              paddingHorizontal: 16
-            }}
-          />
-          <View
-            className='bg-white'
-            style={{
-              paddingBottom: isKeyboardVisible ? 0 : insets.bottom,
-              shadowColor: '#000',
-              shadowOffset: { width: 0, height: -2 },
-              shadowOpacity: 0.1,
-              shadowRadius: 4,
-              elevation: 5
-            }}
+      <GestureDetector gesture={swipeGesture}>
+        <View style={{ flex: 1 }}>
+          <KeyboardAvoidingView
+            className='flex-1'
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={0}
           >
-            <MessageInput
-              onSend={handleSendMessage}
-              onCameraPress={handleCameraPress}
-            />
-          </View>
+            <View className='flex-1'>
+              <MessageHeader
+                userName='aaaa'
+                userImage={require('@/assets/images/users/default-user.jpg')}
+                onImagePress={() => router.push('/(app)/(stack)/users/123')}
+                onMenuPress={() => {
+                  /* メニュー処理 */
+                }}
+                paddingTop={insets.top}
+              />
+              <FlashList
+                data={messagesWithDateLabels}
+                initialScrollIndex={initialScrollIndex}
+                renderItem={({ item }) => {
+                  if (item.type === 'date') {
+                    return <MessageDateLabel date={item.date!} />;
+                  }
+                  return (
+                    <MessageBubble
+                      message={item.text!}
+                      isMine={item.isMine!}
+                      timestamp={item.timestamp}
+                      userImage={
+                        !item.isMine
+                          ? require('@/assets/images/users/default-user.jpg')
+                          : undefined
+                      }
+                    />
+                  );
+                }}
+                keyExtractor={(item) => item.id}
+                contentContainerStyle={{
+                  paddingTop: insets.top + 72,
+                  paddingBottom: 100,
+                  paddingHorizontal: 16
+                }}
+              />
+              <View
+                className='bg-white'
+                style={{
+                  paddingBottom: isKeyboardVisible ? 0 : insets.bottom,
+                  shadowColor: '#000',
+                  shadowOffset: { width: 0, height: -2 },
+                  shadowOpacity: 0.1,
+                  shadowRadius: 4,
+                  elevation: 5
+                }}
+              >
+                <MessageInput
+                  onSend={handleSendMessage}
+                  onCameraPress={handleCameraPress}
+                />
+              </View>
+            </View>
+          </KeyboardAvoidingView>
         </View>
-      </KeyboardAvoidingView>
+      </GestureDetector>
     </SafeAreaView>
   );
 }
