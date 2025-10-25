@@ -12,6 +12,8 @@ type UserImageGalleryProps = {
   images: ImageSourcePropType[];
 };
 
+const IMAGE_HEIGHT = 360;
+
 export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef<any>(null);
@@ -29,10 +31,10 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
     ({ item }: { item: ImageSourcePropType }) => (
       <View
         style={{
-          borderTopLeftRadius: 30,
-          borderTopRightRadius: 30,
+          borderTopLeftRadius: 35,
+          borderTopRightRadius: 35,
           width: CARD_WIDTH,
-          height: 400,
+          height: IMAGE_HEIGHT,
           overflow: 'hidden'
         }}
       >
@@ -75,7 +77,7 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
       <Carousel
         ref={carouselRef}
         width={CARD_WIDTH}
-        height={400}
+        height={IMAGE_HEIGHT}
         data={images}
         renderItem={renderCarouselItem}
         onSnapToItem={handleSnapToItem}
@@ -85,7 +87,7 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
       />
 
       {/* サムネイル */}
-      <View className='px-4 py-2'>
+      <View className='px-4 pt-4'>
         <FlashList
           data={images}
           horizontal

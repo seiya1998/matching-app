@@ -21,10 +21,6 @@ export default function AppLayout() {
     >
       <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
       <Stack.Screen
-        name='modal'
-        options={{ presentation: 'modal', title: 'Modal' }}
-      />
-      <Stack.Screen
         name='(stack)/messages/[messageId]'
         options={{
           headerShown: false,

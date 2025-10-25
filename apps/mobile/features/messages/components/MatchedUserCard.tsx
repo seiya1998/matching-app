@@ -1,5 +1,5 @@
 import { Text } from '@/components/bases';
-import { OnlineStatusIndicator } from '@/components/modules/OnlineStatusIndicator';
+import { OnlineStatusIndicator } from '@/components/modules';
 import { router } from 'expo-router';
 import React, { memo } from 'react';
 import { View, ImageSourcePropType, TouchableOpacity } from 'react-native';
