@@ -93,9 +93,6 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
         onSwipeableOpen={() => {
           setIsSwiping(true);
         }}
-        onSwipeableWillClose={() => {
-          setIsSwiping(false);
-        }}
         onSwipeableClose={() => {
           setIsSwiping(false);
         }}
