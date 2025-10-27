@@ -6,26 +6,23 @@ import {
 } from '@/features/messages/components';
 import { View, TouchableWithoutFeedback } from 'react-native';
 import { formatRelativeTime } from '@/utils';
-import { useMemo, useRef, useCallback } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 
 export default function Messages() {
-  const openSwipeableRef = useRef<any>(null);
+  const [openSwipeableId, setOpenSwipeableId] = useState<
+    number | string | null
+  >(null);
 
-  const closeOpenSwipeable = useCallback(() => {
-    const hadOpen = !!openSwipeableRef.current;
-    openSwipeableRef.current?.close();
-    // スワイプ状態を即座にリセット
-    openSwipeableRef.current?.resetSwipingState?.();
-    openSwipeableRef.current = null;
-    return hadOpen;
+  const handleSwipeableWillOpen = useCallback((id: number | string) => {
+    setOpenSwipeableId(id);
   }, []);
 
-  const handleSwipeableWillOpen = useCallback((ref: any) => {
-    // 別のアイテムが開いている場合のみ閉じる
-    if (openSwipeableRef.current && openSwipeableRef.current !== ref) {
-      openSwipeableRef.current.close();
-    }
-    openSwipeableRef.current = ref;
+  const handleSwipeableClose = useCallback(() => {
+    setOpenSwipeableId(null);
+  }, []);
+
+  const handleBackgroundPress = useCallback(() => {
+    setOpenSwipeableId(null);
   }, []);
 
   const matchedUsers = useMemo(
@@ -156,7 +153,7 @@ export default function Messages() {
   }, [users]);
 
   return (
-    <TouchableWithoutFeedback onPress={closeOpenSwipeable}>
+    <TouchableWithoutFeedback onPress={handleBackgroundPress}>
       <View style={{ flex: 1 }}>
         <Container isPaddingTop={false}>
           {/* 新しいマッチング一覧 */}
@@ -196,8 +193,13 @@ export default function Messages() {
                   onlineStatus={item.status}
                   lastMessage={item.lastMessage}
                   formattedTime={item.formattedTime}
-                  onSwipeableWillOpen={handleSwipeableWillOpen}
-                  onItemPress={closeOpenSwipeable}
+                  isOpen={openSwipeableId === item.id}
+                  hasOtherOpen={
+                    openSwipeableId !== null && openSwipeableId !== item.id
+                  }
+                  onSwipeableWillOpen={() => handleSwipeableWillOpen(item.id)}
+                  onSwipeableClose={handleSwipeableClose}
+                  onOtherItemPress={handleBackgroundPress}
                 />
               )}
               keyExtractor={(item) => item.id.toString()}

@@ -1,7 +1,7 @@
 import { Text } from '@/components/bases';
 import { OnlineStatusIndicator } from '@/components/modules/OnlineStatusIndicator';
 import { router } from 'expo-router';
-import React, { memo, useState, useRef, useEffect, useCallback } from 'react';
+import React, { memo, useRef, useEffect } from 'react';
 import { View, ImageSourcePropType, TouchableHighlight } from 'react-native';
 import { Image } from 'expo-image';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
@@ -22,8 +22,11 @@ interface MessageThreadItemProps {
   onlineStatus?: OnlineStatus;
   lastMessage: string;
   formattedTime?: string;
-  onSwipeableWillOpen?: (ref: any) => void;
-  onItemPress?: () => boolean;
+  isOpen?: boolean;
+  hasOtherOpen?: boolean;
+  onSwipeableWillOpen?: () => void;
+  onSwipeableClose?: () => void;
+  onOtherItemPress?: () => void;
 }
 
 // 定数定義（Tailwind準拠）
@@ -65,27 +68,25 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
     age,
     lastMessage,
     formattedTime,
+    isOpen = false,
+    hasOtherOpen = false,
     onSwipeableWillOpen,
-    onItemPress
+    onSwipeableClose,
+    onOtherItemPress
   }) => {
-    const [isSwiping, setIsSwiping] = useState(false);
     const swipeableRef = useRef<any>(null);
+    const prevIsOpenRef = useRef(false);
+    const isSwipingRef = useRef(false);
 
-    // スワイプ状態をリセットする関数
-    const resetSwipingState = useCallback(() => {
-      setIsSwiping(false);
-    }, []);
-
-    const handleSwipeOpen = useCallback(() => {
-      setIsSwiping(true);
-    }, []);
-
-    // 外部からスワイプ状態をリセットできるメソッドを追加
+    // isOpen が true→false に変化したら close() を呼ぶ
     useEffect(() => {
-      if (swipeableRef.current) {
-        swipeableRef.current.resetSwipingState = resetSwipingState;
+      if (prevIsOpenRef.current && !isOpen) {
+        swipeableRef.current?.close();
+        // close()を呼んだら即座にisSwipingRefをfalseに
+        isSwipingRef.current = false;
       }
-    }, [resetSwipingState]);
+      prevIsOpenRef.current = isOpen;
+    }, [isOpen]);
 
     return (
       <ReanimatedSwipeable
@@ -95,24 +96,37 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
         overshootLeft={false}
         rightThreshold={10}
         onSwipeableWillOpen={() => {
-          onSwipeableWillOpen?.(swipeableRef.current);
+          isSwipingRef.current = true;
+          onSwipeableWillOpen?.();
         }}
-        onSwipeableOpen={handleSwipeOpen}
-        onSwipeableClose={resetSwipingState}
+        onSwipeableClose={() => {
+          isSwipingRef.current = false;
+          onSwipeableClose?.();
+        }}
         renderRightActions={RightAction}
       >
         <TouchableHighlight
           onPress={() => {
-            // まず他のスワイプを閉じる（あれば）
-            const hadOpenSwipeable = onItemPress?.();
-
-            if (isSwiping) {
-              // このアイテム自身がスワイプ中の場合は、閉じるだけ
-              swipeableRef.current?.close();
-            } else if (!hadOpenSwipeable) {
-              // スワイプ中でなく、他に開いているスワイプもなければ画面遷移
-              router.push(`/(app)/(stack)/messages/${String(userId)}`);
+            // スワイプ中（まだStateが更新されていない）の場合は何もしない
+            if (isSwipingRef.current) {
+              return;
             }
+
+            if (isOpen) {
+              // 仕様2: スワイプ中にそのアイテムをタップしたら、スワイプを閉じる（画面遷移しない）
+              swipeableRef.current?.close();
+              isSwipingRef.current = false;
+              return;
+            }
+
+            if (hasOtherOpen) {
+              // 仕様3: スワイプ中に他のアイテムをタップしたら、スワイプを閉じる（画面遷移しない）
+              onOtherItemPress?.();
+              return;
+            }
+
+            // 仕様4: スワイプしていない状態でアイテムをタップしたら、画面遷移する
+            router.push(`/(app)/(stack)/messages/${String(userId)}`);
           }}
           underlayColor='#f3f4f6'
           activeOpacity={0.95}
