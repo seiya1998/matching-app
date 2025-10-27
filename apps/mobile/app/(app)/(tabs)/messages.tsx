@@ -6,19 +6,27 @@ import {
 } from '@/features/messages/components';
 import { View, TouchableWithoutFeedback } from 'react-native';
 import { formatRelativeTime } from '@/utils';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useCallback } from 'react';
 
 export default function Messages() {
   const openSwipeableRef = useRef<any>(null);
 
-  const closeOpenSwipeable = () => {
+  const closeOpenSwipeable = useCallback(() => {
     const hadOpen = !!openSwipeableRef.current;
     openSwipeableRef.current?.close();
     // スワイプ状態を即座にリセット
     openSwipeableRef.current?.resetSwipingState?.();
     openSwipeableRef.current = null;
     return hadOpen;
-  };
+  }, []);
+
+  const handleSwipeableWillOpen = useCallback((ref: any) => {
+    // 別のアイテムが開いている場合のみ閉じる
+    if (openSwipeableRef.current && openSwipeableRef.current !== ref) {
+      openSwipeableRef.current.close();
+    }
+    openSwipeableRef.current = ref;
+  }, []);
 
   const matchedUsers = useMemo(
     () => [
@@ -188,16 +196,7 @@ export default function Messages() {
                   onlineStatus={item.status}
                   lastMessage={item.lastMessage}
                   formattedTime={item.formattedTime}
-                  onSwipeableWillOpen={(ref) => {
-                    // 別のアイテムが開いている場合のみ閉じる
-                    if (
-                      openSwipeableRef.current &&
-                      openSwipeableRef.current !== ref
-                    ) {
-                      openSwipeableRef.current.close();
-                    }
-                    openSwipeableRef.current = ref;
-                  }}
+                  onSwipeableWillOpen={handleSwipeableWillOpen}
                   onItemPress={closeOpenSwipeable}
                 />
               )}
