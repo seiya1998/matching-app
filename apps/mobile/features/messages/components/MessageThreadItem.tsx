@@ -23,7 +23,7 @@ interface MessageThreadItemProps {
   lastMessage: string;
   formattedTime?: string;
   onSwipeableWillOpen?: (ref: any) => void;
-  onItemPress?: () => void;
+  onItemPress?: () => boolean;
 }
 
 // 定数定義（Tailwind準拠）
@@ -79,18 +79,26 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
         overshootLeft={false}
         rightThreshold={40}
         onSwipeableWillOpen={() => {
-          setIsSwiping(true);
           onSwipeableWillOpen?.(swipeableRef.current);
         }}
-        onSwipeableClose={() => setIsSwiping(false)}
+        onSwipeableOpen={() => {
+          setIsSwiping(true);
+        }}
+        onSwipeableClose={() => {
+          setIsSwiping(false);
+        }}
         renderRightActions={RightAction}
       >
         <TouchableHighlight
           onPress={() => {
-            // 常に開いているスワイプを閉じる
-            onItemPress?.();
-            // このアイテム自身がスワイプ中でなければ画面遷移
-            if (!isSwiping) {
+            // まず他のスワイプを閉じる（あれば）
+            const hadOpenSwipeable = onItemPress?.();
+
+            if (isSwiping) {
+              // このアイテム自身がスワイプ中の場合は、閉じるだけ
+              swipeableRef.current?.close();
+            } else if (!hadOpenSwipeable) {
+              // スワイプ中でなく、他に開いているスワイプもなければ画面遷移
               router.push(`/(app)/(stack)/messages/${String(userId)}`);
             }
           }}

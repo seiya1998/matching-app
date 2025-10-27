@@ -13,8 +13,10 @@ export default function Messages() {
   const openSwipeableRef = useRef<any>(null);
 
   const closeOpenSwipeable = () => {
+    const hadOpen = !!openSwipeableRef.current;
     openSwipeableRef.current?.close();
     openSwipeableRef.current = null;
+    return hadOpen;
   };
 
   const matchedUsers = useMemo(
@@ -187,7 +189,10 @@ export default function Messages() {
                     lastMessage={item.lastMessage}
                     formattedTime={item.formattedTime}
                     onSwipeableWillOpen={(ref) => {
-                      closeOpenSwipeable();
+                      // 別のアイテムが開いている場合のみ閉じる
+                      if (openSwipeableRef.current && openSwipeableRef.current !== ref) {
+                        openSwipeableRef.current.close();
+                      }
                       openSwipeableRef.current = ref;
                     }}
                     onItemPress={closeOpenSwipeable}
