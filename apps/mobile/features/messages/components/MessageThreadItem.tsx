@@ -87,7 +87,9 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
       >
         <TouchableHighlight
           onPress={() => {
+            // 常に開いているスワイプを閉じる
             onItemPress?.();
+            // このアイテム自身がスワイプ中でなければ画面遷移
             if (!isSwiping) {
               router.push(`/(app)/(stack)/messages/${String(userId)}`);
             }
