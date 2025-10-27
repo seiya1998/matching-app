@@ -1,7 +1,7 @@
 import { Text } from '@/components/bases';
 import { OnlineStatusIndicator } from '@/components/modules/OnlineStatusIndicator';
 import { router } from 'expo-router';
-import React, { memo, useState, useRef, useEffect } from 'react';
+import React, { memo, useState, useRef, useEffect, useCallback } from 'react';
 import { View, ImageSourcePropType, TouchableHighlight } from 'react-native';
 import { Image } from 'expo-image';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
@@ -71,31 +71,34 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
     const [isSwiping, setIsSwiping] = useState(false);
     const swipeableRef = useRef<any>(null);
 
+    // スワイプ状態をリセットする関数
+    const resetSwipingState = useCallback(() => {
+      setIsSwiping(false);
+    }, []);
+
+    const handleSwipeOpen = useCallback(() => {
+      setIsSwiping(true);
+    }, []);
+
     // 外部からスワイプ状態をリセットできるメソッドを追加
     useEffect(() => {
       if (swipeableRef.current) {
-        swipeableRef.current.resetSwipingState = () => {
-          setIsSwiping(false);
-        };
+        swipeableRef.current.resetSwipingState = resetSwipingState;
       }
-    }, []);
+    }, [resetSwipingState]);
 
     return (
       <ReanimatedSwipeable
         ref={swipeableRef}
-        friction={2}
+        friction={1}
         overshootFriction={8}
         overshootLeft={false}
-        rightThreshold={40}
+        rightThreshold={10}
         onSwipeableWillOpen={() => {
           onSwipeableWillOpen?.(swipeableRef.current);
         }}
-        onSwipeableOpen={() => {
-          setIsSwiping(true);
-        }}
-        onSwipeableClose={() => {
-          setIsSwiping(false);
-        }}
+        onSwipeableOpen={handleSwipeOpen}
+        onSwipeableClose={resetSwipingState}
         renderRightActions={RightAction}
       >
         <TouchableHighlight
