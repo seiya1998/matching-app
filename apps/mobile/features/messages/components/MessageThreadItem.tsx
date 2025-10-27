@@ -1,7 +1,7 @@
 import { Text } from '@/components/bases';
 import { OnlineStatusIndicator } from '@/components/modules/OnlineStatusIndicator';
 import { router } from 'expo-router';
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useRef } from 'react';
 import { View, ImageSourcePropType, TouchableHighlight } from 'react-native';
 import { Image } from 'expo-image';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -23,6 +23,8 @@ interface MessageThreadItemProps {
   onlineStatus?: OnlineStatus;
   lastMessage: string;
   formattedTime?: string;
+  onSwipeableWillOpen?: (ref: any) => void;
+  onItemPress?: () => void;
 }
 
 // 定数定義（Tailwind準拠）
@@ -63,23 +65,31 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
     userId,
     age,
     lastMessage,
-    formattedTime
+    formattedTime,
+    onSwipeableWillOpen,
+    onItemPress
   }) => {
     const [isSwiping, setIsSwiping] = useState(false);
+    const swipeableRef = useRef<any>(null);
 
     return (
       <GestureHandlerRootView>
         <ReanimatedSwipeable
+          ref={swipeableRef}
           friction={2}
           overshootFriction={8}
           overshootLeft={false}
           rightThreshold={40}
-          onSwipeableWillOpen={() => setIsSwiping(true)}
+          onSwipeableWillOpen={() => {
+            setIsSwiping(true);
+            onSwipeableWillOpen?.(swipeableRef.current);
+          }}
           onSwipeableClose={() => setIsSwiping(false)}
           renderRightActions={RightAction}
         >
           <TouchableHighlight
             onPress={() => {
+              onItemPress?.();
               if (!isSwiping) {
                 router.push(`/(app)/(stack)/messages/${String(userId)}`);
               }
