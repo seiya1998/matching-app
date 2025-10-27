@@ -14,6 +14,8 @@ export default function Messages() {
   const closeOpenSwipeable = () => {
     const hadOpen = !!openSwipeableRef.current;
     openSwipeableRef.current?.close();
+    // スワイプ状態を即座にリセット
+    openSwipeableRef.current?.resetSwipingState?.();
     openSwipeableRef.current = null;
     return hadOpen;
   };
