@@ -7,6 +7,7 @@ import {
 import { View, TouchableWithoutFeedback } from 'react-native';
 import { formatRelativeTime } from '@/utils';
 import { useMemo, useRef } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function Messages() {
   const openSwipeableRef = useRef<any>(null);
@@ -144,58 +145,60 @@ export default function Messages() {
   }, [users]);
 
   return (
-    <TouchableWithoutFeedback onPress={closeOpenSwipeable}>
-      <View style={{ flex: 1 }}>
-        <Container isPaddingTop={false}>
-          {/* 新しいマッチング一覧 */}
-          <Text className='text-m font-bold text-body'>マッチング中</Text>
-          <View className='-mx-5 mt-3'>
-            <FlashList
-              data={matchedUsers}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: 16 }}
-              renderItem={({ item }) => (
-                <MatchedUserCard
-                  imageSource={require('@/assets/images/users/default-user.jpg')}
-                  userId={item.id}
-                  age={item.age}
-                  location={item.location}
-                  onlineStatus={item.status}
-                />
-              )}
-              keyExtractor={(item) => item.id.toString()}
-            />
-          </View>
-          <View className='my-8 border-b border-gray-200' />
+    <GestureHandlerRootView>
+      <TouchableWithoutFeedback onPress={closeOpenSwipeable}>
+        <View style={{ flex: 1 }}>
+          <Container isPaddingTop={false}>
+            {/* 新しいマッチング一覧 */}
+            <Text className='text-m font-bold text-body'>マッチング中</Text>
+            <View className='-mx-5 mt-3'>
+              <FlashList
+                data={matchedUsers}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingHorizontal: 16 }}
+                renderItem={({ item }) => (
+                  <MatchedUserCard
+                    imageSource={require('@/assets/images/users/default-user.jpg')}
+                    userId={item.id}
+                    age={item.age}
+                    location={item.location}
+                    onlineStatus={item.status}
+                  />
+                )}
+                keyExtractor={(item) => item.id.toString()}
+              />
+            </View>
+            <View className='my-8 border-b border-gray-200' />
 
-          {/* メッセージ一覧 */}
-          <View className='-mx-5'>
-            <FlashList
-              data={usersWithFormattedTime}
-              scrollEnabled={false}
-              renderItem={({ item }) => (
-                <MessageThreadItem
-                  imageSource={item.imageSource}
-                  userId={item.id}
-                  nickname={item.nickname}
-                  age={item.age}
-                  location={item.location}
-                  onlineStatus={item.status}
-                  lastMessage={item.lastMessage}
-                  formattedTime={item.formattedTime}
-                  onSwipeableWillOpen={(ref) => {
-                    closeOpenSwipeable();
-                    openSwipeableRef.current = ref;
-                  }}
-                  onItemPress={closeOpenSwipeable}
-                />
-              )}
-              keyExtractor={(item) => item.id.toString()}
-            />
-          </View>
-        </Container>
-      </View>
-    </TouchableWithoutFeedback>
+            {/* メッセージ一覧 */}
+            <View className='-mx-5'>
+              <FlashList
+                data={usersWithFormattedTime}
+                scrollEnabled={false}
+                renderItem={({ item }) => (
+                  <MessageThreadItem
+                    imageSource={item.imageSource}
+                    userId={item.id}
+                    nickname={item.nickname}
+                    age={item.age}
+                    location={item.location}
+                    onlineStatus={item.status}
+                    lastMessage={item.lastMessage}
+                    formattedTime={item.formattedTime}
+                    onSwipeableWillOpen={(ref) => {
+                      closeOpenSwipeable();
+                      openSwipeableRef.current = ref;
+                    }}
+                    onItemPress={closeOpenSwipeable}
+                  />
+                )}
+                keyExtractor={(item) => item.id.toString()}
+              />
+            </View>
+          </Container>
+        </View>
+      </TouchableWithoutFeedback>
+    </GestureHandlerRootView>
   );
 }

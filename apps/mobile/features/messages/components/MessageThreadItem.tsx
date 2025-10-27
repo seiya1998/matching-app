@@ -4,7 +4,6 @@ import { router } from 'expo-router';
 import React, { memo, useState, useRef } from 'react';
 import { View, ImageSourcePropType, TouchableHighlight } from 'react-native';
 import { Image } from 'expo-image';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
 import { MaterialIcons } from '@expo/vector-icons';
 import Reanimated, {
@@ -73,57 +72,53 @@ export const MessageThreadItem = memo<MessageThreadItemProps>(
     const swipeableRef = useRef<any>(null);
 
     return (
-      <GestureHandlerRootView>
-        <ReanimatedSwipeable
-          ref={swipeableRef}
-          friction={2}
-          overshootFriction={8}
-          overshootLeft={false}
-          rightThreshold={40}
-          onSwipeableWillOpen={() => {
-            setIsSwiping(true);
-            onSwipeableWillOpen?.(swipeableRef.current);
+      <ReanimatedSwipeable
+        ref={swipeableRef}
+        friction={2}
+        overshootFriction={8}
+        overshootLeft={false}
+        rightThreshold={40}
+        onSwipeableWillOpen={() => {
+          setIsSwiping(true);
+          onSwipeableWillOpen?.(swipeableRef.current);
+        }}
+        onSwipeableClose={() => setIsSwiping(false)}
+        renderRightActions={RightAction}
+      >
+        <TouchableHighlight
+          onPress={() => {
+            onItemPress?.();
+            if (!isSwiping) {
+              router.push(`/(app)/(stack)/messages/${String(userId)}`);
+            }
           }}
-          onSwipeableClose={() => setIsSwiping(false)}
-          renderRightActions={RightAction}
+          underlayColor='#f3f4f6'
+          activeOpacity={0.95}
         >
-          <TouchableHighlight
-            onPress={() => {
-              onItemPress?.();
-              if (!isSwiping) {
-                router.push(`/(app)/(stack)/messages/${String(userId)}`);
-              }
-            }}
-            underlayColor='#f3f4f6'
-            activeOpacity={0.95}
-          >
-            <View className='mx-5 flex-row items-start py-3'>
-              <Image
-                source={imageSource}
-                style={{ width: 64, height: 64, borderRadius: 32 }}
-                contentFit='cover'
-                cachePolicy='memory-disk'
-                priority='high'
-              />
-              <View className='flex-1'>
-                <View className='ml-4 flex-row items-center justify-between'>
-                  <Text className='text-m font-bold text-body'>
-                    {nickname} {age}歳 {location}
-                  </Text>
-                  {formattedTime && (
-                    <Text className='text-xs text-gray-500'>
-                      {formattedTime}
-                    </Text>
-                  )}
-                </View>
-                <Text className='ml-4 mt-1 text-s text-description'>
-                  {lastMessage}
+          <View className='mx-5 flex-row items-start py-3'>
+            <Image
+              source={imageSource}
+              style={{ width: 64, height: 64, borderRadius: 32 }}
+              contentFit='cover'
+              cachePolicy='memory-disk'
+              priority='high'
+            />
+            <View className='flex-1'>
+              <View className='ml-4 flex-row items-center justify-between'>
+                <Text className='text-m font-bold text-body'>
+                  {nickname} {age}歳 {location}
                 </Text>
+                {formattedTime && (
+                  <Text className='text-xs text-gray-500'>{formattedTime}</Text>
+                )}
               </View>
+              <Text className='ml-4 mt-1 text-s text-description'>
+                {lastMessage}
+              </Text>
             </View>
-          </TouchableHighlight>
-        </ReanimatedSwipeable>
-      </GestureHandlerRootView>
+          </View>
+        </TouchableHighlight>
+      </ReanimatedSwipeable>
     );
   }
 );
