@@ -27,11 +27,41 @@ export default function Messages() {
 
   const matchedUsers = useMemo(
     () => [
-      { id: 1, age: 26, location: '北海道', status: 'online' as const },
-      { id: 2, age: 30, location: '東京', status: 'recent' as const },
-      { id: 3, age: 22, location: '大阪', status: 'offline' as const },
-      { id: 4, age: 28, location: '福岡', status: 'online' as const },
-      { id: 5, age: 25, location: '沖縄', status: 'recent' as const }
+      {
+        id: 1,
+        age: 26,
+        location: '北海道',
+        status: 'online' as const,
+        imageSource: require('@/assets/images/users/01.png')
+      },
+      {
+        id: 2,
+        age: 30,
+        location: '東京',
+        status: 'recent' as const,
+        imageSource: require('@/assets/images/users/sample-cat.png')
+      },
+      {
+        id: 3,
+        age: 22,
+        location: '大阪',
+        status: 'offline' as const,
+        imageSource: require('@/assets/images/users/02.png')
+      },
+      {
+        id: 4,
+        age: 28,
+        location: '福岡',
+        status: 'online' as const,
+        imageSource: require('@/assets/images/users/sample-dog.png')
+      },
+      {
+        id: 5,
+        age: 25,
+        location: '沖縄',
+        status: 'recent' as const,
+        imageSource: require('@/assets/images/users/03.png')
+      }
     ],
     []
   );
@@ -41,115 +71,116 @@ export default function Messages() {
       {
         id: 1,
         age: 26,
-        nickname: 'ユーザー1',
+        nickname: 'さくら',
         location: '北海道',
         status: 'online' as const,
-        lastMessage: 'こんにちは！お元気ですか？',
-        lastMessagedAt: new Date('2024-06-20T10:30:00'),
+        lastMessage: 'おはようございます☀️今日はいい天気ですね！',
+        lastMessagedAt: new Date(Date.now() - 5 * 60 * 1000), // 5分前
         imageSource: require('@/assets/images/users/01.png')
       },
       {
         id: 2,
         age: 30,
-        nickname: 'ユーザー2',
+        nickname: 'ゆうき',
         location: '東京',
         status: 'recent' as const,
-        lastMessage:
-          'お久しぶりです！最近どうしていますか？今度お時間があるときにでもお話ししませんか？',
-        lastMessagedAt: new Date('2024-06-19T14:20:00'),
-        imageSource: require('@/assets/images/users/02.png')
+        lastMessage: 'カフェ好きなんですね！今度一緒に行きませんか？😊',
+        lastMessagedAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2時間前
+        imageSource: require('@/assets/images/users/sample-cat.png')
       },
       {
         id: 3,
         age: 22,
-        nickname: 'ユーザー3',
+        nickname: 'あいり',
         location: '大阪',
         status: 'offline' as const,
-        lastMessage: 'お元気ですか？',
-        lastMessagedAt: new Date('2024-06-18T09:15:00'),
-        imageSource: require('@/assets/images/users/03.png')
+        lastMessage: 'プロフィール見ました！趣味が合いそうですね✨',
+        lastMessagedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1日前
+        imageSource: require('@/assets/images/users/02.png')
       },
       {
         id: 4,
         age: 28,
-        nickname: 'ユーザー4',
+        nickname: 'けんた',
         location: '福岡',
         status: 'online' as const,
-        lastMessage: 'こんにちは！',
-        lastMessagedAt: new Date('2024-06-20T10:30:00'),
-        imageSource: require('@/assets/images/users/default-user.jpg')
+        lastMessage: 'いいねありがとうございます！',
+        lastMessagedAt: new Date(Date.now() - 30 * 60 * 1000), // 30分前
+        imageSource: require('@/assets/images/users/sample-dog.png')
       },
       {
         id: 5,
         age: 25,
-        nickname: 'ユーザー5',
+        nickname: 'まな',
         location: '沖縄',
         status: 'recent' as const,
-        lastMessage: 'また会いましょう！',
-        lastMessagedAt: new Date('2024-06-19T14:20:00'),
-        imageSource: require('@/assets/images/users/01.png')
+        lastMessage: 'そうなんですね！私も映画好きです🎬',
+        lastMessagedAt: new Date(Date.now() - 6 * 60 * 60 * 1000), // 6時間前
+        imageSource: require('@/assets/images/users/03.png')
       },
       {
         id: 6,
         age: 27,
-        nickname: 'ユーザー6',
+        nickname: 'ゆうた',
         location: '名古屋',
         status: 'online' as const,
-        lastMessage: '今日はいい天気ですね',
-        lastMessagedAt: new Date('2024-06-20T11:00:00'),
-        imageSource: require('@/assets/images/users/02.png')
+        lastMessage: '週末は何してますか？',
+        lastMessagedAt: new Date(Date.now() - 10 * 60 * 1000), // 10分前
+        imageSource: require('@/assets/images/users/default-user.jpg')
       },
       {
         id: 7,
         age: 23,
-        nickname: 'ユーザー7',
+        nickname: 'みお',
         location: '神戸',
         status: 'offline' as const,
-        lastMessage: 'お疲れ様でした',
-        lastMessagedAt: new Date('2024-06-17T18:45:00'),
-        imageSource: require('@/assets/images/users/03.png')
+        lastMessage: 'ありがとうございます😊またお話しましょう！',
+        lastMessagedAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3日前
+        imageSource: require('@/assets/images/users/01.png')
       },
       {
         id: 8,
         age: 29,
-        nickname: 'ユーザー8',
+        nickname: 'りょう',
         location: '横浜',
         status: 'recent' as const,
-        lastMessage: '明日時間ありますか？',
-        lastMessagedAt: new Date('2024-06-19T16:30:00'),
-        imageSource: require('@/assets/images/users/default-user.jpg')
+        lastMessage: 'よろしくお願いします！',
+        lastMessagedAt: new Date(Date.now() - 12 * 60 * 60 * 1000), // 12時間前
+        imageSource: require('@/assets/images/users/02.png')
       },
       {
         id: 9,
         age: 24,
-        nickname: 'ユーザー9',
+        nickname: 'なな',
         location: '札幌',
         status: 'online' as const,
-        lastMessage: '趣味は何ですか？',
-        lastMessagedAt: new Date('2024-06-20T12:15:00'),
-        imageSource: require('@/assets/images/users/01.png')
+        lastMessage: 'マッチングありがとうございます💕',
+        lastMessagedAt: new Date(Date.now() - 15 * 60 * 1000), // 15分前
+        imageSource: require('@/assets/images/users/03.png')
       },
       {
         id: 10,
         age: 31,
-        nickname: 'ユーザー10',
+        nickname: 'だいき',
         location: '仙台',
         status: 'offline' as const,
-        lastMessage: 'よろしくお願いします',
-        lastMessagedAt: new Date('2024-06-16T08:00:00'),
-        imageSource: require('@/assets/images/users/02.png')
+        lastMessage: 'お話できて楽しかったです！',
+        lastMessagedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2日前
+        imageSource: require('@/assets/images/users/default-user.jpg')
       }
     ],
     []
   );
 
-  // メッセージ一覧データに相対時間を追加
+  // メッセージ一覧データに相対時間を追加し、最新順にソート
   const usersWithFormattedTime = useMemo(() => {
     const now = new Date();
-    return users.map((user) => ({
-      ...user,
-      formattedTime: formatRelativeTime(user.lastMessagedAt, now)
-    }));
+    return users
+      .map((user) => ({
+        ...user,
+        formattedTime: formatRelativeTime(user.lastMessagedAt, now)
+      }))
+      .sort((a, b) => b.lastMessagedAt.getTime() - a.lastMessagedAt.getTime());
   }, [users]);
 
   return (
@@ -166,7 +197,7 @@ export default function Messages() {
               contentContainerStyle={{ paddingHorizontal: 16 }}
               renderItem={({ item }) => (
                 <MatchedUserCard
-                  imageSource={require('@/assets/images/users/default-user.jpg')}
+                  imageSource={item.imageSource}
                   userId={item.id}
                   age={item.age}
                   location={item.location}

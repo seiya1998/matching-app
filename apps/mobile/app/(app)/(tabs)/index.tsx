@@ -1,98 +1,152 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  View,
+  StatusBar,
+  ScrollView
+} from 'react-native';
+import {
+  SafeAreaView,
+  useSafeAreaInsets
+} from 'react-native-safe-area-context';
+import { ImageCard, OnlineStatusIndicator } from '@/components/modules';
+import { HomeHeader } from '@/features/home/components';
+import { Text, Button } from '@/components/bases';
+import { FlashList } from '@shopify/flash-list';
+import { router } from 'expo-router';
 
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+const USERS = [
+  {
+    userId: '1',
+    nickname: 'さくら',
+    age: 26,
+    location: '東京都',
+    onlineStatus: 'online' as const,
+    image: require('@/assets/images/users/01.png')
+  },
+  {
+    userId: '2',
+    nickname: 'ゆうき',
+    age: 28,
+    location: '神奈川県',
+    onlineStatus: 'offline' as const,
+    image: require('@/assets/images/users/02.png')
+  },
+  {
+    userId: '3',
+    nickname: 'あおい',
+    age: 24,
+    location: '大阪府',
+    onlineStatus: 'online' as const,
+    image: require('@/assets/images/users/03.png')
+  },
+  {
+    userId: '4',
+    nickname: 'はるか',
+    age: 27,
+    location: '千葉県',
+    onlineStatus: 'offline' as const,
+    image: require('@/assets/images/users/01.png')
+  },
+  {
+    userId: '5',
+    nickname: 'りょう',
+    age: 25,
+    location: '埼玉県',
+    onlineStatus: 'online' as const,
+    image: require('@/assets/images/users/02.png')
+  },
+  {
+    userId: '6',
+    nickname: 'みお',
+    age: 29,
+    location: '京都府',
+    onlineStatus: 'offline' as const,
+    image: require('@/assets/images/users/03.png')
+  },
+  {
+    userId: '7',
+    nickname: 'けんた',
+    age: 26,
+    location: '愛知県',
+    onlineStatus: 'online' as const,
+    image: require('@/assets/images/users/01.png')
+  },
+  {
+    userId: '8',
+    nickname: 'なな',
+    age: 23,
+    location: '福岡県',
+    onlineStatus: 'offline' as const,
+    image: require('@/assets/images/users/02.png')
+  },
+  {
+    userId: '9',
+    nickname: 'そら',
+    age: 30,
+    location: '北海道',
+    onlineStatus: 'online' as const,
+    image: require('@/assets/images/users/03.png')
+  },
+  {
+    userId: '10',
+    nickname: 'ひろ',
+    age: 27,
+    location: '兵庫県',
+    onlineStatus: 'offline' as const,
+    image: require('@/assets/images/users/01.png')
+  }
+] as const;
 
-export default function HomeScreen() {
+export default function Home() {
+  const insets = useSafeAreaInsets();
+  const headerHeight = insets.top + 64; // ヘッダーの固定高さ
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
-
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <SafeAreaView className='flex-1 bg-white' edges={['left', 'right']}>
+      <StatusBar barStyle='dark-content' />
+      <View style={{ flex: 1 }}>
+        <HomeHeader />
+        <ScrollView
+          bounces={true}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingTop: headerHeight }}
+        >
+          <FlashList
+            data={USERS}
+            numColumns={2}
+            scrollEnabled={false}
+            renderItem={({ item, index }) => (
+              <View
+                className='w-1/2'
+                style={{
+                  paddingLeft: index % 2 === 0 ? 20 : 8,
+                  paddingRight: index % 2 === 0 ? 8 : 20,
+                  paddingBottom: 16
+                }}
+              >
+                <ImageCard
+                  image={item.image}
+                  title={item.nickname}
+                  onPress={() => router.push(`/users/${item.userId}`)}
+                  size='medium'
+                  shadow={false}
+                >
+                  <View className='flex-row items-center'>
+                    <OnlineStatusIndicator
+                      status={item.onlineStatus}
+                      size='large'
+                    />
+                    <Text className='ml-1 text-m text-body'>
+                      {item.age}歳 {item.location}
+                    </Text>
+                  </View>
+                </ImageCard>
+              </View>
+            )}
+            keyExtractor={(item) => item.userId}
+          />
+        </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});

@@ -4,7 +4,7 @@ import { Image } from 'expo-image';
 import { Text, Button } from '@/components/bases';
 import { cn } from '@/utils';
 
-type CardSize = 'small' | 'medium' | 'large';
+type CardSize = 'small' | 'medium';
 
 type ImageCardProps = {
   image: string | { uri: string } | number; // URL、require()、またはオブジェクト
@@ -14,6 +14,7 @@ type ImageCardProps = {
   size?: CardSize; // サイズプリセット
   className?: string;
   shadow?: boolean;
+  children?: React.ReactNode;
 };
 
 const sizePresets = {
@@ -24,16 +25,10 @@ const sizePresets = {
     padding: 'px-2 py-1'
   },
   medium: {
-    width: 140,
-    imageHeight: 140,
-    textSize: 'text-sm',
+    width: 170,
+    imageHeight: 170,
+    textSize: 'text-m',
     padding: 'px-3 py-2'
-  },
-  large: {
-    width: 200,
-    imageHeight: 200,
-    textSize: 'text-base',
-    padding: 'px-4 py-3'
   }
 };
 
@@ -44,14 +39,22 @@ export const ImageCard: React.FC<ImageCardProps> = ({
   onPress,
   size = 'medium',
   className,
-  shadow = true
+  shadow = true,
+  children
 }) => {
   // サイズの設定を取得
   const preset = sizePresets[size];
   const cardWidth = preset.width;
-  const cardImageHeight = preset.imageHeight;
+  const cardImageHeight =
+    'imageHeight' in preset ? preset.imageHeight : undefined;
+  const aspectRatio =
+    'aspectRatio' in preset ? (preset.aspectRatio as number) : undefined;
   const textSize = preset.textSize;
   const padding = preset.padding;
+
+  const imageStyle = aspectRatio
+    ? { width: '100%' as const, aspectRatio, borderRadius: 12 }
+    : { width: '100%' as const, height: cardImageHeight, borderRadius: 12 };
 
   return (
     <Button onPress={onPress} className='p-0' activeOpacity={0.8}>
@@ -66,27 +69,41 @@ export const ImageCard: React.FC<ImageCardProps> = ({
         {/* 画像部分 */}
         <Image
           source={typeof image === 'string' ? { uri: image } : image}
-          style={{ width: '100%', height: cardImageHeight, borderRadius: 12 }}
+          style={imageStyle}
           contentFit='cover'
           transition={200}
         />
 
         {/* テキスト部分 */}
         <View className={cn(padding)}>
-          <Text
-            className={cn(textSize, 'font-semibold text-gray-900')}
-            numberOfLines={1}
-          >
-            {title}
-          </Text>
+          {children ? (
+            <>
+              <Text
+                className={cn(textSize, 'font-semibold text-gray-900')}
+                numberOfLines={1}
+              >
+                {title}
+              </Text>
+              {children}
+            </>
+          ) : (
+            <>
+              <Text
+                className={cn(textSize, 'font-semibold text-gray-900')}
+                numberOfLines={1}
+              >
+                {title}
+              </Text>
 
-          {subtitle && (
-            <Text
-              className={cn('mt-1 text-gray-600', textSize)}
-              numberOfLines={1}
-            >
-              {subtitle}
-            </Text>
+              {subtitle && (
+                <Text
+                  className={cn('mt-1 text-gray-600', textSize)}
+                  numberOfLines={1}
+                >
+                  {subtitle}
+                </Text>
+              )}
+            </>
           )}
         </View>
       </View>

@@ -21,7 +21,7 @@ export default function TabLayout() {
         headerTitle: '',
         headerShadowVisible: false,
         tabBarStyle: {
-          shadowRadius: 0.5,
+          shadowRadius: 1,
           shadowOpacity: 0.03,
           borderTopWidth: 0,
           shadowColor: '#000',
@@ -41,6 +41,8 @@ export default function TabLayout() {
         name='index'
         options={{
           title: 'ホーム',
+          headerShown: false,
+          headerLeft: () => null,
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name='house' color={color} />
           )
