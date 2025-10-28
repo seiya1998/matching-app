@@ -12,15 +12,16 @@ import { OnlineStatusIndicator, Lists, ImageCard } from '@/components/modules';
 import { MaterialIcons } from '@expo/vector-icons';
 import { FlashList } from '@shopify/flash-list';
 
-const images = [
+// 静的データをコンポーネント外に移動（メモリ効率とレンダリングパフォーマンスの改善）
+const IMAGES = [
   require('@/assets/images/users/default-user.jpg'),
   require('@/assets/images/users/03.png'),
   require('@/assets/images/users/01.png'),
   require('@/assets/images/users/02.png'),
   require('@/assets/images/users/01.png')
-];
+] as const;
 
-const preferenceTags = [
+const PREFERENCE_TAGS = [
   {
     id: '1',
     title: '映画鑑賞',
@@ -83,7 +84,8 @@ const preferenceTags = [
   }
 ] as const;
 
-const profileList = [
+// 動的に取得される想定のプロフィールデータ（モックデータ）
+const MOCK_PROFILE_LIST = [
   { label: 'ニックネーム', value: 'aaaa' },
   { label: '年齢', value: '26歳' },
   { label: '居住地(都道府県)', value: '北海道' },
@@ -110,12 +112,15 @@ const profileList = [
   { label: '初回デート費用', value: '割り勘' },
   { label: 'お酒', value: 'ときどき飲む' },
   { label: 'タバコ', value: '吸わない' }
-];
+] as const;
 
 export default function UserProfile() {
   const insets = useSafeAreaInsets();
   const params = useLocalSearchParams();
   const userId = typeof params['userId'] === 'string' ? params['userId'] : '';
+
+  // TODO: 実際にはAPI等から取得したデータを使用
+  const profileList = MOCK_PROFILE_LIST;
 
   return (
     <SafeAreaView className='flex-1 bg-white' edges={['left', 'right']}>
@@ -142,7 +147,7 @@ export default function UserProfile() {
           bounces={true}
         >
           {/* ユーザーの画像ギャラリー */}
-          <UserImageGallery images={images} />
+          <UserImageGallery images={IMAGES} />
 
           {/* コンテンツエリア */}
           <View className='mx-5'>
@@ -216,9 +221,9 @@ export default function UserProfile() {
                   </Text>
                 </Button>
               </View>
-              <View className='-mx-5'>
+              <View className='-mx-5' style={{ height: 130 }}>
                 <FlashList
-                  data={preferenceTags.slice(0, 10)}
+                  data={PREFERENCE_TAGS.slice(0, 10)}
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   renderItem={({ item }) => (
@@ -243,18 +248,17 @@ export default function UserProfile() {
               <Text className='mb-3 text-xxl font-semibold text-body'>
                 プロフィール
               </Text>
-              <FlashList
-                data={profileList}
-                renderItem={({ item, index }) => (
+              <View>
+                {profileList.map((item, index) => (
                   <Lists
                     key={`profiles-${String(index) + 1}`}
                     title={item.label}
                     titleColor='text-description'
                     rightText={item.value}
-                    isShowBottomBorder={index < (profileList.length ?? 0) - 1}
+                    isShowBottomBorder={index < profileList.length - 1}
                   />
-                )}
-              />
+                ))}
+              </View>
             </View>
           </View>
         </ScrollView>

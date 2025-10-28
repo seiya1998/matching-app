@@ -9,7 +9,7 @@ import { cn } from '@/utils';
 const { width: CARD_WIDTH } = Dimensions.get('window');
 
 type UserImageGalleryProps = {
-  images: ImageSourcePropType[];
+  images: readonly ImageSourcePropType[] | ImageSourcePropType[];
 };
 
 const IMAGE_HEIGHT = 360;
@@ -17,6 +17,9 @@ const IMAGE_HEIGHT = 360;
 export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const carouselRef = useRef<any>(null);
+
+  // readonly配列を通常の配列として扱うために変換
+  const imageList = images as ImageSourcePropType[];
 
   const handleSnapToItem = useCallback((index: number) => {
     setActiveIndex(index);
@@ -78,7 +81,7 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
         ref={carouselRef}
         width={CARD_WIDTH}
         height={IMAGE_HEIGHT}
-        data={images}
+        data={imageList}
         renderItem={renderCarouselItem}
         onSnapToItem={handleSnapToItem}
         loop={false}
@@ -89,7 +92,7 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
       {/* サムネイル */}
       <View className='pl-5 pt-4'>
         <FlashList
-          data={images}
+          data={imageList}
           horizontal
           showsHorizontalScrollIndicator={false}
           keyExtractor={(_, index) => `thumb-${index}`}

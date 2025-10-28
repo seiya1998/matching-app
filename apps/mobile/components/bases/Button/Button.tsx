@@ -83,13 +83,16 @@ const ButtonComponent: ForwardRefRenderFunction<View, Props> = (
         ? 'text-gray-4'
         : 'text-green-5';
 
-  // キーボードを閉じてからボタンを押す
+  // キーボードを閉じてからボタンを押す（テンプレートボタンの場合のみ）
   const handlePress = useCallback(
     (event: GestureResponderEvent) => {
-      Keyboard.dismiss();
+      // テンプレートボタン（text指定）の場合のみキーボードを閉じる
+      if (text != null) {
+        Keyboard.dismiss();
+      }
       onPress?.(event);
     },
-    [onPress]
+    [onPress, text]
   );
 
   const isTemplateButton = text != null;
