@@ -1,8 +1,9 @@
-import { Container, Text } from '@/components/bases';
+import { Container, Text, ChoiceButton } from '@/components/bases';
 import { router } from 'expo-router';
 import { FlashList } from '@shopify/flash-list';
 import { Lists } from '@/components/modules';
 import { View } from 'react-native';
+import { useState } from 'react';
 
 const settings = [
   {
@@ -58,10 +59,18 @@ const supportSettings = [
 ] as const;
 
 export default function Search() {
+  const [isChecked, setChecked] = useState(false);
   return (
     <Container isPaddingTop={false} style='mt-5'>
       <View className='mb-5'>
-        <Text className='mb-3 text-xl font-bold text-body'>各種設定</Text>
+        <Text className='mb-3 text-xl font-bold text-body'>
+          プロフィールで絞り込み
+        </Text>
+        <ChoiceButton
+          isChecked={isChecked}
+          onValueChange={setChecked}
+          text='写真あり'
+        />
       </View>
     </Container>
   );
