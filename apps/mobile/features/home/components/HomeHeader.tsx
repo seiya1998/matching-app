@@ -4,7 +4,12 @@ import { Button, Text } from '@/components/bases';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export const HomeHeader = memo(() => {
+type HomeHeaderProps = {
+  onSortPress?: () => void;
+  onFilterPress?: () => void;
+};
+
+export const HomeHeader = memo<HomeHeaderProps>(({ onSortPress, onFilterPress }) => {
   const insets = useSafeAreaInsets();
   return (
     <View
@@ -18,17 +23,21 @@ export const HomeHeader = memo(() => {
       {/* ロゴ */}
       <Image
         source={require('@/assets/images/logo.png')}
-        style={{ width: 140, height: 140, marginLeft: -10 }}
-        resizeMode='contain'
+        style={{ width: 100, height: 100 }}
       />
-      <View>
+      <View className='flex-row items-center gap-3'>
+        {/* ソートボタン */}
+        <Button
+          activeOpacity={0.7}
+          onPress={onSortPress}
+        >
+          <Ionicons name='swap-vertical' size={24} color='#666' />
+        </Button>
+
         {/* 検索・絞り込みボタン */}
         <Button
           activeOpacity={0.7}
-          onPress={() => {
-            // TODO: 検索・絞り込み画面に遷移
-            console.log('検索・絞り込み画面を開く');
-          }}
+          onPress={onFilterPress}
           className='flex-row items-center gap-2 rounded-full border border-gray-300 px-4 py-2'
         >
           <Ionicons name='search' size={20} color='#666' />

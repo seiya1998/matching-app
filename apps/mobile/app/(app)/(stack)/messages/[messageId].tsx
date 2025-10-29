@@ -7,18 +7,16 @@ import {
 import { router, useLocalSearchParams } from 'expo-router';
 import {
   View,
-  StatusBar,
-  KeyboardAvoidingView,
   Platform,
   Keyboard
 } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useMemo, useCallback, useState, useEffect } from 'react';
 import {
-  SafeAreaView,
   useSafeAreaInsets
 } from 'react-native-safe-area-context';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { Gesture } from 'react-native-gesture-handler';
+import { ScreenWrapper } from '@/components/bases';
 
 type MessageItem = {
   id: string;
@@ -174,72 +172,65 @@ export default function MessageDetail() {
   }, [messagesWithDateLabels.length]);
 
   return (
-    <SafeAreaView className='flex-1 bg-white' edges={['left', 'right']}>
-      <StatusBar barStyle='dark-content' />
-      <GestureDetector gesture={swipeGesture}>
-        <View style={{ flex: 1 }}>
-          <KeyboardAvoidingView
-            className='flex-1'
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            keyboardVerticalOffset={0}
-          >
-            <View className='flex-1'>
-              <MessageHeader
-                userName='aaaa'
-                userImage={require('@/assets/images/users/default-user.jpg')}
-                onImagePress={() => router.push('/(app)/(stack)/users/123')}
-                onMenuPress={() => {
-                  /* メニュー処理 */
-                }}
-                paddingTop={insets.top}
-              />
-              <FlashList
-                data={messagesWithDateLabels}
-                initialScrollIndex={initialScrollIndex}
-                renderItem={({ item }) => {
-                  if (item.type === 'date') {
-                    return <MessageDateLabel date={item.date!} />;
-                  }
-                  return (
-                    <MessageBubble
-                      message={item.text!}
-                      isMine={item.isMine!}
-                      timestamp={item.timestamp}
-                      userImage={
-                        !item.isMine
-                          ? require('@/assets/images/users/default-user.jpg')
-                          : undefined
-                      }
-                    />
-                  );
-                }}
-                keyExtractor={(item) => item.id}
-                contentContainerStyle={{
-                  paddingTop: insets.top + 72,
-                  paddingBottom: 100,
-                  paddingHorizontal: 16
-                }}
-              />
-              <View
-                className='bg-white'
-                style={{
-                  paddingBottom: isKeyboardVisible ? 0 : insets.bottom,
-                  shadowColor: '#000',
-                  shadowOffset: { width: 0, height: -2 },
-                  shadowOpacity: 0.1,
-                  shadowRadius: 4,
-                  elevation: 5
-                }}
-              >
-                <MessageInput
-                  onSend={handleSendMessage}
-                  onCameraPress={handleCameraPress}
-                />
-              </View>
-            </View>
-          </KeyboardAvoidingView>
-        </View>
-      </GestureDetector>
-    </SafeAreaView>
+    <ScreenWrapper
+      scrollEnabled={false}
+      enableKeyboardAvoid
+      gesture={swipeGesture}
+      header={
+        <MessageHeader
+          userName='aaaa'
+          userImage={require('@/assets/images/users/default-user.jpg')}
+          onImagePress={() => router.push('/(app)/(stack)/users/123')}
+          onMenuPress={() => {
+            /* メニュー処理 */
+          }}
+          paddingTop={insets.top}
+        />
+      }
+    >
+      <FlashList
+        data={messagesWithDateLabels}
+        initialScrollIndex={initialScrollIndex}
+        renderItem={({ item }) => {
+          if (item.type === 'date') {
+            return <MessageDateLabel date={item.date!} />;
+          }
+          return (
+            <MessageBubble
+              message={item.text!}
+              isMine={item.isMine!}
+              timestamp={item.timestamp}
+              userImage={
+                !item.isMine
+                  ? require('@/assets/images/users/default-user.jpg')
+                  : undefined
+              }
+            />
+          );
+        }}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{
+          paddingTop: insets.top + 72,
+          paddingBottom: 100,
+          paddingHorizontal: 16
+        }}
+      />
+      <View
+        className='bg-white'
+        style={{
+          paddingBottom: isKeyboardVisible ? 0 : insets.bottom,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
+          elevation: 5
+        }}
+      >
+        <MessageInput
+          onSend={handleSendMessage}
+          onCameraPress={handleCameraPress}
+        />
+      </View>
+    </ScreenWrapper>
   );
 }

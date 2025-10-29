@@ -1,19 +1,18 @@
 import {
   Platform,
   StyleSheet,
-  View,
-  StatusBar,
-  ScrollView
+  View
 } from 'react-native';
 import {
-  SafeAreaView,
   useSafeAreaInsets
 } from 'react-native-safe-area-context';
 import { ImageCard, OnlineStatusIndicator } from '@/components/modules';
 import { HomeHeader } from '@/features/home/components';
-import { Text, Button } from '@/components/bases';
+import { Text, Button, ScreenWrapper } from '@/components/bases';
 import { FlashList } from '@shopify/flash-list';
 import { router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { useState, useMemo } from 'react';
 
 const USERS = [
   {
@@ -98,55 +97,83 @@ const USERS = [
   }
 ] as const;
 
+type SortType = 'newest' | 'login' | 'popular';
+
 export default function Home() {
   const insets = useSafeAreaInsets();
   const headerHeight = insets.top + 64; // ヘッダーの固定高さ
+  const [sortType, setSortType] = useState<SortType>('newest');
+
+  const sortedUsers = useMemo(() => {
+    const users = [...USERS];
+    // TODO: 実際のソートロジックを実装
+    // 現状はそのまま返す
+    return users;
+  }, [sortType]);
+
+  const handleSortPress = () => {
+    // TODO: ソートモーダルを表示
+    console.log('ソートボタン押下');
+  };
+
+  const handleFilterPress = () => {
+    // TODO: 検索・絞り込み画面に遷移
+    console.log('検索・絞り込み画面を開く');
+  };
+
   return (
-    <SafeAreaView className='flex-1 bg-white' edges={['left', 'right']}>
-      <StatusBar barStyle='dark-content' />
-      <View style={{ flex: 1 }}>
-        <HomeHeader />
-        <ScrollView
-          bounces={true}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingTop: headerHeight }}
-        >
-          <FlashList
-            data={USERS}
-            numColumns={2}
-            scrollEnabled={false}
-            renderItem={({ item, index }) => (
-              <View
-                className='w-1/2'
-                style={{
-                  paddingLeft: index % 2 === 0 ? 20 : 8,
-                  paddingRight: index % 2 === 0 ? 8 : 20,
-                  paddingBottom: 16
-                }}
-              >
-                <ImageCard
-                  image={item.image}
-                  title={item.nickname}
-                  onPress={() => router.push(`/users/${item.userId}`)}
-                  size='medium'
-                  shadow={false}
-                >
-                  <View className='flex-row items-center'>
-                    <OnlineStatusIndicator
-                      status={item.onlineStatus}
-                      size='large'
-                    />
-                    <Text className='ml-1 text-m text-body'>
-                      {item.age}歳 {item.location}
-                    </Text>
-                  </View>
-                </ImageCard>
-              </View>
-            )}
-            keyExtractor={(item) => item.userId}
-          />
-        </ScrollView>
+    <ScreenWrapper
+      header={<HomeHeader onSortPress={handleSortPress} onFilterPress={handleFilterPress} />}
+      bounces={true}
+      contentContainerStyle={{ paddingTop: headerHeight }}
+    >
+      {/* 検索結果人数 */}
+      <View className='mb-5 border-b border-gray-100 bg-gray-50 px-5 py-4'>
+        <View className='flex-row items-center gap-2'>
+          <Ionicons name='people-outline' size={20} color='#666' />
+          <Text className='text-base text-gray-700'>
+            <Text className='font-semibold text-gray-900'>
+              {sortedUsers.length}人
+            </Text>
+            のお相手が見つかりました
+          </Text>
+        </View>
       </View>
-    </SafeAreaView>
+
+      <FlashList
+        data={sortedUsers}
+        numColumns={2}
+        scrollEnabled={false}
+        renderItem={({ item, index }) => (
+          <View
+            className='w-1/2'
+            style={{
+              paddingLeft: index % 2 === 0 ? 20 : 8,
+              paddingRight: index % 2 === 0 ? 8 : 20,
+              paddingBottom: 16
+            }}
+          >
+            <ImageCard
+              image={item.image}
+              title={item.nickname}
+              onPress={() => router.push(`/users/${item.userId}`)}
+              size='medium'
+              shadow={false}
+            >
+              <View className='flex-row items-center'>
+                <OnlineStatusIndicator
+                  status={item.onlineStatus}
+                  size='large'
+                />
+                <Text className='ml-1 text-m text-body'>
+                  {item.age}歳 {item.location}
+                </Text>
+              </View>
+            </ImageCard>
+          </View>
+        )}
+        keyExtractor={(item) => item.userId}
+      />
+    </ScreenWrapper>
   );
 }
