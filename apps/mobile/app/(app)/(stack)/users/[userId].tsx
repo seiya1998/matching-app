@@ -133,6 +133,19 @@ export default function UserProfile() {
           paddingTop={insets.top}
         />
       }
+      footer={
+        <View className='px-4 py-3' style={{ paddingBottom: insets.bottom + 12 }}>
+          <Button
+            onPress={() => console.log('いいね送信')}
+            className='rounded-full bg-primary py-4'
+          >
+            <View className='flex-row items-center justify-center'>
+              <MaterialIcons name='thumb-up' size={24} color='white' />
+              <Text className='ml-2 text-lg font-bold text-white'>いいね！</Text>
+            </View>
+          </Button>
+        </View>
+      }
       bounces={true}
     >
       {/* ユーザーの画像ギャラリー */}
@@ -249,19 +262,6 @@ export default function UserProfile() {
             ))}
           </View>
         </View>
-      </View>
-
-      {/* 下部固定のいいねボタン */}
-      <View className='px-4 py-3' style={{ paddingBottom: insets.bottom + 12 }}>
-        <Button
-          onPress={() => console.log('いいね送信')}
-          className='rounded-full bg-primary py-4'
-        >
-          <View className='flex-row items-center justify-center'>
-            <MaterialIcons name='thumb-up' size={24} color='white' />
-            <Text className='ml-2 text-lg font-bold text-white'>いいね！</Text>
-          </View>
-        </Button>
       </View>
     </ScreenWrapper>
   );

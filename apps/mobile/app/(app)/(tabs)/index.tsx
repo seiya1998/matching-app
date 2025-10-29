@@ -1,11 +1,5 @@
-import {
-  Platform,
-  StyleSheet,
-  View
-} from 'react-native';
-import {
-  useSafeAreaInsets
-} from 'react-native-safe-area-context';
+import { Platform, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ImageCard, OnlineStatusIndicator } from '@/components/modules';
 import { HomeHeader } from '@/features/home/components';
 import { Text, Button, ScreenWrapper } from '@/components/bases';
@@ -116,14 +110,14 @@ export default function Home() {
     console.log('ソートボタン押下');
   };
 
-  const handleFilterPress = () => {
-    // TODO: 検索・絞り込み画面に遷移
-    console.log('検索・絞り込み画面を開く');
-  };
-
   return (
     <ScreenWrapper
-      header={<HomeHeader onSortPress={handleSortPress} onFilterPress={handleFilterPress} />}
+      header={
+        <HomeHeader
+          onSortPress={handleSortPress}
+          onFilterPress={() => router.push('/search')}
+        />
+      }
       bounces={true}
       contentContainerStyle={{ paddingTop: headerHeight }}
     >
@@ -155,8 +149,7 @@ export default function Home() {
           >
             <ImageCard
               image={item.image}
-              title={item.nickname}
-              onPress={() => router.push(`/users/${item.userId}`)}
+              onPress={() => router.push(`/(app)/(stack)/users/${item.userId}`)}
               size='medium'
               shadow={false}
             >

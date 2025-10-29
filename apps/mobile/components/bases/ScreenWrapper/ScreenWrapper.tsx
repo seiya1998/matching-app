@@ -37,6 +37,9 @@ type ScreenWrapperProps = {
 
   // 固定ヘッダー
   header?: React.ReactNode;
+
+  // 固定フッター（下部固定要素）
+  footer?: React.ReactNode;
 };
 
 export const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
@@ -51,7 +54,8 @@ export const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   enableKeyboardAvoid = false,
   keyboardVerticalOffset = 0,
   gesture,
-  header
+  header,
+  footer
 }) => {
   // コンテンツ部分の構築
   const baseContent = scrollEnabled ? (
@@ -74,9 +78,13 @@ export const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
       keyboardVerticalOffset={keyboardVerticalOffset}
     >
       {baseContent}
+      {footer}
     </KeyboardAvoidingView>
   ) : (
-    baseContent
+    <>
+      {baseContent}
+      {footer}
+    </>
   );
 
   // GestureDetectorまたはヘッダーでラップ

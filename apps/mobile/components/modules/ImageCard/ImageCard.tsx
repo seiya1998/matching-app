@@ -8,7 +8,7 @@ type CardSize = 'small' | 'medium';
 
 type ImageCardProps = {
   image: string | { uri: string } | number; // URL、require()、またはオブジェクト
-  title: string;
+  title?: string;
   subtitle?: string;
   onPress: () => void; // 必須に変更
   size?: CardSize; // サイズプリセット
@@ -78,22 +78,27 @@ export const ImageCard: React.FC<ImageCardProps> = ({
         <View className={cn(padding)}>
           {children ? (
             <>
-              <Text
-                className={cn(textSize, 'font-semibold text-gray-900')}
-                numberOfLines={1}
-              >
-                {title}
-              </Text>
+              {title && (
+                <Text
+                  className={cn(textSize, 'font-semibold text-gray-900')}
+                  numberOfLines={1}
+                >
+                  {title}
+                </Text>
+              )}
+
               {children}
             </>
           ) : (
             <>
-              <Text
-                className={cn(textSize, 'font-semibold text-gray-900')}
-                numberOfLines={1}
-              >
-                {title}
-              </Text>
+              {title && (
+                <Text
+                  className={cn(textSize, 'font-semibold text-gray-900')}
+                  numberOfLines={1}
+                >
+                  {title}
+                </Text>
+              )}
 
               {subtitle && (
                 <Text
