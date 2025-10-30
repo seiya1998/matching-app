@@ -44,11 +44,11 @@ type Props = (TemplateButtonProps | DefaultButtonProps) &
 
 const variantClass = {
   primary: {
-    button: 'rounded-full bg-green-5',
+    button: 'rounded-full bg-primary font-bold',
     disabledButton: 'bg-gray-4'
   },
   secondary: {
-    button: 'rounded-full border border-green-5 bg-white',
+    button: 'rounded-full border border-primary bg-white',
     disabledButton: 'border-gray-4'
   },
   tertiary: {
@@ -81,7 +81,7 @@ const ButtonComponent: ForwardRefRenderFunction<View, Props> = (
       ? 'text-white'
       : disabled
         ? 'text-gray-4'
-        : 'text-green-5';
+        : 'text-primary';
 
   // キーボードを閉じてからボタンを押す（テンプレートボタンの場合のみ）
   const handlePress = useCallback(

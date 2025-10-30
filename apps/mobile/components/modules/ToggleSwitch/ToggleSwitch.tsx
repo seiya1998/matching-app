@@ -35,7 +35,7 @@ export function ToggleSwitch({ isEnabled, onToggle }: Props) {
     const backgroundColor = interpolateColor(
       progress.value,
       [0, 1],
-      ['#E0E0E0', '#6F8D1B'] // 0:グレー 1:緑
+      ['#E0E0E0', '#5DBAEB'] // 0:グレー 1:プライマリーカラー
     );
     return { backgroundColor };
   });

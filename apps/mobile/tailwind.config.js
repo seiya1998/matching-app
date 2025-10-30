@@ -1,14 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{js,jsx,ts,tsx}", "./components/**/*.{js,jsx,ts,tsx}", "./features/**/*.{js,jsx,ts,tsx}"],
-  presets: [require("nativewind/preset")],
+  content: [
+    './app/**/*.{js,jsx,ts,tsx}',
+    './components/**/*.{js,jsx,ts,tsx}',
+    './features/**/*.{js,jsx,ts,tsx}'
+  ],
+  presets: [require('nativewind/preset')],
   theme: {
     data: {
       error: 'error=true'
     },
     extend: {
       spacing: {
-        '18': '72px',
+        18: '72px'
       },
       fontSize: {
         s: ['12px', { lineHeight: '18px', letterSpacing: 0.6 }],
@@ -35,7 +39,7 @@ module.exports = {
         circle: '9999px'
       },
       colors: {
-        primary: '#4a90e2',
+        primary: '#5DBAEB',
         gray: {
           0: '#fdfaf4',
           1: '#f9f6f0',
