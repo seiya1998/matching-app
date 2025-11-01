@@ -1,7 +1,6 @@
 import { router, Stack } from 'expo-router';
 import { Button } from '@/components/bases';
 import { ChevronBack } from '@/assets/svgs';
-import { CloseButton } from '@/components/modules';
 
 export default function AppLayout() {
   return (
@@ -29,17 +28,11 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
-        name='(stack)/search/index'
+        name='(stack)/search'
         options={{
           animation: 'slide_from_bottom',
           presentation: 'modal',
-          headerTitle: '検索条件',
-          headerBackVisible: false,
-          headerStyle: {
-            backgroundColor: '#fff'
-          },
-          headerLeft: () => null,
-          headerRight: () => <CloseButton onPress={() => router.back()} />
+          headerShown: false
         }}
       />
       <Stack.Screen

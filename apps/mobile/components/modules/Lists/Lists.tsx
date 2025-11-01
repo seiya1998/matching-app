@@ -7,7 +7,7 @@ import EvilIcons from '@expo/vector-icons/EvilIcons';
 
 type BaseListsProps = {
   listType?: 'L' | 'M' | null;
-  leftIconType?: 'footprint' | 'star' | 'like' | 'help' | null;
+  leftIconType?: 'footprint' | 'star' | 'like' | 'help' | 'search' | null;
   title: string;
   titleColor?: string;
   isTitleBold?: boolean;
@@ -79,12 +79,16 @@ export function Lists({
       <View className='h-14 w-14 items-center justify-center rounded-full bg-blue-500'>
         <Ionicons name='help-circle-outline' size={32} color='white' />
       </View>
+    ) : leftIconType === 'search' ? (
+      <View className='h-10 w-10 items-center justify-center'>
+        <Ionicons name='search' size={20} color='#7b7873' />
+      </View>
     ) : null;
   return (
     <Button
       activeOpacity={1}
       className={cn(
-        'mb-4 flex-row',
+        'flex-row pt-3',
         isShowBottomBorder && 'border-width-0.5 border-b border-divider'
       )}
       onPress={onPress}

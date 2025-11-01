@@ -21,12 +21,10 @@ export const MessageBubble = memo<MessageBubbleProps>(
         <View className='max-w-[75%]'>
           <View
             className={`rounded-2xl px-4 py-3 ${
-              isMine ? 'bg-blue-500' : 'bg-gray-200'
+              isMine ? 'bg-primary' : 'bg-gray-200'
             }`}
           >
-            <Text
-              className={`text-base ${isMine ? 'text-white' : 'text-body'}`}
-            >
+            <Text className={`text-m ${isMine ? 'text-white' : 'text-body'}`}>
               {message}
             </Text>
           </View>

@@ -22,8 +22,9 @@ import {
   LAST_LOGIN_PERIODS
 } from '@/values/userProfile';
 import { FilterSection } from '@/features/search/components';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { router } from 'expo-router';
 
 export default function Search() {
   // State for each filter
@@ -103,7 +104,7 @@ export default function Search() {
               variant='secondary'
               size='small'
               onPress={() => {
-                console.log('検索履歴から探す');
+                router.push('/search/history');
               }}
             />
           </View>
