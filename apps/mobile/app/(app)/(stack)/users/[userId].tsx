@@ -2,9 +2,7 @@ import { MessageHeader } from '@/features/messages/components';
 import { UserImageGallery, StatusItem } from '@/features/users/components';
 import { useLocalSearchParams } from 'expo-router';
 import { View } from 'react-native';
-import {
-  useSafeAreaInsets
-} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text, Button, ScreenWrapper } from '@/components/bases';
 import { OnlineStatusIndicator, Lists, ImageCard } from '@/components/modules';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -130,18 +128,22 @@ export default function UserProfile() {
           onMenuPress={() => {
             /* メニュー処理 */
           }}
-          paddingTop={insets.top}
         />
       }
       footer={
-        <View className='px-4 py-3' style={{ paddingBottom: insets.bottom + 12 }}>
+        <View
+          className='px-4 py-3'
+          style={{ paddingBottom: insets.bottom + 12 }}
+        >
           <Button
             onPress={() => console.log('いいね送信')}
             className='rounded-full bg-primary py-4'
           >
             <View className='flex-row items-center justify-center'>
               <MaterialIcons name='thumb-up' size={24} color='white' />
-              <Text className='ml-2 text-lg font-bold text-white'>いいね！</Text>
+              <Text className='ml-2 text-lg font-bold text-white'>
+                いいね！
+              </Text>
             </View>
           </Button>
         </View>
@@ -187,9 +189,9 @@ export default function UserProfile() {
             最近はプログラミングの勉強に夢中で、新しい技術を学ぶのが楽しくて仕方ありません！
             {'\n\n'}
             【趣味・好きなこと】{'\n'}◆
-            カフェ巡り｜美味しいコーヒーを求めて色んなお店を開拓中です{'\n'}
-            ◆ 映画鑑賞｜アクションからヒューマンドラマまで幅広く観ます{'\n'}
-            ◆ スノーボード｜冬は毎週末ゲレンデにいます⛷{'\n'}◆
+            カフェ巡り｜美味しいコーヒーを求めて色んなお店を開拓中です{'\n'}◆
+            映画鑑賞｜アクションからヒューマンドラマまで幅広く観ます{'\n'}◆
+            スノーボード｜冬は毎週末ゲレンデにいます⛷{'\n'}◆
             温泉巡り｜北海道の秘湯を制覇するのが目標です♨️{'\n'}◆
             料理｜最近はパスタ作りにハマってます🍝{'\n'}◆
             ドライブ｜天気の良い日は海沿いをドライブするのが好きです{'\n\n'}
@@ -218,9 +220,7 @@ export default function UserProfile() {
               好みタグ
             </Text>
             <Button onPress={() => {}}>
-              <Text className='text-m font-bold text-primary'>
-                すべて見る
-              </Text>
+              <Text className='text-m font-bold text-primary'>すべて見る</Text>
             </Button>
           </View>
           <View className='-mx-5' style={{ height: 130 }}>

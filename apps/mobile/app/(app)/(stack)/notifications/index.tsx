@@ -68,7 +68,7 @@ export default function Notifications() {
   ] as const;
 
   return (
-    <Container isPaddingTop={false} style='mt-5'>
+    <Container isPaddingTop={false} style='mt-5 mb-20'>
       <FlashList
         data={notifications}
         renderItem={({ item, index }) => (

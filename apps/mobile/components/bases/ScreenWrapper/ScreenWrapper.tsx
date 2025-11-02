@@ -3,14 +3,13 @@ import {
   View,
   StatusBar,
   ScrollView,
-  StyleProp,
-  ViewStyle,
   KeyboardAvoidingView,
   Platform
 } from 'react-native';
 import {
   SafeAreaView,
-  Edge
+  Edge,
+  useSafeAreaInsets
 } from 'react-native-safe-area-context';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 
@@ -26,7 +25,6 @@ type ScreenWrapperProps = {
   // ScrollView関連
   scrollEnabled?: boolean;
   bounces?: boolean;
-  contentContainerStyle?: StyleProp<ViewStyle>;
 
   // KeyboardAvoidingView関連
   enableKeyboardAvoid?: boolean;
@@ -40,6 +38,9 @@ type ScreenWrapperProps = {
 
   // 固定フッター（下部固定要素）
   footer?: React.ReactNode;
+
+  // paddingTop制御
+  isPaddingTop?: boolean;
 };
 
 export const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
@@ -50,24 +51,28 @@ export const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   safeAreaClassName,
   scrollEnabled = true,
   bounces,
-  contentContainerStyle,
   enableKeyboardAvoid = false,
   keyboardVerticalOffset = 0,
   gesture,
   header,
-  footer
+  footer,
+  isPaddingTop = true
 }) => {
+  const insets = useSafeAreaInsets();
+
   // コンテンツ部分の構築
   const baseContent = scrollEnabled ? (
     <ScrollView
       showsVerticalScrollIndicator={false}
       bounces={bounces}
-      contentContainerStyle={contentContainerStyle}
+      contentContainerStyle={{ paddingTop: isPaddingTop ? insets.top : 0 }}
     >
       {children}
     </ScrollView>
   ) : (
-    <View style={{ flex: 1 }}>{children}</View>
+    <View style={{ flex: 1, paddingTop: isPaddingTop ? insets.top : 0 }}>
+      {children}
+    </View>
   );
 
   // KeyboardAvoidingViewでラップ

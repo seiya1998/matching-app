@@ -52,6 +52,8 @@ export default function TabLayout() {
         name='likes'
         options={{
           title: 'いいね',
+          headerShown: false,
+          headerLeft: () => null,
           tabBarIcon: ({ color }) => (
             <EvilIcons size={32} name='like' color={color} />
           )

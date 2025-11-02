@@ -1,5 +1,4 @@
 import { Platform, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ImageCard, OnlineStatusIndicator } from '@/components/modules';
 import { HomeHeader } from '@/features/home/components';
 import { Text, Button, ScreenWrapper } from '@/components/bases';
@@ -94,8 +93,6 @@ const USERS = [
 type SortType = 'newest' | 'login' | 'popular';
 
 export default function Home() {
-  const insets = useSafeAreaInsets();
-  const headerHeight = insets.top + 64; // ヘッダーの固定高さ
   const [sortType, setSortType] = useState<SortType>('newest');
 
   const sortedUsers = useMemo(() => {
@@ -119,10 +116,10 @@ export default function Home() {
         />
       }
       bounces={true}
-      contentContainerStyle={{ paddingTop: headerHeight }}
+      isPaddingTop={true}
     >
       {/* 検索結果人数 */}
-      <View className='mb-5 border-b border-gray-100 bg-gray-50 px-5 py-4'>
+      <View className='mb-5 mt-[70px] border-b border-gray-100 bg-gray-50 px-5 py-4'>
         <View className='flex-row items-center gap-2'>
           <Ionicons name='people-outline' size={20} color='#666' />
           <Text className='text-base text-gray-700'>

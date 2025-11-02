@@ -5,16 +5,10 @@ import {
   MessageInput
 } from '@/features/messages/components';
 import { router, useLocalSearchParams } from 'expo-router';
-import {
-  View,
-  Platform,
-  Keyboard
-} from 'react-native';
+import { View, Platform, Keyboard } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 import { useMemo, useCallback, useState, useEffect } from 'react';
-import {
-  useSafeAreaInsets
-} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Gesture } from 'react-native-gesture-handler';
 import { ScreenWrapper } from '@/components/bases';
 
@@ -184,7 +178,6 @@ export default function MessageDetail() {
           onMenuPress={() => {
             /* メニュー処理 */
           }}
-          paddingTop={insets.top}
         />
       }
     >

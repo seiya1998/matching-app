@@ -185,59 +185,57 @@ export default function Messages() {
 
   return (
     <TouchableWithoutFeedback onPress={handleBackgroundPress}>
-      <View style={{ flex: 1 }}>
-        <Container isPaddingTop={false}>
-          {/* 新しいマッチング一覧 */}
-          <Text className='text-m font-bold text-body'>マッチング中</Text>
-          <View className='-mx-5 mt-3'>
-            <FlashList
-              data={matchedUsers}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: 16 }}
-              renderItem={({ item }) => (
-                <MatchedUserCard
-                  imageSource={item.imageSource}
-                  userId={item.id}
-                  age={item.age}
-                  location={item.location}
-                  onlineStatus={item.status}
-                />
-              )}
-              keyExtractor={(item) => item.id.toString()}
-            />
-          </View>
-          <View className='my-8 border-b border-gray-200' />
+      <Container isPaddingTop={false} style='mb-10'>
+        {/* 新しいマッチング一覧 */}
+        <Text className='text-m font-bold text-body'>マッチング中</Text>
+        <View className='-mx-5 mt-3'>
+          <FlashList
+            data={matchedUsers}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 16 }}
+            renderItem={({ item }) => (
+              <MatchedUserCard
+                imageSource={item.imageSource}
+                userId={item.id}
+                age={item.age}
+                location={item.location}
+                onlineStatus={item.status}
+              />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </View>
+        <View className='my-8 border-b border-gray-200' />
 
-          {/* メッセージ一覧 */}
-          <View className='-mx-5'>
-            <FlashList
-              data={usersWithFormattedTime}
-              scrollEnabled={false}
-              renderItem={({ item }) => (
-                <MessageThreadItem
-                  imageSource={item.imageSource}
-                  userId={item.id}
-                  nickname={item.nickname}
-                  age={item.age}
-                  location={item.location}
-                  onlineStatus={item.status}
-                  lastMessage={item.lastMessage}
-                  formattedTime={item.formattedTime}
-                  isOpen={openSwipeableId === item.id}
-                  hasOtherOpen={
-                    openSwipeableId !== null && openSwipeableId !== item.id
-                  }
-                  onSwipeableWillOpen={() => handleSwipeableWillOpen(item.id)}
-                  onSwipeableClose={handleSwipeableClose}
-                  onOtherItemPress={handleBackgroundPress}
-                />
-              )}
-              keyExtractor={(item) => item.id.toString()}
-            />
-          </View>
-        </Container>
-      </View>
+        {/* メッセージ一覧 */}
+        <View className='-mx-5'>
+          <FlashList
+            data={usersWithFormattedTime}
+            scrollEnabled={false}
+            renderItem={({ item }) => (
+              <MessageThreadItem
+                imageSource={item.imageSource}
+                userId={item.id}
+                nickname={item.nickname}
+                age={item.age}
+                location={item.location}
+                onlineStatus={item.status}
+                lastMessage={item.lastMessage}
+                formattedTime={item.formattedTime}
+                isOpen={openSwipeableId === item.id}
+                hasOtherOpen={
+                  openSwipeableId !== null && openSwipeableId !== item.id
+                }
+                onSwipeableWillOpen={() => handleSwipeableWillOpen(item.id)}
+                onSwipeableClose={handleSwipeableClose}
+                onOtherItemPress={handleBackgroundPress}
+              />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </View>
+      </Container>
     </TouchableWithoutFeedback>
   );
 }
