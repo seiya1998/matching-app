@@ -35,7 +35,7 @@ export const UserSwipeCard = memo<UserSwipeCardProps>(
     return (
       <Button
         onPress={handleCardPress}
-        activeOpacity={0.95}
+        activeOpacity={1}
         className='overflow-hidden rounded-[20px] bg-white shadow-lg'
         style={{
           width: cardWidth,

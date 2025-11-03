@@ -1,6 +1,7 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { View } from 'react-native';
 import { Text } from '../Text';
+import { Button } from '../Button';
 import { cn } from '@/utils/classNames';
 
 type ChoiceButtonProps = {
@@ -18,7 +19,7 @@ const ChoiceButtonComponent: ForwardRefRenderFunction<
   };
 
   return (
-    <TouchableOpacity
+    <Button
       ref={ref}
       onPress={handlePress}
       className={cn(
@@ -35,7 +36,7 @@ const ChoiceButtonComponent: ForwardRefRenderFunction<
       >
         {text}
       </Text>
-    </TouchableOpacity>
+    </Button>
   );
 };
 

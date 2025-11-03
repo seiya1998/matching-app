@@ -4,20 +4,16 @@ import EvilIcons from '@expo/vector-icons/EvilIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Button } from '@/components/bases';
+import { Button, Text } from '@/components/bases';
 import { ChevronBack } from '@/assets/svgs';
 import { View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: '#5DBAEB',
         headerTitle: '',
         headerShadowVisible: false,
         tabBarStyle: {
@@ -26,6 +22,9 @@ export default function TabLayout() {
           borderTopWidth: 0,
           shadowColor: '#000',
           paddingTop: 6
+        },
+        tabBarLabelStyle: {
+          fontWeight: '700'
         },
         headerLeft: () => {
           return (

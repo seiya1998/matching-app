@@ -203,7 +203,7 @@ export default function MessageDetail() {
         }}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{
-          paddingTop: insets.top + 72,
+          paddingTop: insets.top,
           paddingBottom: 100,
           paddingHorizontal: 16
         }}

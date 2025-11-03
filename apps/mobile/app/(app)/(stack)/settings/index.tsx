@@ -59,52 +59,63 @@ const supportSettings = [
 
 export default function Settings() {
   return (
-    <Container isPaddingTop={false} style='mt-5'>
-      <View className='mb-5'>
+    <Container isPaddingTop={false} style='bg-gray-100'>
+      <View className='my-5'>
         <Text className='mb-3 text-xl font-bold text-body'>各種設定</Text>
-        <FlashList
-          data={settings}
-          renderItem={({ item, index }) => (
-            <Lists
-              key={`settings-${String(index) + 1}`}
-              title={item.title}
-              isShowRightIcon={true}
-              isShowBottomBorder={index < (settings.length ?? 0) - 1}
-              onPress={() => router.push(`/(app)/(stack)/notifications`)}
-            />
-          )}
-        />
+        <View className='-mx-5 bg-white'>
+          <FlashList
+            data={settings}
+            renderItem={({ item, index }) => (
+              <Lists
+                key={`settings-${String(index) + 1}`}
+                title={item.title}
+                isShowRightIcon={true}
+                isShowBottomBorder={index < (settings.length ?? 0) - 1}
+                onPress={() => router.push(`/(app)/(stack)/notifications`)}
+              />
+            )}
+            contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 12 }}
+          />
+        </View>
       </View>
       <View className='mb-5'>
         <Text className='mb-3 text-xl font-bold text-body'>
           非表示・ブロック設定
         </Text>
-        <FlashList
-          data={blockedSettings}
-          renderItem={({ item, index }) => (
-            <Lists
-              key={`blocked-settings-${String(index) + 1}`}
-              title={item.title}
-              isShowRightIcon={true}
-              isShowBottomBorder={index < (blockedSettings.length ?? 0) - 1}
-              onPress={() => router.push(`/(app)/(stack)/notifications`)}
-            />
-          )}
-        />
-      </View>
-      <Text className='mb-3 text-xl font-bold text-body'>サポート</Text>
-      <FlashList
-        data={supportSettings}
-        renderItem={({ item, index }) => (
-          <Lists
-            key={`support-settings-${String(index) + 1}`}
-            title={item.title}
-            isShowRightIcon={true}
-            isShowBottomBorder={index < (supportSettings.length ?? 0) - 1}
-            onPress={() => router.push(`/(app)/(stack)/notifications`)}
+        <View className='-mx-5 bg-white'>
+          <FlashList
+            data={blockedSettings}
+            renderItem={({ item, index }) => (
+              <Lists
+                key={`blocked-settings-${String(index) + 1}`}
+                title={item.title}
+                isShowRightIcon={true}
+                isShowBottomBorder={index < (blockedSettings.length ?? 0) - 1}
+                onPress={() => router.push(`/(app)/(stack)/notifications`)}
+              />
+            )}
+            contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 12 }}
           />
-        )}
-      />
+        </View>
+      </View>
+      <View className='mb-5'>
+        <Text className='mb-3 text-xl font-bold text-body'>サポート</Text>
+        <View className='-mx-5 bg-white'>
+          <FlashList
+            data={supportSettings}
+            renderItem={({ item, index }) => (
+              <Lists
+                key={`support-settings-${String(index) + 1}`}
+                title={item.title}
+                isShowRightIcon={true}
+                isShowBottomBorder={index < (supportSettings.length ?? 0) - 1}
+                onPress={() => router.push(`/(app)/(stack)/notifications`)}
+              />
+            )}
+            contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 12 }}
+          />
+        </View>
+      </View>
     </Container>
   );
 }

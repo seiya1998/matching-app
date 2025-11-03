@@ -43,7 +43,7 @@ const Container = forwardRef<ScrollView, ContainerProps>(
 
     const content = (
       <View
-        className={`mx-5 flex-1 ${style ?? ''}`}
+        className={`flex-1 px-5 ${style ?? ''}`}
         style={{ paddingTop: isPaddingTop ? insets.top : 0 }}
       >
         {children}
