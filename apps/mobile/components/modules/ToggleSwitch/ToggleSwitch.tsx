@@ -14,8 +14,8 @@ type Props = {
   onToggle: () => void;
 };
 
-const TOGGLE_SWITCH_WIDTH = 60;
-const TOGGLE_SWITCH_HEIGHT = 32;
+const TOGGLE_SWITCH_WIDTH = 51;
+const TOGGLE_SWITCH_HEIGHT = 31;
 const TOGGLE_PADDING = -1;
 
 export function ToggleSwitch({ isEnabled, onToggle }: Props) {
@@ -62,12 +62,12 @@ export function ToggleSwitch({ isEnabled, onToggle }: Props) {
   return (
     <Pressable onPress={handlePress} disabled={isAnimating.value}>
       <Animated.View
-        className={cn('h-8 w-[60px] rounded-full p-0.5')}
+        className={cn('h-[31px] w-[51px] rounded-full p-0.5')}
         style={containerStyle}
       >
         <Animated.View
           className={cn(
-            'elevation-5 h-7 w-7 rounded-full bg-white shadow-lg shadow-black/30'
+            'elevation-5 h-[27px] w-[27px] rounded-full bg-white shadow-lg shadow-black/30'
           )}
           style={thumbStyle}
         />

@@ -7,53 +7,53 @@ import { View } from 'react-native';
 const settings = [
   {
     title: '通知設定',
-    path: '/settings/notification'
+    path: '/(app)/(stack)/settings/notification'
   },
   {
     title: '足あと設定',
-    path: '/settings/footprints'
+    path: '/(app)/(stack)/settings/footprints'
   },
   {
     title: 'プライベートモード設定',
-    path: '/settings/private'
+    path: '/(app)/(stack)/settings/private'
   },
   {
     title: '有料会員の解約',
-    path: '/settings/premium'
+    path: '/(app)/(stack)/settings/premium'
   }
 ] as const;
 
 const blockedSettings = [
   {
     title: '非表示リスト',
-    path: '/hidden-users'
+    path: '/(app)/(stack)/hidden-users'
   },
   {
     title: 'ブロックリスト',
-    path: '/blocked-users'
+    path: '/(app)/(stack)/blocked-users'
   }
 ] as const;
 
 const supportSettings = [
   {
     title: 'ヘルプ・お問い合わせ',
-    path: '/help'
+    path: '/(app)/(stack)/help'
   },
   {
     title: '利用規約',
-    path: '/terms'
+    path: '/(app)/(stack)/terms'
   },
   {
     title: 'プライバシーポリシー',
-    path: '/privacy'
+    path: '/(app)/(stack)/privacy'
   },
   {
     title: 'ログアウト',
-    path: '/logout'
+    path: '/(app)/(stack)/logout'
   },
   {
     title: 'miraiを退会する',
-    path: '/delete-account'
+    path: '/(app)/(stack)/delete-account'
   }
 ] as const;
 
@@ -71,7 +71,7 @@ export default function Settings() {
                 title={item.title}
                 isShowRightIcon={true}
                 isShowBottomBorder={index < (settings.length ?? 0) - 1}
-                onPress={() => router.push(`/(app)/(stack)/notifications`)}
+                onPress={() => router.push(item.path as any)}
               />
             )}
             contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 12 }}
@@ -91,7 +91,7 @@ export default function Settings() {
                 title={item.title}
                 isShowRightIcon={true}
                 isShowBottomBorder={index < (blockedSettings.length ?? 0) - 1}
-                onPress={() => router.push(`/(app)/(stack)/notifications`)}
+                onPress={() => router.push(item.path as any)}
               />
             )}
             contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 12 }}
@@ -109,7 +109,7 @@ export default function Settings() {
                 title={item.title}
                 isShowRightIcon={true}
                 isShowBottomBorder={index < (supportSettings.length ?? 0) - 1}
-                onPress={() => router.push(`/(app)/(stack)/notifications`)}
+                onPress={() => router.push(item.path as any)}
               />
             )}
             contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 12 }}

@@ -49,6 +49,12 @@ export default function AppLayout() {
         }}
       />
       <Stack.Screen
+        name='(stack)/settings/notification'
+        options={{
+          headerTitle: '通知設定'
+        }}
+      />
+      <Stack.Screen
         name='(stack)/notifications/index'
         options={{
           headerTitle: 'お知らせ'
