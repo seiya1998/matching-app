@@ -75,7 +75,7 @@ export const UserImageGallery = memo<UserImageGalleryProps>(({ images }) => {
   );
 
   return (
-    <View className='mt-[80px]'>
+    <View className='mt-[70px]'>
       {/* メイン画像スライダー */}
       <Carousel
         ref={carouselRef}

@@ -1,9 +1,10 @@
+import { memo } from 'react';
 import { TabBar } from 'react-native-tab-view';
 import type { TabBarProps } from 'react-native-tab-view';
 
 type LikesTabBarProps = TabBarProps<{ key: string; title: string }>;
 
-export const LikesTabBar = (props: LikesTabBarProps) => {
+export const LikesTabBar = memo<LikesTabBarProps>((props) => {
   return (
     <TabBar
       {...props}
@@ -20,4 +21,6 @@ export const LikesTabBar = (props: LikesTabBarProps) => {
       tabStyle={{ paddingVertical: 8 }}
     />
   );
-};
+});
+
+LikesTabBar.displayName = 'LikesTabBar';

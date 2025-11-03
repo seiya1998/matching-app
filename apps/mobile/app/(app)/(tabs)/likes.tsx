@@ -1,4 +1,4 @@
-import { Container, Text, Button, ScreenWrapper } from '@/components/bases';
+import { Container } from '@/components/bases';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import {
   ReceivedLikes,
