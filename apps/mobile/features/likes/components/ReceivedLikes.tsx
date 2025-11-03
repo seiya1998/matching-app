@@ -1,5 +1,5 @@
 import { View, Dimensions } from 'react-native';
-import { Text, Button } from '@/components/bases';
+import { Button } from '@/components/bases';
 import { Swiper, type SwiperCardRefType } from 'rn-swiper-list';
 import { useRef, useState, useCallback } from 'react';
 import { EvilIcons } from '@expo/vector-icons';
@@ -7,6 +7,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { SwipeLikeOverlay } from './SwipeLikeOverlay';
 import { SwipeSkipOverlay } from './SwipeSkipOverlay';
 import { UserSwipeCard } from './UserSwipeCard';
+import { EmptyReceivedLikes } from './EmptyReceivedLikes';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CARD_WIDTH = SCREEN_WIDTH - 40;
@@ -89,15 +90,7 @@ export const ReceivedLikes = () => {
       <View className='flex-1 px-5'>
         <View className='mt-5 flex-1 items-center'>
           {currentIndex >= MOCK_USERS.length ? (
-            <View
-              className='items-center justify-center rounded-[20px] bg-gray-100'
-              style={{
-                width: CARD_WIDTH,
-                height: 520
-              }}
-            >
-              <Text className='text-xl text-gray-600'>✨ すべて見ました</Text>
-            </View>
+            <EmptyReceivedLikes cardWidth={CARD_WIDTH} />
           ) : (
             <Swiper
               ref={swiperRef}
