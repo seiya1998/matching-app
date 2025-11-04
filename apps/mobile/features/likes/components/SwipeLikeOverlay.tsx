@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from '@/components/bases';
-import { EvilIcons } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { LinearGradient } from 'expo-linear-gradient';
 
 export const SwipeLikeOverlay = memo(() => {
@@ -20,7 +20,7 @@ export const SwipeLikeOverlay = memo(() => {
     >
       <View className='flex-1 justify-center items-start pl-12'>
         <View className='items-center gap-2'>
-          <EvilIcons name='like' size={64} color='white' />
+          <MaterialCommunityIcons name='thumb-up' size={64} color='white' />
           <Text className='text-3xl font-bold text-white'>いいね</Text>
         </View>
       </View>

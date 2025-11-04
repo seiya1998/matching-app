@@ -3,7 +3,7 @@ import { Text, Button } from '@/components/bases';
 import { cn } from '@/utils';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import EvilIcons from '@expo/vector-icons/EvilIcons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 type BaseListsProps = {
   listType?: 'L' | 'M' | null;
@@ -69,7 +69,7 @@ export function Lists({
       </View>
     ) : leftIconType === 'like' ? (
       <View className='h-14 w-14 items-center justify-center rounded-full bg-red-500'>
-        <EvilIcons size={32} name='like' color='white' />
+        <MaterialCommunityIcons size={28} name='thumb-up' color='white' />
       </View>
     ) : leftIconType === 'star' ? (
       <View className='h-14 w-14 items-center justify-center rounded-full bg-yellow-500'>

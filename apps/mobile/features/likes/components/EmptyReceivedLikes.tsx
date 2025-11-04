@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { View } from 'react-native';
 import { Text } from '@/components/bases';
-import { EvilIcons } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 type EmptyReceivedLikesProps = {
   cardWidth: number;
@@ -18,7 +18,7 @@ export const EmptyReceivedLikes = memo<EmptyReceivedLikesProps>(
           height: cardHeight
         }}
       >
-        <EvilIcons name='like' size={80} color='#9CA3AF' />
+        <MaterialCommunityIcons name='thumb-up-outline' size={80} color='#9CA3AF' />
         <Text className='mt-10 text-xl font-bold text-body'>
           もらった「いいね！」はありません
         </Text>

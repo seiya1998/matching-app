@@ -1,13 +1,12 @@
 import { Tabs, router } from 'expo-router';
 import React from 'react';
-import EvilIcons from '@expo/vector-icons/EvilIcons';
-import AntDesign from '@expo/vector-icons/AntDesign';
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Button, Text } from '@/components/bases';
 import { ChevronBack } from '@/assets/svgs';
 import { View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 export default function TabLayout() {
   return (
@@ -42,8 +41,12 @@ export default function TabLayout() {
           title: 'ホーム',
           headerShown: false,
           headerLeft: () => null,
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name='house' color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <IconSymbol
+              size={28}
+              name={focused ? 'house.fill' : 'house'}
+              color={color}
+            />
           )
         }}
       />
@@ -53,8 +56,12 @@ export default function TabLayout() {
           title: 'いいね',
           headerShown: false,
           headerLeft: () => null,
-          tabBarIcon: ({ color }) => (
-            <EvilIcons size={32} name='like' color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              size={24}
+              name={focused ? 'thumb-up' : 'thumb-up-outline'}
+              color={color}
+            />
           )
         }}
       />
@@ -64,8 +71,12 @@ export default function TabLayout() {
           headerTitle: 'メッセージ',
           headerLeft: () => null,
           title: 'メッセージ',
-          tabBarIcon: ({ color }) => (
-            <AntDesign size={22} name='message' color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialCommunityIcons
+              size={26}
+              name={focused ? 'comment-processing' : 'comment-processing-outline'}
+              color={color}
+            />
           )
         }}
       />
@@ -97,8 +108,12 @@ export default function TabLayout() {
             );
           },
           title: 'マイページ',
-          tabBarIcon: ({ color }) => (
-            <EvilIcons size={32} name='user' color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              size={26}
+              name={focused ? 'person' : 'person-outline'}
+              color={color}
+            />
           )
         }}
       />

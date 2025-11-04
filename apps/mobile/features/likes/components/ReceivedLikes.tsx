@@ -2,7 +2,6 @@ import { View, Dimensions } from 'react-native';
 import { Button } from '@/components/bases';
 import { Swiper, type SwiperCardRefType } from 'rn-swiper-list';
 import { useRef, useState, useCallback } from 'react';
-import { EvilIcons } from '@expo/vector-icons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { SwipeLikeOverlay } from './SwipeLikeOverlay';
 import { SwipeSkipOverlay } from './SwipeSkipOverlay';
@@ -129,7 +128,7 @@ export const ReceivedLikes = () => {
             onPress={handleSwipeRight}
             className='h-[70px] w-[70px] items-center justify-center rounded-full bg-green-500 shadow-md'
           >
-            <EvilIcons name='like' size={40} color='white' />
+            <MaterialCommunityIcons name='thumb-up' size={30} color='white' />
           </Button>
         </View>
       )}
