@@ -66,6 +66,12 @@ export default function AppLayout() {
           headerTitle: 'お知らせ'
         }}
       />
+      <Stack.Screen
+        name='(stack)/favorites/index'
+        options={{
+          headerTitle: 'お気に入り'
+        }}
+      />
     </Stack>
   );
 }

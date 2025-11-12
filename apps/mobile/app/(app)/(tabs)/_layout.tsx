@@ -2,7 +2,7 @@ import { Tabs, router } from 'expo-router';
 import React from 'react';
 import { HapticTab } from '@/components/haptic-tab';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Button, Text } from '@/components/bases';
+import { Button } from '@/components/bases';
 import { ChevronBack } from '@/assets/svgs';
 import { View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -74,7 +74,9 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <MaterialCommunityIcons
               size={26}
-              name={focused ? 'comment-processing' : 'comment-processing-outline'}
+              name={
+                focused ? 'comment-processing' : 'comment-processing-outline'
+              }
               color={color}
             />
           )

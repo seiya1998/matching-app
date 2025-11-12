@@ -14,7 +14,7 @@ export default function Mypages() {
     {
       leftIconType: 'star',
       title: 'お気に入り',
-      path: '/likes'
+      path: '/favorites'
     },
     {
       leftIconType: 'like',
