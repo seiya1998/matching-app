@@ -1,0 +1,1 @@
+export { FootprintCard } from './FootprintCard';

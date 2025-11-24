@@ -72,6 +72,12 @@ export default function AppLayout() {
           headerTitle: 'お気に入り'
         }}
       />
+      <Stack.Screen
+        name='(stack)/footprints/index'
+        options={{
+          headerTitle: '足あと'
+        }}
+      />
     </Stack>
   );
 }

@@ -4,7 +4,7 @@ import { Image } from 'expo-image';
 import { Text, Button } from '@/components/bases';
 import { cn } from '@/utils';
 
-type CardSize = 'small' | 'medium';
+type CardSize = 'small' | 'medium' | 'full';
 
 type ImageCardProps = {
   image: string | { uri: string } | number; // URL、require()、またはオブジェクト
@@ -27,6 +27,12 @@ const sizePresets = {
   medium: {
     width: 170,
     imageHeight: 170,
+    textSize: 'text-m',
+    padding: 'px-3 py-2'
+  },
+  full: {
+    width: '100%',
+    aspectRatio: 1.2,
     textSize: 'text-m',
     padding: 'px-3 py-2'
   }
@@ -56,15 +62,18 @@ export const ImageCard: React.FC<ImageCardProps> = ({
     ? { width: '100%' as const, aspectRatio, borderRadius: 12 }
     : { width: '100%' as const, height: cardImageHeight, borderRadius: 12 };
 
+  const cardWidthStyle = typeof cardWidth === 'string' ? undefined : { width: cardWidth };
+
   return (
     <Button onPress={onPress} className='p-0' activeOpacity={0.8}>
       <View
         className={cn(
           'overflow-hidden rounded-xl bg-white',
           shadow && 'shadow-lg',
+          typeof cardWidth === 'string' && 'w-full',
           className
         )}
-        style={{ width: cardWidth }}
+        style={cardWidthStyle}
       >
         {/* 画像部分 */}
         <Image

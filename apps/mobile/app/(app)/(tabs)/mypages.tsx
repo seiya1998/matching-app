@@ -9,7 +9,7 @@ export default function Mypages() {
     {
       leftIconType: 'footprint',
       title: '足あと',
-      path: '/likes'
+      path: '/footprints'
     },
     {
       leftIconType: 'star',
