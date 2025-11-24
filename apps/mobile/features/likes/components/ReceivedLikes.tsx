@@ -2,6 +2,7 @@ import { View, Dimensions } from 'react-native';
 import { Button } from '@/components/bases';
 import { Swiper, type SwiperCardRefType } from 'rn-swiper-list';
 import { useRef, useState, useCallback } from 'react';
+import { router } from 'expo-router';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { SwipeLikeOverlay } from './SwipeLikeOverlay';
 import { SwipeSkipOverlay } from './SwipeSkipOverlay';
@@ -74,11 +75,22 @@ export const ReceivedLikes = () => {
     setCurrentIndex((prev) => prev + 1);
   };
 
+  const handleCardPress = useCallback(() => {
+    if (currentIndex < MOCK_USERS.length) {
+      const userId = MOCK_USERS[currentIndex].id;
+      router.push(`/(app)/(stack)/users/${userId}`);
+    }
+  }, [currentIndex]);
+
   const renderCard = useCallback(
     (user: (typeof MOCK_USERS)[0]) => (
-      <UserSwipeCard user={user} cardWidth={CARD_WIDTH} />
+      <UserSwipeCard
+        user={user}
+        cardWidth={CARD_WIDTH}
+        onPress={() => handleCardPress()}
+      />
     ),
-    []
+    [handleCardPress]
   );
 
   const renderOverlayLabelRight = useCallback(() => <SwipeLikeOverlay />, []);
@@ -97,6 +109,7 @@ export const ReceivedLikes = () => {
               renderCard={renderCard}
               onSwipeLeft={onSwipedLeft}
               onSwipeRight={onSwipedRight}
+              onPress={handleCardPress}
               cardStyle={{
                 width: CARD_WIDTH,
                 height: 520

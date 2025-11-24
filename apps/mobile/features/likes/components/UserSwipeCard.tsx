@@ -3,7 +3,6 @@ import { View } from 'react-native';
 import { Image, ImageSource } from 'expo-image';
 import { Text, Button } from '@/components/bases';
 import { cn } from '@/utils/classNames';
-import { router } from 'expo-router';
 
 type UserSwipeCardProps = {
   user: {
@@ -17,10 +16,11 @@ type UserSwipeCardProps = {
   };
   cardWidth: number;
   cardHeight?: number;
+  onPress?: () => void;
 };
 
 export const UserSwipeCard = memo<UserSwipeCardProps>(
-  ({ user, cardWidth, cardHeight = 520 }) => {
+  ({ user, cardWidth, cardHeight = 520, onPress }) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const imageList = user.images as ImageSource[];
 
@@ -28,14 +28,8 @@ export const UserSwipeCard = memo<UserSwipeCardProps>(
       setActiveIndex(index);
     }, []);
 
-    const handleCardPress = useCallback(() => {
-      router.push(`/(app)/(stack)/users/${user.id}`);
-    }, [user.id]);
-
     return (
-      <Button
-        onPress={handleCardPress}
-        activeOpacity={1}
+      <View
         className='overflow-hidden rounded-[20px] bg-white shadow-lg'
         style={{
           width: cardWidth,
@@ -90,7 +84,7 @@ export const UserSwipeCard = memo<UserSwipeCardProps>(
           </View>
           <Text className='text-m text-white'>{user.bio}</Text>
         </View>
-      </Button>
+      </View>
     );
   }
 );
