@@ -28,7 +28,7 @@ module.exports = {
       `prettier --write --ignore-unknown --config ../../.prettierrc.js ${files.join(
         ' '
       )}`,
-      // 'npx prisma format',
+      'npx prisma format',
       'secretlint "**/*"'
     ];
   }

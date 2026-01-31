@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  matching-app-api-server:
+    container_name: matching-app-api-server
+    build:
+      context: .
+      dockerfile: ./apps/server/Dockerfile
+    volumes:
+      - ./apps/server/src:/app/src
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=mysql://root:mypassword@matching-app-mysql-server:3306/mydb
+    depends_on:
+      matching-app-mysql-server:
+        condition: service_healthy
+    ports:
+      - "3001:8080"
+    networks:
+      - local-net
+    platform: linux/arm64
+
+  matching-app-mysql-server:
+    container_name: matching-app-mysql-server
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: mypassword
+      MYSQL_ROOT_PASSWORD: mypassword
+      TZ: "Asia/Tokyo"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    ports:
+      - "3306:3306"
+    networks:
+      - local-net
+
+networks:
+  local-net:
+    driver: bridge
