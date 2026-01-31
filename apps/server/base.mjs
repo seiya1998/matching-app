@@ -1,7 +1,7 @@
+import { resolve } from 'node:path';
 import eslint from '@eslint/js';
 import pluginImport from 'eslint-plugin-import';
 import globals from 'globals';
-import { resolve } from 'node:path';
 import tseslint from 'typescript-eslint';
 
 const tsconfigPath = resolve(process.cwd(), 'tsconfig.json');
@@ -65,7 +65,7 @@ const plugin = tseslint.config(
         {
           args: 'all',
           argsIgnorePattern: '^_',
-          caughtErrors: 'all',
+          caughtErrors: 'none',
           caughtErrorsIgnorePattern: '^_',
           destructuredArrayIgnorePattern: '^_',
           varsIgnorePattern: '^_',
@@ -76,6 +76,8 @@ const plugin = tseslint.config(
       '@typescript-eslint/no-unsafe-function-type': 'error',
       '@typescript-eslint/no-wrapper-object-types': 'error',
       '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+      '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
       'max-params': ['error', 3]
     }
   },

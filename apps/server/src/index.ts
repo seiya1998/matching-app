@@ -1,4 +1,5 @@
 /* eslint-disable functional/no-return-void, functional/no-expression-statements, functional/no-conditional-statements */
+import 'dotenv/config';
 import cors from '@fastify/cors';
 import helmet from '@fastify/helmet';
 import fastify from 'fastify';
