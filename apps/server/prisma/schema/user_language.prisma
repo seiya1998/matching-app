@@ -30,8 +30,8 @@ model RUserLanguages {
   language Language @map("language")
 
   // リレーション
-  user                RUsers?                @relation(fields: [userId], references: [id])
-  userLanguageUpdates EUserLanguageUpdates[]
+  user               RUsers?                @relation(fields: [userId], references: [id])
+  userLanguageUpdate EUserLanguageUpdates[]
 
   @@unique([userId, language])
   @@map("r_user_languages")

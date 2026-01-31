@@ -1,3 +1,429 @@
 //// ------------------------------------------------------
 //// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 //// ------------------------------------------------------
+
+Table r_user_introductions {
+  id String [pk]
+  userId String [unique, not null]
+  content String [not null]
+  user r_users [not null]
+  userIntroductionUpdate e_user_introduction_updates [not null]
+}
+
+Table e_user_introduction_updates {
+  id String [pk]
+  userIntroductionId String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  userIntroduction r_user_introductions [not null]
+}
+
+Table r_user_languages {
+  id String [pk]
+  userId String [not null]
+  language Language [not null]
+  user r_users
+  userLanguageUpdate e_user_language_updates [not null]
+
+  indexes {
+    (userId, language) [unique]
+  }
+}
+
+Table e_user_language_updates {
+  id String [pk]
+  userLanguageId String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  userLanguage r_user_languages [not null]
+}
+
+Table r_user_personality_types {
+  id String [pk]
+  userId String [not null]
+  personalityType PersonalityType [not null]
+  user r_users [not null]
+  userPersonalityTypeUpdate e_user_personality_type_updates [not null]
+
+  indexes {
+    (userId, personalityType) [unique]
+  }
+}
+
+Table e_user_personality_type_updates {
+  id String [pk]
+  userPersonalityTypeId String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  userPersonalityType r_user_personality_types [not null]
+}
+
+Table r_user_profiles {
+  id String [pk]
+  userId String [unique, not null]
+  nickname String [not null]
+  bloodType BloodType
+  height Int
+  bodyType BodyType
+  residencePrefecture String
+  residenceCity String
+  birthplace String
+  workplacePrefecture String
+  workplaceCity String
+  siblingPosition SiblingPosition
+  educationLevel EducationLevel
+  schoolName String
+  annualIncomeRange AnnualIncomeRange
+  occupation Occupation
+  occupationName String
+  holiday Holiday
+  drinkingHabit DrinkingHabit
+  smokingHabit SmokingHabit
+  livingSituation LivingSituation
+  maritalHistory MaritalHistory
+  hasChildren HasChildren
+  marriageIntention MarriageIntention
+  wantsChildren WantsChildren
+  houseworkChildcare HouseworkChildcare
+  meetingPreference MeetingPreference
+  dateExpense DateExpense
+  sociability Sociability
+  user r_users [not null]
+  userProfileUpdate e_user_profile_updates [not null]
+}
+
+Table e_user_profile_updates {
+  id String [pk]
+  userProfileId String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  userProfile r_user_profiles [not null]
+}
+
+Table r_devices {
+  id String [pk]
+  deviceId String [unique, not null]
+  deviceModelId String [not null]
+  expoPushToken String [not null]
+  user r_users
+}
+
+Table r_users {
+  id String [pk]
+  deviceId String [unique]
+  gender Gender [not null]
+  birthYear Int [not null]
+  birthMonth Int [not null]
+  birthDay Int [not null]
+  currentMembershipStatus MembershipStatus [not null]
+  currentVerificationStatus VerificationStatus [not null]
+  currentLoginStatus LoginStatus [not null]
+  device r_devices
+  profile r_user_profiles
+  introduction r_user_introductions
+  languages r_user_languages [not null]
+  personalityTypes r_user_personality_types [not null]
+}
+
+Enum Language {
+  JAPANESE
+  ENGLISH
+  CHINESE
+  HINDI
+  SPANISH
+  RUSSIAN
+  FRENCH
+  ARABIC
+  PORTUGUESE
+  MALAY
+  BENGALI
+  GERMAN
+  URDU
+  ITALIAN
+  KOREAN
+  VIETNAMESE
+  PERSIAN
+  TAGALOG
+  THAI
+  TURKISH
+  OTHER
+}
+
+Enum PersonalityType {
+  KIND
+  STRAIGHTFORWARD
+  DECISIVE
+  GENTLE
+  APPROACHABLE
+  CHEERFUL
+  INDOOR
+  OUTDOOR
+  EARNEST
+  INTELLECTUAL
+  SINCERE
+  METICULOUS
+  OPTIMISTIC
+  SHY
+  ALWAYS_SMILING
+  ELEGANT
+  COMPOSED
+  HUMBLE
+  STRICT
+  COMPASSIONATE
+  LONELY
+  SOCIABLE
+  COOL_HEADED
+  CURIOUS
+  FAMILY_ORIENTED
+  CAREER_ORIENTED
+  RESPONSIBLE
+  CARING
+  GOOD_TALKER
+  GOOD_LISTENER
+  REFRESHING
+  ACTION_ORIENTED
+  RATIONAL
+  COMPETITIVE
+  FUNNY
+  PASSIONATE
+  PERCEPTIVE
+  ATTENTIVE
+  BOLD
+  TOLERANT
+  GENEROUS
+  NATURAL
+  GENUINE
+  EASYGOING
+  RESERVED
+  MOODY
+}
+
+Enum BloodType {
+  A
+  B
+  O
+  AB
+}
+
+Enum BodyType {
+  SLIM
+  AVERAGE
+  GLAMOROUS
+  ATHLETIC
+  CHUBBY
+  HEAVY
+}
+
+Enum SiblingPosition {
+  ELDEST
+  SECOND
+  THIRD
+  ONLY_CHILD
+  OTHER
+}
+
+Enum EducationLevel {
+  HIGH_SCHOOL
+  COLLEGE
+  UNIVERSITY
+  GRADUATE_SCHOOL
+  OTHER
+}
+
+Enum AnnualIncomeRange {
+  BELOW_200
+  BETWEEN_200_400
+  BETWEEN_400_600
+  BETWEEN_600_800
+  BETWEEN_800_1000
+  BETWEEN_1000_1500
+  BETWEEN_1500_2000
+  BETWEEN_2000_3000
+  ABOVE_3000
+}
+
+Enum Holiday {
+  WEEKENDS
+  WEEKDAYS
+  IRREGULAR
+  OTHER
+}
+
+Enum DrinkingHabit {
+  NEVER
+  SOMETIMES
+  REGULARLY
+}
+
+Enum SmokingHabit {
+  NEVER
+  SOMETIMES
+  REGULARLY
+  E_CIGARETTE
+  WILL_QUIT_FOR_PARTNER
+  NOT_AROUND_NONSMOKERS
+}
+
+Enum LivingSituation {
+  ALONE
+  ROOMSHARE
+  WITH_PET
+  WITH_FAMILY
+  OTHER
+}
+
+Enum MaritalHistory {
+  NEVER_MARRIED
+  DIVORCED
+  WIDOWED
+}
+
+Enum HasChildren {
+  NONE
+  LIVING_TOGETHER
+  NOT_TOGETHER
+}
+
+Enum MarriageIntention {
+  ASAP
+  WITHIN_2_3_YEARS
+  IF_RIGHT
+  DISCUSS
+  UNSURE
+}
+
+Enum WantsChildren {
+  YES
+  NO
+  DISCUSS
+  UNSURE
+}
+
+Enum HouseworkChildcare {
+  WILLING
+  IF_POSSIBLE
+  COOPERATE
+  PREFER_PARTNER
+  LEAVE_TO_PARTNER
+}
+
+Enum MeetingPreference {
+  RIGHT_AWAY
+  IF_WE_CLICK
+  AFTER_CHATTING
+}
+
+Enum DateExpense {
+  SPLIT_EQUALLY
+  I_PAY_ALL
+  I_PAY_MORE
+  PARTNER_PAYS_ALL
+  PARTNER_PAYS_MORE
+  WHOEVER_CAN
+  DISCUSS
+}
+
+Enum Sociability {
+  LOVES_GROUPS
+  PREFERS_ALONE
+  QUICK_TO_BOND
+  GRADUALLY
+}
+
+Enum Occupation {
+  LISTED_COMPANY
+  FINANCE
+  GOVERNMENT
+  MILITARY
+  FIREFIGHTER
+  CONSULTANT
+  EXECUTIVE
+  MAJOR_COMPANY
+  MAJOR_FOREIGN
+  MAJOR_TRADING
+  FOREIGN_FINANCE
+  SALES
+  DOCTOR
+  PHARMACIST
+  MEDICAL
+  NURSE
+  BEAUTY
+  LAWYER
+  ACCOUNTANT
+  TAX_ACCOUNTANT
+  AVIATION
+  ADVERTISING
+  MEDIA
+  EDUCATION
+  IT
+  FOOD
+  TRAVEL
+  DISTRIBUTION
+  PHARMACEUTICAL
+  INSURANCE
+  REAL_ESTATE
+  CONSTRUCTION
+  TELECOMMUNICATIONS
+  MANUFACTURING
+  WEB
+  ENGINEER
+  DESIGNER
+  CREATOR
+  SERVICE
+  CHEF_NUTRITIONIST
+  APPAREL
+  ENTERTAINMENT
+  ATHLETE
+  ANNOUNCER
+  ENTERTAINER_MODEL
+  RECEPTIONIST
+  SECRETARY
+  OFFICE_WORKER
+  WELFARE
+  CHILDCARE
+  COMPANY_EMPLOYEE
+  STUDENT
+  SELF_EMPLOYED
+  FREELANCE
+  BRIDAL
+  OTHER
+}
+
+Enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+Enum MembershipStatus {
+  FREE
+  PREMIUM
+  LAPSED
+  CANCELED
+}
+
+Enum VerificationStatus {
+  UNVERIFIED
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+Enum LoginStatus {
+  LOGGED_OUT
+  LOGGED_IN
+}
+
+Ref: r_user_introductions.userId - r_users.id
+
+Ref: e_user_introduction_updates.userIntroductionId > r_user_introductions.id
+
+Ref: r_user_languages.userId > r_users.id
+
+Ref: e_user_language_updates.userLanguageId > r_user_languages.id
+
+Ref: r_user_personality_types.userId > r_users.id
+
+Ref: e_user_personality_type_updates.userPersonalityTypeId > r_user_personality_types.id
+
+Ref: r_user_profiles.userId - r_users.id
+
+Ref: e_user_profile_updates.userProfileId > r_user_profiles.id
+
+Ref: r_users.deviceId - r_devices.id

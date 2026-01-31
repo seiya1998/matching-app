@@ -9,7 +9,8 @@
     "start": "node dist/index.js",
     "lint": "eslint --fix --config .eslintrc.js",
     "lint-staged": "lint-staged --config .lintstagedrc.js",
-    "prisma:generate": "pnpm prisma generate"
+    "prisma:generate": "pnpm prisma generate",
+    "db:seed": "pnpm prisma db seed"
   },
   "dependencies": {
     "@fastify/autoload": "^6.3.1",
@@ -18,7 +19,7 @@
     "@fastify/swagger": "^9.6.1",
     "@fastify/swagger-ui": "^5.2.5",
     "@fastify/websocket": "^11.2.0",
-    "@prisma/adapter-pg": "^7.3.0",
+    "@prisma/adapter-mariadb": "^7.3.0",
     "@prisma/client": "^7.3.0",
     "cuid": "^3.0.0",
     "date-fns": "^4.1.0",
@@ -34,6 +35,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@faker-js/faker": "^10.2.0",
     "@secretlint/secretlint-rule-preset-recommend": "^11.3.1",
     "@tsconfig/strictest": "^2.0.8",
     "@types/jest": "^30.0.0",
@@ -62,6 +64,7 @@
     "ts-jest": "^29.4.6",
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.21.0",
     "typescript-eslint": "^8.54.0"
   }
 }

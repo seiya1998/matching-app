@@ -5,8 +5,8 @@ model RUserIntroductions {
   content String @map("content") // 自己紹介文
 
   // リレーション
-  user                    RUsers                     @relation(fields: [userId], references: [id])
-  userIntroductionUpdates EUserIntroductionUpdates[]
+  user                   RUsers                     @relation(fields: [userId], references: [id])
+  userIntroductionUpdate EUserIntroductionUpdates[]
 
   @@map("r_user_introductions")
 }

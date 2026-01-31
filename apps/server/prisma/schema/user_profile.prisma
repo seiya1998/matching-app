@@ -241,8 +241,8 @@ model RUserProfiles {
   sociability         Sociability?        @map("sociability") // 社交性
 
   // リレーション
-  user               RUsers                @relation(fields: [userId], references: [id])
-  userProfileUpdates EUserProfileUpdates[]
+  user              RUsers                @relation(fields: [userId], references: [id])
+  userProfileUpdate EUserProfileUpdates[]
 
   // インデックス
   @@index([residencePrefecture, residenceCity])

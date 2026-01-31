@@ -54,8 +54,8 @@ model RUserPersonalityTypes {
   personalityType PersonalityType @map("personality_type")
 
   // リレーション
-  user                       RUsers                        @relation(fields: [userId], references: [id])
-  userPersonalityTypeUpdates EUserPersonalityTypeUpdates[]
+  user                      RUsers                        @relation(fields: [userId], references: [id])
+  userPersonalityTypeUpdate EUserPersonalityTypeUpdates[]
 
   @@unique([userId, personalityType])
   @@map("r_user_personality_types")
