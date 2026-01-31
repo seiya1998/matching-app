@@ -1,0 +1,24 @@
+// 自己紹介
+model RUserIntroductions {
+  id      String @id @default(cuid())
+  userId  String @unique @map("user_id")
+  content String @map("content") // 自己紹介文
+
+  // リレーション
+  user                    RUsers                     @relation(fields: [userId], references: [id])
+  userIntroductionUpdates EUserIntroductionUpdates[]
+
+  @@map("r_user_introductions")
+}
+
+// 自己紹介更新
+model EUserIntroductionUpdates {
+  id                 String   @id @default(cuid())
+  userIntroductionId String   @map("user_introduction_id")
+  createdAt          DateTime @default(now()) @map("created_at")
+
+  // リレーション
+  userIntroduction RUserIntroductions @relation(fields: [userIntroductionId], references: [id])
+
+  @@map("e_user_introduction_updates")
+}

@@ -1,0 +1,67 @@
+// 性別情報
+enum Gender {
+  MALE // 男性
+  FEMALE // 女性
+  OTHER // その他
+}
+
+// 会員ステータス
+enum MembershipStatus {
+  FREE // 無料会員
+  PREMIUM // 有料会員
+  LAPSED // 有料会員解約
+  CANCELED // 退会済み
+}
+
+// 本人認証ステータス
+enum VerificationStatus {
+  UNVERIFIED // 未認証
+  PENDING // 審査中
+  VERIFIED // 認証済み
+  REJECTED // 審査拒否
+}
+
+// ログインステータス
+enum LoginStatus {
+  LOGGED_OUT // ログアウト中
+  LOGGED_IN // ログイン中
+}
+
+// デバイス情報
+model RDevices {
+  id            String  @id @default(cuid())
+  deviceId      String  @unique @map("device_id")
+  deviceModelId String  @map("device_model_id")
+  expoPushToken String  @map("expo_push_token")
+  user          RUsers?
+
+  // インデックス
+  @@index([deviceId])
+  @@map("r_devices")
+}
+
+// ユーザー情報
+model RUsers {
+  id         String  @id @default(cuid())
+  deviceId   String? @unique @map("device_id")
+  gender     Gender  @map("gender")
+  birthYear  Int     @map("birth_year")
+  birthMonth Int     @map("birth_month")
+  birthDay   Int     @map("birth_day")
+
+  // 会員ステータス・本人認証ステータス・ログインステータス
+  currentMembershipStatus   MembershipStatus   @map("current_membership_status")
+  currentVerificationStatus VerificationStatus @map("current_verification_status")
+  currentLoginStatus        LoginStatus        @map("current_login_status")
+
+  // リレーション
+  device           RDevices?               @relation(fields: [deviceId], references: [id])
+  profile          RUserProfiles?
+  introduction     RUserIntroductions?
+  languages        RUserLanguages[]
+  personalityTypes RUserPersonalityTypes[]
+
+  // インデックス
+  @@index([gender, birthYear])
+  @@map("r_users")
+}

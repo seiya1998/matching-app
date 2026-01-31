@@ -1,0 +1,74 @@
+// 性格・タイプ
+enum PersonalityType {
+  KIND // 優しい
+  STRAIGHTFORWARD // 素直
+  DECISIVE // 決断力がある
+  GENTLE // 穏やか
+  APPROACHABLE // 親しみやすい
+  CHEERFUL // 明るい
+  INDOOR // インドア
+  OUTDOOR // アウトドア
+  EARNEST // 真面目
+  INTELLECTUAL // 知的
+  SINCERE // 誠実
+  METICULOUS // 几帳面
+  OPTIMISTIC // 楽観的
+  SHY // 照れ屋
+  ALWAYS_SMILING // いつも笑顔
+  ELEGANT // 上品
+  COMPOSED // 落ち着いている
+  HUMBLE // 謙虚
+  STRICT // 厳格
+  COMPASSIONATE // 思いやりがある
+  LONELY // さびしがり
+  SOCIABLE // 社交的
+  COOL_HEADED // 冷静沈着
+  CURIOUS // 好奇心旺盛
+  FAMILY_ORIENTED // 家庭的
+  CAREER_ORIENTED // 仕事好き
+  RESPONSIBLE // 責任感がある
+  CARING // 面倒見が良い
+  GOOD_TALKER // 話し上手
+  GOOD_LISTENER // 聞き上手
+  REFRESHING // さわやか
+  ACTION_ORIENTED // 行動的
+  RATIONAL // 合理的
+  COMPETITIVE // 負けず嫌い
+  FUNNY // 面白い
+  PASSIONATE // 熱い
+  PERCEPTIVE // 気が利く
+  ATTENTIVE // マメ
+  BOLD // 大胆
+  TOLERANT // 寛容
+  GENEROUS // 気前がいい
+  NATURAL // 天然と言われる
+  GENUINE // 裏表がない
+  EASYGOING // マイペース
+  RESERVED // 奥手
+  MOODY // 気分屋
+}
+
+model RUserPersonalityTypes {
+  id              String          @id @default(cuid())
+  userId          String          @map("user_id")
+  personalityType PersonalityType @map("personality_type")
+
+  // リレーション
+  user                       RUsers                        @relation(fields: [userId], references: [id])
+  userPersonalityTypeUpdates EUserPersonalityTypeUpdates[]
+
+  @@unique([userId, personalityType])
+  @@map("r_user_personality_types")
+}
+
+// 性格・タイプの更新履歴
+model EUserPersonalityTypeUpdates {
+  id                    String   @id @default(cuid())
+  userPersonalityTypeId String   @map("user_personality_type_id")
+  createdAt             DateTime @default(now()) @map("created_at")
+
+  // リレーション
+  userPersonalityType RUserPersonalityTypes @relation(fields: [userPersonalityTypeId], references: [id])
+
+  @@map("e_user_personality_type_updates")
+}

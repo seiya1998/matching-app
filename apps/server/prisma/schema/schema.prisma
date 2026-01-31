@@ -1,12 +1,12 @@
 generator client {
   provider        = "prisma-client"
   previewFeatures = ["relationJoins"]
-  output          = "./generated/prisma"
+  output          = "./../generated/prisma/"
 }
 
 generator erd {
   provider = "prisma-dbml-generator"
-  output   = "./dbml"
+  output   = "./../dbml"
 }
 
 datasource db {

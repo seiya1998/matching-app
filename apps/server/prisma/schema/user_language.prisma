@@ -1,0 +1,50 @@
+// 言語情報
+enum Language {
+  JAPANESE // 日本語
+  ENGLISH // 英語
+  CHINESE // 中国語
+  HINDI // ヒンディー語
+  SPANISH // スペイン語
+  RUSSIAN // ロシア語
+  FRENCH // フランス語
+  ARABIC // アラビア語
+  PORTUGUESE // ポルトガル語
+  MALAY // マレー語
+  BENGALI // ベンガル語
+  GERMAN // ドイツ語
+  URDU // ウルドゥー語
+  ITALIAN // イタリア語
+  KOREAN // 韓国語
+  VIETNAMESE // ベトナム語
+  PERSIAN // ペルシア語
+  TAGALOG // タガログ語
+  THAI // タイ語
+  TURKISH // トルコ語
+  OTHER // その他
+}
+
+// 話せる言語
+model RUserLanguages {
+  id       String   @id @default(cuid())
+  userId   String   @map("user_id")
+  language Language @map("language")
+
+  // リレーション
+  user                RUsers?                @relation(fields: [userId], references: [id])
+  userLanguageUpdates EUserLanguageUpdates[]
+
+  @@unique([userId, language])
+  @@map("r_user_languages")
+}
+
+// 話せる言語の更新履歴
+model EUserLanguageUpdates {
+  id             String   @id @default(cuid())
+  userLanguageId String   @map("user_language_id")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  // リレーション
+  userLanguage RUserLanguages @relation(fields: [userLanguageId], references: [id])
+
+  @@map("e_user_language_updates")
+}

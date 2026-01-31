@@ -1,0 +1,283 @@
+// 血液型情報
+enum BloodType {
+  A // A型
+  B // B型
+  O // O型
+  AB // AB型
+}
+
+// 体型情報
+enum BodyType {
+  SLIM // スリム
+  AVERAGE // 普通体型
+  GLAMOROUS // グラマー
+  ATHLETIC // 筋肉質
+  CHUBBY // ややぽっちゃり
+  HEAVY // 太め
+}
+
+// 兄弟構成
+enum SiblingPosition {
+  ELDEST // 長男・長女
+  SECOND // 次男・次女
+  THIRD // 三男・三女
+  ONLY_CHILD // 一人っ子
+  OTHER // その他
+}
+
+// 学歴情報
+enum EducationLevel {
+  HIGH_SCHOOL // 高校卒
+  COLLEGE // 短大・専門学校・高専卒
+  UNIVERSITY // 大学卒
+  GRADUATE_SCHOOL // 大学院卒
+  OTHER // その他
+}
+
+// 年収情報
+enum AnnualIncomeRange {
+  BELOW_200 // 200万円未満
+  BETWEEN_200_400 // 200〜400万円
+  BETWEEN_400_600 // 400〜600万円
+  BETWEEN_600_800 // 600〜800万円
+  BETWEEN_800_1000 // 800〜1000万円
+  BETWEEN_1000_1500 // 1000〜1500万円
+  BETWEEN_1500_2000 // 1500〜2000万円
+  BETWEEN_2000_3000 // 2000〜3000万円
+  ABOVE_3000 // 3000万円以上
+}
+
+// 休日情報
+enum Holiday {
+  WEEKENDS // 土日
+  WEEKDAYS // 平日
+  IRREGULAR // 不定期
+  OTHER // その他
+}
+
+// 飲酒習慣
+enum DrinkingHabit {
+  NEVER // 飲まない
+  SOMETIMES // 時々飲む
+  REGULARLY // 飲む
+}
+
+// 喫煙習慣
+enum SmokingHabit {
+  NEVER // 吸わない
+  SOMETIMES // 時々吸う
+  REGULARLY // 吸う
+  E_CIGARETTE // 吸う（電子タバコ）
+  WILL_QUIT_FOR_PARTNER // 相手が嫌ならやめる
+  NOT_AROUND_NONSMOKERS // 非喫煙者の前では吸わない
+}
+
+// 同居人
+enum LivingSituation {
+  ALONE // 一人暮らし
+  ROOMSHARE // ルームシェア
+  WITH_PET // ペットいます
+  WITH_FAMILY // 実家暮らし
+  OTHER // その他
+}
+
+// 結婚歴
+enum MaritalHistory {
+  NEVER_MARRIED // 未婚
+  DIVORCED // 離婚
+  WIDOWED // 死別
+}
+
+// 子供の有無
+enum HasChildren {
+  NONE // いない
+  LIVING_TOGETHER // いる（同居）
+  NOT_TOGETHER // いる（別居）
+}
+
+// 結婚意向
+enum MarriageIntention {
+  ASAP // すぐにでもしたい
+  WITHIN_2_3_YEARS // 2〜3年のうちに
+  IF_RIGHT // 良い人がいればしたい
+  DISCUSS // 相手と相談
+  UNSURE // わからない
+}
+
+// 子供の希望
+enum WantsChildren {
+  YES // 欲しい
+  NO // 欲しくない
+  DISCUSS // 相手と相談
+  UNSURE // わからない
+}
+
+// 家事・育児
+enum HouseworkChildcare {
+  WILLING // 積極的に参加したい
+  IF_POSSIBLE // できれば参加したい
+  COOPERATE // 二人で協力
+  PREFER_PARTNER // できれば相手に任せたい
+  LEAVE_TO_PARTNER // お相手に任せたい
+}
+
+// 出会うまでの希望
+enum MeetingPreference {
+  RIGHT_AWAY // できればすぐ会いたい
+  IF_WE_CLICK // 気が合えば会いたい
+  AFTER_CHATTING // メッセージを重ねてから
+}
+
+// デート費用
+enum DateExpense {
+  SPLIT_EQUALLY // 割り勘
+  I_PAY_ALL // 自分が全て払う
+  I_PAY_MORE // 自分が多めに払う
+  PARTNER_PAYS_ALL // 相手に全て
+  PARTNER_PAYS_MORE // 相手が多め
+  WHOEVER_CAN // 持っている方が払う
+  DISCUSS // 相手と相談
+}
+
+enum Sociability {
+  LOVES_GROUPS // 大人数が好き
+  PREFERS_ALONE // 一人が好き
+  QUICK_TO_BOND // すぐに仲良くなる
+  GRADUALLY // 徐々に仲良くなる
+}
+
+// 職業情報
+enum Occupation {
+  LISTED_COMPANY // 上場企業
+  FINANCE // 金融
+  GOVERNMENT // 公務員
+  MILITARY // 自衛隊
+  FIREFIGHTER // 消防士
+  CONSULTANT // コンサル
+  EXECUTIVE // 経営者・役員
+  MAJOR_COMPANY // 大手企業
+  MAJOR_FOREIGN // 大手外資
+  MAJOR_TRADING // 大手商社
+  FOREIGN_FINANCE // 外資金融
+  SALES // 営業・販売
+  DOCTOR // 医師
+  PHARMACIST // 薬剤師
+  MEDICAL // 医療関係
+  NURSE // 看護師
+  BEAUTY // 美容関係
+  LAWYER // 弁護士
+  ACCOUNTANT // 公認会計士
+  TAX_ACCOUNTANT // 税理士
+  AVIATION // 航空関係
+  ADVERTISING // 広告
+  MEDIA // マスコミ
+  EDUCATION // 教育関係
+  IT // IT関係
+  FOOD // 食品関係
+  TRAVEL // 旅行関係
+  DISTRIBUTION // 流通
+  PHARMACEUTICAL // 製薬
+  INSURANCE // 保険
+  REAL_ESTATE // 不動産
+  CONSTRUCTION // 建築関係
+  TELECOMMUNICATIONS // 通信
+  MANUFACTURING // 製造業
+  WEB // WEB業界
+  ENGINEER // エンジニア
+  DESIGNER // デザイナー
+  CREATOR // クリエイター
+  SERVICE // サービス業
+  CHEF_NUTRITIONIST // 調理師・栄養士
+  APPAREL // アパレル
+  ENTERTAINMENT // エンタメ
+  ATHLETE // スポーツ選手
+  ANNOUNCER // アナウンサー
+  ENTERTAINER_MODEL // 芸能・モデル
+  RECEPTIONIST // 受付
+  SECRETARY // 秘書
+  OFFICE_WORKER // 事務
+  WELFARE // 福祉
+  CHILDCARE // 保育士
+  COMPANY_EMPLOYEE // 会社員
+  STUDENT // 学生
+  SELF_EMPLOYED // 自営業
+  FREELANCE // 自由業
+  BRIDAL // ブライダル
+  OTHER // その他
+}
+
+// ユーザーのプロフィール情報
+model RUserProfiles {
+  id       String @id @default(cuid())
+  userId   String @unique @map("user_id")
+  nickname String @map("nickname") // 必須: 表示名がないと他ユーザーに見せられない
+
+  // 以下は任意入力項目
+  bloodType           BloodType?          @map("blood_type")
+  height              Int?                @map("height")
+  bodyType            BodyType?           @map("body_type")
+  residencePrefecture String?             @map("residence_prefecture") // 居住地都道府県
+  residenceCity       String?             @map("residence_city") // 居住地市区町村
+  birthplace          String?             @map("birthplace") // 出身地
+  workplacePrefecture String?             @map("workplace_prefecture") // 勤務地都道府県
+  workplaceCity       String?             @map("workplace_city") // 勤務地市区町村
+  siblingPosition     SiblingPosition?    @map("sibling_position") // 兄弟構成
+  educationLevel      EducationLevel?     @map("education_level") // 学歴
+  schoolName          String?             @map("school_name") // 学校名
+  annualIncomeRange   AnnualIncomeRange?  @map("annual_income_range") // 年収
+  occupation          Occupation?         @map("occupation") // 職業
+  occupationName      String?             @map("occupation_name") // 職業名
+  holiday             Holiday?            @map("holiday") // 休日情報
+  drinkingHabit       DrinkingHabit?      @map("drinking_habit") // 飲酒習慣
+  smokingHabit        SmokingHabit?       @map("smoking_habit") // 喫煙習慣
+  livingSituation     LivingSituation?    @map("living_situation") // 同居人
+  maritalHistory      MaritalHistory?     @map("marital_history") // 結婚歴
+  hasChildren         HasChildren?        @map("has_children") // 子供の有無
+  marriageIntention   MarriageIntention?  @map("marriage_intention") // 結婚意向
+  wantsChildren       WantsChildren?      @map("wants_children") // 子供の希望
+  houseworkChildcare  HouseworkChildcare? @map("housework_childcare") // 家事・育児
+  meetingPreference   MeetingPreference?  @map("meeting_preference") // 出会うまでの希望
+  dateExpense         DateExpense?        @map("date_expense") // デート費用
+  sociability         Sociability?        @map("sociability") // 社交性
+
+  // リレーション
+  user               RUsers                @relation(fields: [userId], references: [id])
+  userProfileUpdates EUserProfileUpdates[]
+
+  // インデックス
+  @@index([residencePrefecture, residenceCity])
+  @@index([workplacePrefecture, workplaceCity])
+  @@index([height])
+  @@index([bloodType])
+  @@index([bodyType])
+  @@index([birthplace])
+  @@index([siblingPosition])
+  @@index([educationLevel])
+  @@index([annualIncomeRange])
+  @@index([occupation])
+  @@index([holiday])
+  @@index([drinkingHabit])
+  @@index([smokingHabit])
+  @@index([livingSituation])
+  @@index([maritalHistory])
+  @@index([hasChildren])
+  @@index([marriageIntention])
+  @@index([wantsChildren])
+  @@index([houseworkChildcare])
+  @@index([meetingPreference])
+  @@index([dateExpense])
+  @@index([sociability])
+  @@map("r_user_profiles")
+}
+
+// ユーザープロフィールの更新履歴
+model EUserProfileUpdates {
+  id            String   @id @default(cuid())
+  userProfileId String   @map("user_profile_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  // リレーション
+  userProfile RUserProfiles @relation(fields: [userProfileId], references: [id])
+
+  @@map("e_user_profile_updates")
+}
