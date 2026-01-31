@@ -1,17 +1,17 @@
-const { ESLint } = require('eslint');
+import { ESLint } from 'eslint';
 
 const removeIgnoredFiles = async (files) => {
-  const eslint = new ESLint({ overrideConfigFile: './eslint.config.mjs' });
+  const eslintInstance = new ESLint({
+    overrideConfigFile: './eslint.config.mjs'
+  });
   const isIgnored = await Promise.all(
-    files.map((file) => {
-      return eslint.isPathIgnored(file);
-    })
+    files.map((file) => eslintInstance.isPathIgnored(file))
   );
   const filteredFiles = files.filter((_, i) => !isIgnored[i]);
   return filteredFiles.join(' ');
 };
 
-module.exports = {
+export default {
   'src/**/*.{ts,tsx,js,jsx}': async (files) => {
     const filesToLint = await removeIgnoredFiles(files);
     if (filesToLint.length === 0) {
@@ -25,9 +25,7 @@ module.exports = {
     }
     return [
       'tsc --noEmit',
-      `prettier --write --ignore-unknown --config ../../.prettierrc.js ${files.join(
-        ' '
-      )}`,
+      `prettier --write --ignore-unknown --config ../../.prettierrc.js ${files.join(' ')}`,
       'npx prisma format',
       'secretlint "**/*"'
     ];
