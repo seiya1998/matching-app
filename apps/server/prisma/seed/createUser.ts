@@ -5,7 +5,7 @@ import {
   VerificationStatus,
   LoginStatus,
   Gender
-} from 'prisma/generated/prisma/client';
+} from '@prisma/client';
 
 const faker = fakerJA;
 

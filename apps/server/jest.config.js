@@ -18,6 +18,7 @@ module.exports = {
     'schema.ts',
     'exampleSchema.ts'
   ],
+  transformIgnorePatterns: ['node_modules/(?!@faker-js/faker)'],
   coverageDirectory: '../coverage',
   testEnvironment: 'node',
   reporters: [

@@ -1,7 +1,6 @@
 generator client {
-  provider        = "prisma-client"
+  provider        = "prisma-client-js"
   previewFeatures = ["relationJoins"]
-  output          = "./../generated/prisma/"
 }
 
 generator erd {
@@ -11,4 +10,5 @@ generator erd {
 
 datasource db {
   provider = "mysql"
+  url      = env("DATABASE_URL")
 }

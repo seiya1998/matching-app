@@ -2,7 +2,7 @@
 CREATE TABLE `r_user_introductions` (
     `id` VARCHAR(191) NOT NULL,
     `user_id` VARCHAR(191) NOT NULL,
-    `content` VARCHAR(191) NOT NULL,
+    `content` TEXT NOT NULL,
 
     UNIQUE INDEX `r_user_introductions_user_id_key`(`user_id`),
     PRIMARY KEY (`id`)

@@ -1,7 +1,4 @@
-import { fakerJA } from '@faker-js/faker';
-import { Prisma, Language } from 'prisma/generated/prisma/client';
-
-const faker = fakerJA;
+import { Prisma, Language } from '@prisma/client';
 
 export const createUserLanguages = async (
   prisma: Prisma.TransactionClient,
@@ -13,7 +10,7 @@ export const createUserLanguages = async (
       prisma.rUserLanguages.create({
         data: {
           userId: user.id,
-          language: faker.helpers.enumValue(Language),
+          language: Language.JAPANESE,
           userLanguageUpdate: {
             create: {}
           }

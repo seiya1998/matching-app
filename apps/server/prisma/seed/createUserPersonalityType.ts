@@ -1,5 +1,5 @@
 import { fakerJA } from '@faker-js/faker';
-import { Prisma, PersonalityType } from 'prisma/generated/prisma/client';
+import { Prisma, PersonalityType } from '@prisma/client';
 
 const faker = fakerJA;
 

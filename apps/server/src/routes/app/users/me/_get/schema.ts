@@ -1,10 +1,6 @@
+import { Gender, LoginStatus, MembershipStatus } from '@prisma/client';
 import { JSONSchema } from 'json-schema-to-ts';
 import { GenerateRequestTypes, GenerateResponseTypes } from '@/types';
-import {
-  Gender,
-  LoginStatus,
-  MembershipStatus
-} from 'prisma/generated/prisma/client';
 
 /**
  * GET: /users/me

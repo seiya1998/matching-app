@@ -16,6 +16,6 @@
     },
     "experimentalDecorators": true
   },
-  "include": ["src", "types", "prisma", "prisma.config.ts", "prisma"],
+  "include": ["src", "types", "prisma"],
   "exclude": ["node_modules"]
 }

@@ -19,7 +19,7 @@ import {
   MeetingPreference,
   DateExpense,
   Sociability
-} from 'prisma/generated/prisma/client';
+} from '@prisma/client';
 
 const faker = fakerJA;
 
