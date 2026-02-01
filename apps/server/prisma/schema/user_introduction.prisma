@@ -2,7 +2,7 @@
 model RUserIntroductions {
   id      String @id @default(cuid())
   userId  String @unique @map("user_id")
-  content String @map("content") // 自己紹介文
+  content String @map("content") @db.Text // 自己紹介文
 
   // リレーション
   user                   RUsers                     @relation(fields: [userId], references: [id])

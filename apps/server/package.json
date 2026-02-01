@@ -10,7 +10,10 @@
     "lint": "eslint --fix --config .eslintrc.js",
     "lint-staged": "lint-staged --config .lintstagedrc.mjs",
     "prisma:generate": "pnpm prisma generate",
-    "db:seed": "pnpm prisma db seed"
+    "db:seed": "pnpm prisma db seed",
+    "test": "pnpm prisma:generate && jest --config jest.config.js",
+    "test:cov": "pnpm prisma:generate && jest --config jest.config.js --colors --coverage",
+    "test:e2e": "pnpm prisma:generate && jest --config jest.config.e2e.js"
   },
   "dependencies": {
     "@fastify/autoload": "^6.3.1",
