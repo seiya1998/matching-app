@@ -2,7 +2,7 @@ import { MembershipStatus } from '@prisma/client';
 import type { GetUserProfileResponse } from './schema';
 import type { Prisma } from '@/lib';
 import type { Result } from '@/types';
-import { calculateAge } from '@/utils';
+import { calculateAge, logger } from '@/utils';
 
 /**
  * ユーザーIDからユーザープロフィールを取得する
@@ -107,7 +107,7 @@ export const findUserProfileById = async ({
     };
   } catch (error) {
     /* eslint-disable-next-line functional/no-expression-statements */
-    console.log(error);
+    logger.error(error);
 
     return { success: false, error: { errorCode: 630 } };
   }

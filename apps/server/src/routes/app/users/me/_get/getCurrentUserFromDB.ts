@@ -1,6 +1,7 @@
 import type { GetCurrentUserResponse } from './schema';
 import type { Prisma } from '@/lib';
 import type { Result } from '@/types';
+import { logger } from '@/utils';
 
 /**
  * ユーザー自身の情報を取得する
@@ -42,7 +43,7 @@ export const getCurrentUserFromDB = async ({
     };
   } catch (error) {
     /* eslint-disable-next-line functional/no-expression-statements */
-    console.log(error);
+    logger.error(error);
 
     return { success: false, error: { errorCode: 630 } };
   }
