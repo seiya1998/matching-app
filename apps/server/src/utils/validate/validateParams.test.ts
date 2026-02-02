@@ -284,6 +284,313 @@ describe('validateParams', () => {
     });
   });
 
+  // --- between ---
+  describe('between', () => {
+    test('文字列の文字数が範囲内の場合はsuccess', () => {
+      const result = validateParams<{ name: unknown }>(
+        { name: 'abc' },
+        { name: ['string', 'between:1,5'] }
+      );
+      expect(result).toEqual({ success: true, data: { name: 'abc' } });
+    });
+
+    test('文字列の文字数が範囲外の場合はfailure', () => {
+      const result = validateParams<{ name: unknown }>(
+        { name: 'abcdef' },
+        { name: ['string', 'between:1,5'] }
+      );
+      expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+
+    test('数値が範囲内の場合はsuccess', () => {
+      const result = validateParams<{ age: unknown }>(
+        { age: 20 },
+        { age: ['number', 'between:0,100'] }
+      );
+      expect(result).toEqual({ success: true, data: { age: 20 } });
+    });
+
+    test('数値が範囲外の場合はfailure', () => {
+      const result = validateParams<{ age: unknown }>(
+        { age: 101 },
+        { age: ['number', 'between:0,100'] }
+      );
+      expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+  });
+
+  // --- in ---
+  describe('in', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ type: unknown }>(
+        { type: value },
+        { type: ['in:app,sync'] }
+      );
+
+    test('許可リストに含まれる場合はsuccess', () => {
+      expect(validate('app')).toEqual({
+        success: true,
+        data: { type: 'app' }
+      });
+    });
+
+    test('許可リストに含まれない場合はfailure', () => {
+      expect(validate('other')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+
+    test('数値の場合はfailure', () => {
+      expect(validate(123)).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- regex ---
+  describe('regex', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ field: unknown }>(
+        { field: value },
+        { field: ['regex:^[a-z]+$'] }
+      );
+
+    test('パターンに一致する場合はsuccess', () => {
+      expect(validate('abc')).toEqual({
+        success: true,
+        data: { field: 'abc' }
+      });
+    });
+
+    test('パターンに一致しない場合はfailure', () => {
+      expect(validate('ABC')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+
+    test('数値の場合はfailure', () => {
+      expect(validate(123)).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- postalNo ---
+  describe('postalNo', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ postal: unknown }>(
+        { postal: value },
+        { postal: ['postalNo'] }
+      );
+
+    test('7桁数字の場合はsuccess', () => {
+      expect(validate('1234567')).toEqual({
+        success: true,
+        data: { postal: '1234567' }
+      });
+    });
+
+    test('桁数不足の場合はfailure', () => {
+      expect(validate('123456')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+
+    test('ハイフン付きの場合はfailure', () => {
+      expect(validate('123-4567')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- mobilePhone ---
+  describe('mobilePhone', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ phone: unknown }>(
+        { phone: value },
+        { phone: ['mobilePhone'] }
+      );
+
+    test('有効な携帯電話番号の場合はsuccess', () => {
+      expect(validate('09012345678')).toEqual({
+        success: true,
+        data: { phone: '09012345678' }
+      });
+    });
+
+    test('桁数不足の場合はfailure', () => {
+      expect(validate('0901234567')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+
+    test('0以外で始まる場合はfailure', () => {
+      expect(validate('19012345678')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- landlinePhone ---
+  describe('landlinePhone', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ phone: unknown }>(
+        { phone: value },
+        { phone: ['landlinePhone'] }
+      );
+
+    test('有効な固定電話番号の場合はsuccess', () => {
+      expect(validate('0312345678')).toEqual({
+        success: true,
+        data: { phone: '0312345678' }
+      });
+    });
+
+    test('桁数超過の場合はfailure', () => {
+      expect(validate('03123456789')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- url ---
+  describe('url', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ link: unknown }>({ link: value }, { link: ['url'] });
+
+    test('有効なURLの場合はsuccess', () => {
+      expect(validate('https://example.com')).toEqual({
+        success: true,
+        data: { link: 'https://example.com' }
+      });
+    });
+
+    test('httpも有効', () => {
+      expect(validate('http://example.com')).toEqual({
+        success: true,
+        data: { link: 'http://example.com' }
+      });
+    });
+
+    test('プロトコルなしの場合はfailure', () => {
+      expect(validate('example.com')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- password ---
+  describe('password', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ pw: unknown }>({ pw: value }, { pw: ['password'] });
+
+    test('有効なパスワードの場合はsuccess', () => {
+      expect(validate('Abcdef1!')).toEqual({
+        success: true,
+        data: { pw: 'Abcdef1!' }
+      });
+    });
+
+    test('大文字がない場合はfailure', () => {
+      expect(validate('abcdef1!')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+
+    test('8文字未満の場合はfailure', () => {
+      expect(validate('Abc1!')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- alphaNumHyphen ---
+  describe('alphaNumHyphen', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ field: unknown }>(
+        { field: value },
+        { field: ['alphaNumHyphen'] }
+      );
+
+    test('半角英数字・ハイフンの場合はsuccess', () => {
+      expect(validate('abc-123')).toEqual({
+        success: true,
+        data: { field: 'abc-123' }
+      });
+    });
+
+    test('アンダースコアを含む場合はfailure', () => {
+      expect(validate('abc_123')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- array ---
+  describe('array', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ items: unknown }>(
+        { items: value },
+        { items: ['array'] }
+      );
+
+    test('配列の場合はsuccess', () => {
+      expect(validate([1, 2, 3])).toEqual({
+        success: true,
+        data: { items: [1, 2, 3] }
+      });
+    });
+
+    test('空配列の場合はsuccess', () => {
+      expect(validate([])).toEqual({
+        success: true,
+        data: { items: [] }
+      });
+    });
+
+    test('配列でない場合はfailure', () => {
+      expect(validate('not-array')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- arrayMax ---
+  describe('arrayMax', () => {
+    test('要素数が最大値以下の場合はsuccess', () => {
+      const result = validateParams<{ items: unknown }>(
+        { items: ['a', 'b'] },
+        { items: ['array', 'arrayMax:3'] }
+      );
+      expect(result).toEqual({
+        success: true,
+        data: { items: ['a', 'b'] }
+      });
+    });
+
+    test('要素数が最大値超過の場合はfailure', () => {
+      const result = validateParams<{ items: unknown }>(
+        { items: ['a', 'b', 'c', 'd'] },
+        { items: ['array', 'arrayMax:3'] }
+      );
+      expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+  });
+
   // --- nullable ---
   describe('nullable', () => {
     const validate = (value: unknown) =>
