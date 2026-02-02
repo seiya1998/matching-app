@@ -13,7 +13,11 @@
     "db:seed": "pnpm prisma db seed",
     "test": "pnpm prisma:generate && jest --config jest.config.js",
     "test:cov": "pnpm prisma:generate && jest --config jest.config.js --colors --coverage",
-    "test:e2e": "pnpm prisma:generate && jest --config jest.config.e2e.js"
+    "test:e2e": "pnpm prisma:generate && jest --config jest.config.e2e.js",
+    "generate:schema": "tsx scripts/generateSchema.ts",
+    "generate:extract-params": "tsx scripts/generateExtractParams.ts",
+    "generate:handler": "tsx scripts/generateHandler.ts",
+    "generate:service": "tsx scripts/generateService.ts"
   },
   "dependencies": {
     "@fastify/autoload": "^6.3.1",

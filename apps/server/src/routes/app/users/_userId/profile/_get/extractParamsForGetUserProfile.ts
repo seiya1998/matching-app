@@ -1,7 +1,7 @@
 import { FastifyRequest } from 'fastify';
 import { GetUserProfileRequest } from './schema';
 import { Result } from '@/types';
-import { validateParams } from '@/utils/validate';
+import { validateParams } from '@/utils';
 
 export const extractParamsForGetUserProfile = (
   request: FastifyRequest<GetUserProfileRequest>

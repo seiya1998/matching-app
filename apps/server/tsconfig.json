@@ -16,6 +16,6 @@
     },
     "experimentalDecorators": true
   },
-  "include": ["src", "types", "prisma"],
+  "include": ["src", "types", "prisma", "scripts"],
   "exclude": ["node_modules"]
 }

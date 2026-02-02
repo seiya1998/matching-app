@@ -3,6 +3,7 @@ import pluginFunctional from 'eslint-plugin-functional';
 import baseConfig from './base.mjs';
 
 const plugin = [
+  { ignores: ['scripts/'] },
   ...baseConfig,
   {
     rules: {

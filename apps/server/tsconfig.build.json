@@ -5,5 +5,12 @@
     "noEmit": false,
     "incremental": false
   },
-  "exclude": ["node_modules", "dist", "**/*test.ts", "prisma", "coverage"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*test.ts",
+    "prisma",
+    "coverage",
+    "scripts"
+  ]
 }
