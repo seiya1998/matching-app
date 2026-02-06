@@ -100,6 +100,14 @@ describe('validateParams', () => {
       expect(validate(42)).toEqual({ success: true, data: { field: 42 } });
     });
 
+    test('負の数の場合はsuccess', () => {
+      expect(validate(-42)).toEqual({ success: true, data: { field: -42 } });
+    });
+
+    test('小数の場合はsuccess', () => {
+      expect(validate(3.14)).toEqual({ success: true, data: { field: 3.14 } });
+    });
+
     test('NaNの場合はfailure', () => {
       expect(validate(NaN)).toEqual({
         success: false,
@@ -628,31 +636,401 @@ describe('validateParams', () => {
     });
   });
 
-  // --- 複数フィールド ---
-  describe('複数フィールド', () => {
-    test('全フィールドが有効な場合はsuccess', () => {
-      const result = validateParams<{ userId: unknown; nickname: unknown }>(
-        { userId: 'cabcdefghijklmnopqrstuvwx', nickname: 'taro' },
-        {
-          userId: ['required', 'cuid'],
-          nickname: ['required', 'string', 'min:1', 'max:20']
-        }
-      );
-      expect(result).toEqual({
-        success: true,
-        data: { userId: 'cabcdefghijklmnopqrstuvwx', nickname: 'taro' }
+  // --- boolean ---
+  describe('boolean', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ flag: unknown }>({ flag: value }, { flag: ['boolean'] });
+
+    test('trueの場合はsuccess', () => {
+      expect(validate(true)).toEqual({ success: true, data: { flag: true } });
+    });
+
+    test('falseの場合はsuccess', () => {
+      expect(validate(false)).toEqual({ success: true, data: { flag: false } });
+    });
+
+    test('文字列の場合はfailure', () => {
+      expect(validate('true')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- integer ---
+  describe('integer', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ num: unknown }>({ num: value }, { num: ['integer'] });
+
+    test('整数の場合はsuccess', () => {
+      expect(validate(42)).toEqual({ success: true, data: { num: 42 } });
+    });
+
+    test('負の整数の場合はsuccess', () => {
+      expect(validate(-42)).toEqual({ success: true, data: { num: -42 } });
+    });
+
+    test('小数の場合はfailure', () => {
+      expect(validate(3.14)).toEqual({
+        success: false,
+        error: { errorCode: 400 }
       });
     });
 
-    test('1つでも無効な場合はfailure', () => {
-      const result = validateParams<{ userId: unknown; nickname: unknown }>(
-        { userId: 'invalid', nickname: 'taro' },
-        {
-          userId: ['required', 'cuid'],
-          nickname: ['required', 'string', 'min:1', 'max:20']
-        }
+    test('文字列の場合はfailure', () => {
+      expect(validate('42')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- uuid ---
+  describe('uuid', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ id: unknown }>({ id: value }, { id: ['uuid'] });
+
+    test('有効なUUIDの場合はsuccess', () => {
+      expect(validate('550e8400-e29b-41d4-a716-446655440000')).toEqual({
+        success: true,
+        data: { id: '550e8400-e29b-41d4-a716-446655440000' }
+      });
+    });
+
+    test('無効な形式の場合はfailure', () => {
+      expect(validate('invalid-uuid')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- date ---
+  describe('date', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ d: unknown }>({ d: value }, { d: ['date'] });
+
+    test('有効な日付文字列の場合はsuccess', () => {
+      expect(validate('2024-01-15')).toEqual({
+        success: true,
+        data: { d: '2024-01-15' }
+      });
+    });
+
+    test('無効な日付の場合はfailure', () => {
+      expect(validate('not-a-date')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- dateFormat ---
+  describe('dateFormat', () => {
+    test('YYYY-MM-DD形式が一致する場合はsuccess', () => {
+      const result = validateParams<{ d: unknown }>(
+        { d: '2024-01-15' },
+        { d: ['dateFormat:YYYY-MM-DD'] }
+      );
+      expect(result).toEqual({ success: true, data: { d: '2024-01-15' } });
+    });
+
+    test('形式が一致しない場合はfailure', () => {
+      const result = validateParams<{ d: unknown }>(
+        { d: '2024/01/15' },
+        { d: ['dateFormat:YYYY-MM-DD'] }
       );
       expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+  });
+
+  // --- datetime ---
+  describe('datetime', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ dt: unknown }>({ dt: value }, { dt: ['datetime'] });
+
+    test('有効な日時の場合はsuccess', () => {
+      expect(validate('2024-01-15T10:30:00Z')).toEqual({
+        success: true,
+        data: { dt: '2024-01-15T10:30:00Z' }
+      });
+    });
+
+    test('無効な日時の場合はfailure', () => {
+      expect(validate('invalid')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- arrayMin ---
+  describe('arrayMin', () => {
+    test('要素数が最小値以上の場合はsuccess', () => {
+      const result = validateParams<{ items: unknown }>(
+        { items: ['a', 'b'] },
+        { items: ['array', 'arrayMin:2'] }
+      );
+      expect(result).toEqual({ success: true, data: { items: ['a', 'b'] } });
+    });
+
+    test('要素数が最小値未満の場合はfailure', () => {
+      const result = validateParams<{ items: unknown }>(
+        { items: ['a'] },
+        { items: ['array', 'arrayMin:2'] }
+      );
+      expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+  });
+
+  // --- hiragana ---
+  describe('hiragana', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ kana: unknown }>(
+        { kana: value },
+        { kana: ['hiragana'] }
+      );
+
+    test('ひらがなの場合はsuccess', () => {
+      expect(validate('やまだ たろう')).toEqual({
+        success: true,
+        data: { kana: 'やまだ たろう' }
+      });
+    });
+
+    test('カタカナを含む場合はfailure', () => {
+      expect(validate('やまだ タロウ')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- katakana ---
+  describe('katakana', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ kana: unknown }>(
+        { kana: value },
+        { kana: ['katakana'] }
+      );
+
+    test('カタカナの場合はsuccess', () => {
+      expect(validate('ヤマダ タロウ')).toEqual({
+        success: true,
+        data: { kana: 'ヤマダ タロウ' }
+      });
+    });
+
+    test('ひらがなを含む場合はfailure', () => {
+      expect(validate('ヤマダ たろう')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- extensions ---
+  describe('extensions', () => {
+    test('許可された拡張子の場合はsuccess', () => {
+      const result = validateParams<{ file: unknown }>(
+        { file: 'photo.jpg' },
+        { file: ['extensions:jpg,png,gif'] }
+      );
+      expect(result).toEqual({ success: true, data: { file: 'photo.jpg' } });
+    });
+
+    test('許可されていない拡張子の場合はfailure', () => {
+      const result = validateParams<{ file: unknown }>(
+        { file: 'document.pdf' },
+        { file: ['extensions:jpg,png,gif'] }
+      );
+      expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+  });
+
+  // --- fileSizeMax ---
+  describe('fileSizeMax', () => {
+    test('最大値以下の場合はsuccess', () => {
+      const result = validateParams<{ size: unknown }>(
+        { size: 1024 * 1024 }, // 1MB
+        { size: ['fileSizeMax:5MB'] }
+      );
+      expect(result).toEqual({ success: true, data: { size: 1024 * 1024 } });
+    });
+
+    test('最大値超過の場合はfailure', () => {
+      const result = validateParams<{ size: unknown }>(
+        { size: 10 * 1024 * 1024 }, // 10MB
+        { size: ['fileSizeMax:5MB'] }
+      );
+      expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+  });
+
+  // --- fileSizeMin ---
+  describe('fileSizeMin', () => {
+    test('最小値以上の場合はsuccess', () => {
+      const result = validateParams<{ size: unknown }>(
+        { size: 2048 }, // 2KB
+        { size: ['fileSizeMin:1KB'] }
+      );
+      expect(result).toEqual({ success: true, data: { size: 2048 } });
+    });
+
+    test('最小値未満の場合はfailure', () => {
+      const result = validateParams<{ size: unknown }>(
+        { size: 500 }, // 500B
+        { size: ['fileSizeMin:1KB'] }
+      );
+      expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+  });
+
+  // --- base64SizeMax ---
+  describe('base64SizeMax', () => {
+    // 小さいbase64画像（約100バイト）
+    const smallBase64 =
+      'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==';
+    // 大きめのbase64画像を模擬（1KB以上）
+    const largeBase64 = `data:image/png;base64,${'A'.repeat(2000)}`;
+
+    test('最大値以下の場合はsuccess', () => {
+      const result = validateParams<{ image: unknown }>(
+        { image: smallBase64 },
+        { image: ['base64SizeMax:1KB'] }
+      );
+      expect(result).toEqual({ success: true, data: { image: smallBase64 } });
+    });
+
+    test('最大値超過の場合はfailure', () => {
+      const result = validateParams<{ image: unknown }>(
+        { image: largeBase64 },
+        { image: ['base64SizeMax:1KB'] }
+      );
+      expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+
+    test('無効なbase64形式の場合はfailure', () => {
+      const result = validateParams<{ image: unknown }>(
+        { image: 'not-base64' },
+        { image: ['base64SizeMax:1KB'] }
+      );
+      expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+  });
+
+  // --- file ---
+  describe('file', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ file: unknown }>({ file: value }, { file: ['file'] });
+
+    test('有効なファイルオブジェクトの場合はsuccess', () => {
+      const fileObj = { filename: 'test.jpg', mimetype: 'image/jpeg' };
+      expect(validate(fileObj)).toEqual({
+        success: true,
+        data: { file: fileObj }
+      });
+    });
+
+    test('filenameがない場合はfailure', () => {
+      expect(validate({ mimetype: 'image/jpeg' })).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+
+    test('mimetypeがない場合はfailure', () => {
+      expect(validate({ filename: 'test.jpg' })).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+
+    test('nullの場合はfailure', () => {
+      expect(validate(null)).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+
+    test('文字列の場合はfailure', () => {
+      expect(validate('test.jpg')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- mimeType ---
+  describe('mimeType', () => {
+    const validate = (value: unknown) =>
+      validateParams<{ file: unknown }>(
+        { file: value },
+        { file: ['file', 'mimeType:image/jpeg,image/png'] }
+      );
+
+    test('許可されたMIMEタイプの場合はsuccess', () => {
+      const fileObj = { filename: 'test.jpg', mimetype: 'image/jpeg' };
+      expect(validate(fileObj)).toEqual({
+        success: true,
+        data: { file: fileObj }
+      });
+    });
+
+    test('別の許可されたMIMEタイプの場合もsuccess', () => {
+      const fileObj = { filename: 'test.png', mimetype: 'image/png' };
+      expect(validate(fileObj)).toEqual({
+        success: true,
+        data: { file: fileObj }
+      });
+    });
+
+    test('許可されていないMIMEタイプの場合はfailure', () => {
+      const fileObj = { filename: 'test.gif', mimetype: 'image/gif' };
+      expect(validate(fileObj)).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+
+    test('ファイルオブジェクトでない場合はfailure', () => {
+      expect(validate('test.jpg')).toEqual({
+        success: false,
+        error: { errorCode: 400 }
+      });
+    });
+  });
+
+  // --- 複数フィールド ---
+  describe('複数フィールド', () => {
+    test('全フィールドが有効な場合はsuccess', () => {
+      const result = validateParams<{ name: unknown; age: unknown }>(
+        { name: 'taro', age: 20 },
+        { name: ['required', 'string'], age: ['required', 'number'] }
+      );
+      expect(result).toEqual({
+        success: true,
+        data: { name: 'taro', age: 20 }
+      });
+    });
+
+    test('1つでも無効なフィールドがある場合はfailure', () => {
+      const result = validateParams<{ name: unknown; age: unknown }>(
+        { name: 'taro', age: 'invalid' },
+        { name: ['required', 'string'], age: ['required', 'number'] }
+      );
+      expect(result).toEqual({ success: false, error: { errorCode: 400 } });
+    });
+
+    test('nullableフィールドがnullでも他が有効ならsuccess', () => {
+      const result = validateParams<{ name: unknown; nickname: unknown }>(
+        { name: 'taro', nickname: null },
+        { name: ['required', 'string'], nickname: ['nullable', 'string'] }
+      );
+      expect(result).toEqual({
+        success: true,
+        data: { name: 'taro', nickname: null }
+      });
     });
   });
 });
