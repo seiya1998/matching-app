@@ -158,8 +158,6 @@ export const validateDateFormat = (value: string, format: string): boolean => {
   const patterns: Record<string, RegExp> = {
     'YYYY-MM-DD': /^\d{4}-\d{2}-\d{2}$/,
     'YYYY/MM/DD': /^\d{4}\/\d{2}\/\d{2}$/,
-    'DD/MM/YYYY': /^\d{2}\/\d{2}\/\d{4}$/,
-    'MM/DD/YYYY': /^\d{2}\/\d{2}\/\d{4}$/,
     YYYYMMDD: /^\d{8}$/
   };
   const pattern = patterns[format];
