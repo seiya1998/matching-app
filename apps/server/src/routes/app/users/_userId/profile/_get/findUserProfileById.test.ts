@@ -75,4 +75,26 @@ describe('findUserProfileById', () => {
 
     expect(result).toEqual({ success: false, error: { errorCode: 630 } });
   });
+
+  test('正常系 - introductionがnullの場合は空文字を返す', async () => {
+    const user = await prismaMock.rUsers.findFirst({
+      select: { id: true },
+      where: { currentMembershipStatus: 'FREE' }
+    });
+
+    // introductionを削除
+    await prismaMock.rUserIntroductions.deleteMany({
+      where: { userId: user?.id ?? '' }
+    });
+
+    const result = await findUserProfileById({
+      userId: user?.id ?? '',
+      prisma: prismaMock
+    });
+
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.introduction).toBe('');
+    }
+  });
 });

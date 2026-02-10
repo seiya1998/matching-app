@@ -202,6 +202,8 @@ export const validateExtensions = (
 const parseFileSize = (size: string): number => {
   const match = size.match(/^(\d+(?:\.\d+)?)(B|KB|MB|GB)$/i);
   if (match === null) return 0;
+  if (match[1] === undefined || match[2] === undefined) return 0;
+
   const value = parseFloat(match[1]);
   const unit = match[2].toUpperCase();
   const units: Record<string, number> = {
@@ -210,7 +212,10 @@ const parseFileSize = (size: string): number => {
     MB: 1024 * 1024,
     GB: 1024 * 1024 * 1024
   };
-  return value * units[unit];
+  const multiplier = units[unit];
+  if (multiplier === undefined) return 0;
+
+  return value * multiplier;
 };
 
 // ファイルサイズ最大値バリデーション
@@ -232,6 +237,8 @@ export const validateBase64SizeMax = (
   if (!validateBase64(base64String)) return false;
 
   const base64Data = base64String.split('base64,')[1];
+  if (base64Data === undefined) return false;
+
   const padding = (base64Data.match(/=+$/) ?? [''])[0].length;
   const fileSize = (base64Data.length * 3) / 4 - padding;
   return fileSize <= parseFileSize(max);

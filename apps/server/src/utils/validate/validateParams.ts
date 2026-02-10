@@ -109,21 +109,30 @@ const resolveValidator = (
 ): ((value: unknown) => boolean) => {
   // min:N — string: 文字数の最小値, number: 値の最小値
   if (rule.startsWith('min:')) {
-    const min = Number(rule.split(':')[1]);
+    const match = rule.match(/^min:(\d+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const min = Number(match[1]);
     return (v) =>
       (typeof v === 'string' || typeof v === 'number') && validateMin(v, min);
   }
 
   // max:N — string: 文字数の最大値, number: 値の最大値
   if (rule.startsWith('max:')) {
-    const max = Number(rule.split(':')[1]);
+    const match = rule.match(/^max:(\d+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const max = Number(match[1]);
     return (v) =>
       (typeof v === 'string' || typeof v === 'number') && validateMax(v, max);
   }
 
   // between:N,M — string: 文字数の範囲, number: 値の範囲
   if (rule.startsWith('between:')) {
-    const [min, max] = rule.split(':')[1].split(',').map(Number);
+    const match = rule.match(/^between:(\d+),(\d+)$/);
+    if (match == null || match[1] === undefined || match[2] === undefined) {
+      return (_v) => false;
+    }
+    const min = Number(match[1]);
+    const max = Number(match[2]);
     return (v) =>
       (typeof v === 'string' || typeof v === 'number') &&
       validateBetween(v, min, max);
@@ -131,13 +140,17 @@ const resolveValidator = (
 
   // digits:N — 固定N桁の数字文字列
   if (rule.startsWith('digits:')) {
-    const digits = Number(rule.split(':')[1]);
+    const match = rule.match(/^digits:(\d+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const digits = Number(match[1]);
     return (v) => typeof v === 'string' && validateDigits(v, digits);
   }
 
   // in:a,b,c — 許可リストに含まれるか
   if (rule.startsWith('in:')) {
-    const allowed = rule.split(':')[1].split(',');
+    const match = rule.match(/^in:([^,.]+(?:,[^,.]+)*)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const allowed = match[1].split(',');
     return (v) => typeof v === 'string' && validateIn(v, allowed);
   }
 
@@ -149,54 +162,70 @@ const resolveValidator = (
 
   // arrayMin:N — 配列の最小要素数
   if (rule.startsWith('arrayMin:')) {
-    const min = Number(rule.split(':')[1]);
+    const match = rule.match(/^arrayMin:(\d+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const min = Number(match[1]);
     return (v) => Array.isArray(v) && validateArrayMin(v, min);
   }
 
   // arrayMax:N — 配列の最大要素数
   if (rule.startsWith('arrayMax:')) {
-    const max = Number(rule.split(':')[1]);
+    const match = rule.match(/^arrayMax:(\d+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const max = Number(match[1]);
     return (v) => Array.isArray(v) && validateArrayMax(v, max);
   }
 
   // extensions:ext1,ext2 — 拡張子チェック
   if (rule.startsWith('extensions:')) {
-    const extensions = rule.split(':')[1].split(',');
+    const match = rule.match(/^extensions:(.+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const extensions = match[1].split(',');
     return (v) => typeof v === 'string' && validateExtensions(v, extensions);
   }
 
   // dateFormat:format — 日付フォーマットチェック
   if (rule.startsWith('dateFormat:')) {
-    const format = rule.split(':')[1];
+    const match = rule.match(/^dateFormat:(.+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const format = match[1];
     return (v) => typeof v === 'string' && validateDateFormat(v, format);
   }
 
   // fileSizeMax:size — 最大ファイルサイズチェック
   if (rule.startsWith('fileSizeMax:')) {
-    const max = rule.split(':')[1];
+    const match = rule.match(/^fileSizeMax:(.+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const max = match[1];
     return (v) => typeof v === 'number' && validateFileSizeMax(v, max);
   }
 
   // fileSizeMin:size — 最小ファイルサイズチェック
   if (rule.startsWith('fileSizeMin:')) {
-    const min = rule.split(':')[1];
+    const match = rule.match(/^fileSizeMin:(.+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const min = match[1];
     return (v) => typeof v === 'number' && validateFileSizeMin(v, min);
   }
 
   // base64SizeMax:size — base64画像の最大ファイルサイズチェック
   if (rule.startsWith('base64SizeMax:')) {
-    const max = rule.split(':')[1];
+    const match = rule.match(/^base64SizeMax:(.+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const max = match[1];
     return (v) => typeof v === 'string' && validateBase64SizeMax(v, max);
   }
 
   // mimeType:type1,type2 — MIMEタイプチェック
   if (rule.startsWith('mimeType:')) {
-    const allowed = rule.split(':')[1].split(',');
+    const match = rule.match(/^mimeType:(.+)$/);
+    if (match == null || match[1] === undefined) return (_v) => false;
+    const allowed = match[1].split(',');
     return (v) => validateMimeType(v, allowed);
   }
 
   // パラメータなしのルールはマップから取得
-  return validators[rule];
+  return validators[rule] ?? ((_v) => false);
 };
 
 /**
