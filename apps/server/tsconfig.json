@@ -17,6 +17,13 @@
     },
     "experimentalDecorators": true
   },
-  "include": ["src", "types", "prisma", "scripts"],
+  "include": [
+    "src",
+    "types",
+    "prisma",
+    "scripts",
+    "drizzle.config.ts",
+    "drizzle"
+  ],
   "exclude": ["node_modules"]
 }

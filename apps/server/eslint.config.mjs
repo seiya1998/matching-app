@@ -7,7 +7,8 @@ const plugin = [
   ...baseConfig,
   {
     rules: {
-      ...pluginImport.flatConfigs.recommended.rules
+      ...pluginImport.flatConfigs.recommended.rules,
+      'import/no-unresolved': 'off'
     }
   },
   {
